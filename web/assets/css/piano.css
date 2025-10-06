@@ -109,7 +109,8 @@
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    min-width: 600px;
+    min-width: 1200px;
+    height: 200px;
 }
 
 .piano-key {
@@ -120,8 +121,8 @@
 }
 
 .piano-key.white {
-    width: 40px;
-    height: 200px;
+    width: 50px;
+    height: 180px;
     background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
     border: 1px solid #d1d5db;
     border-radius: 0 0 8px 8px;
@@ -132,6 +133,7 @@
     font-weight: 500;
     color: #374151;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
 }
 
 .piano-key.white:hover {
@@ -147,7 +149,7 @@
 }
 
 .piano-key.black {
-    width: 24px;
+    width: 30px;
     height: 120px;
     background: linear-gradient(to bottom, #1f2937 0%, #111827 100%);
     border: 1px solid #374151;

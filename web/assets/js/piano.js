@@ -24,24 +24,27 @@ class PianoApp {
         }
     }
 
+    ensureAudioContext() {
+        if (!this.audioContext) {
+            this.setupAudioContext();
+        }
+        
+        // Resume audio context if suspended (required by some browsers)
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+    }
+
     createPianoKeys() {
         const keyboard = document.getElementById('piano-keyboard');
         if (!keyboard) return;
 
-        // White keys
-        const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-        whiteKeys.forEach(note => {
-            const key = document.createElement('div');
-            key.className = 'piano-key white';
-            key.dataset.note = note;
-            key.textContent = note;
-            key.addEventListener('mousedown', (e) => this.playNote(e));
-            key.addEventListener('mouseup', (e) => this.stopNote(e));
-            key.addEventListener('mouseleave', (e) => this.stopNote(e));
-            keyboard.appendChild(key);
-        });
+        // Clear existing keys
+        keyboard.innerHTML = '';
 
-        // Black keys
+        // Create full piano keyboard (3 octaves: C3 to C6)
+        const octaves = [3, 4, 5];
+        const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
         const blackKeys = [
             { note: 'C#', position: 0 },
             { note: 'D#', position: 1 },
@@ -50,27 +53,48 @@ class PianoApp {
             { note: 'A#', position: 5 }
         ];
 
-        blackKeys.forEach(({ note, position }) => {
-            const key = document.createElement('div');
-            key.className = 'piano-key black';
-            key.dataset.note = note;
-            key.textContent = note;
-            key.style.left = `${position * 40 + 30}px`;
-            key.addEventListener('mousedown', (e) => this.playNote(e));
-            key.addEventListener('mouseup', (e) => this.stopNote(e));
-            key.addEventListener('mouseleave', (e) => this.stopNote(e));
-            keyboard.appendChild(key);
+        let keyIndex = 0;
+
+        octaves.forEach(octave => {
+            // Create white keys for this octave
+            whiteKeys.forEach(note => {
+                const key = document.createElement('div');
+                key.className = 'piano-key white';
+                key.dataset.note = `${note}${octave}`;
+                key.dataset.octave = octave;
+                key.textContent = note;
+                key.style.left = `${keyIndex * 60}px`;
+                key.addEventListener('mousedown', (e) => this.playNote(e));
+                key.addEventListener('mouseup', (e) => this.stopNote(e));
+                key.addEventListener('mouseleave', (e) => this.stopNote(e));
+                keyboard.appendChild(key);
+                keyIndex++;
+            });
+
+            // Create black keys for this octave
+            blackKeys.forEach(({ note, position }) => {
+                const key = document.createElement('div');
+                key.className = 'piano-key black';
+                key.dataset.note = `${note}${octave}`;
+                key.dataset.octave = octave;
+                key.textContent = note;
+                key.style.left = `${(keyIndex - 7 + position) * 60 + 45}px`;
+                key.addEventListener('mousedown', (e) => this.playNote(e));
+                key.addEventListener('mouseup', (e) => this.stopNote(e));
+                key.addEventListener('mouseleave', (e) => this.stopNote(e));
+                keyboard.appendChild(key);
+            });
         });
+
+        // Update keyboard width
+        keyboard.style.width = `${keyIndex * 60}px`;
     }
 
     setupEventListeners() {
-        // Octave selector
-        const octaveSelect = document.getElementById('octave-select');
-        if (octaveSelect) {
-            octaveSelect.addEventListener('change', (e) => {
-                this.currentOctave = parseInt(e.target.value);
-            });
-        }
+        // Initialize audio context on first user interaction
+        document.addEventListener('click', () => {
+            this.ensureAudioContext();
+        }, { once: true });
 
         // Volume control
         const volumeControl = document.getElementById('volume-control');
@@ -114,68 +138,94 @@ class PianoApp {
     }
 
     getFrequency(note, octave) {
+        // Standard frequencies for A4 = 440Hz
         const noteFrequencies = {
-            'C': 16.35,
-            'C#': 17.32,
-            'D': 18.35,
-            'D#': 19.45,
-            'E': 20.60,
-            'F': 21.83,
-            'F#': 23.12,
-            'G': 24.50,
-            'G#': 25.96,
-            'A': 27.50,
-            'A#': 29.14,
-            'B': 30.87
+            'C': 261.63,   // C4
+            'C#': 277.18,  // C#4
+            'D': 293.66,    // D4
+            'D#': 311.13,  // D#4
+            'E': 329.63,   // E4
+            'F': 349.23,   // F4
+            'F#': 369.99,  // F#4
+            'G': 392.00,   // G4
+            'G#': 415.30,  // G#4
+            'A': 440.00,   // A4
+            'A#': 466.16,  // A#4
+            'B': 493.88    // B4
         };
 
         const baseFreq = noteFrequencies[note];
-        return baseFreq * Math.pow(2, octave);
+        if (!baseFreq) {
+            console.warn(`Unknown note: ${note}`);
+            return 440; // Default to A4
+        }
+        
+        // Calculate frequency based on octave difference from 4
+        const octaveDiff = octave - 4;
+        const frequency = baseFreq * Math.pow(2, octaveDiff);
+        
+        // Validate frequency
+        if (!isFinite(frequency) || frequency <= 0) {
+            console.warn(`Invalid frequency for ${note}${octave}: ${frequency}`);
+            return 440; // Default to A4
+        }
+        
+        return frequency;
     }
 
     playNote(event) {
+        this.ensureAudioContext();
         if (!this.audioContext) return;
 
         const note = event.target.dataset.note;
-        const fullNote = `${note}${this.currentOctave}`;
-        const frequency = this.getFrequency(note, this.currentOctave);
+        const octave = parseInt(event.target.dataset.octave) || this.currentOctave;
+        const frequency = this.getFrequency(note, octave);
+
+        // Validate frequency before playing
+        if (!isFinite(frequency) || frequency <= 0 || frequency > 20000) {
+            console.warn(`Invalid frequency for ${note}${octave}: ${frequency}`);
+            return;
+        }
 
         // Stop any existing oscillator for this note
         this.stopNote(event);
 
-        // Create new oscillator
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
+        try {
+            // Create new oscillator
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
 
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
 
-        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-        oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+            oscillator.type = 'sine';
 
-        gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.01);
+            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.01);
 
-        oscillator.start();
+            oscillator.start();
 
-        this.oscillators.set(fullNote, { oscillator, gainNode });
+            this.oscillators.set(note, { oscillator, gainNode });
 
-        // Visual feedback
-        event.target.classList.add('active');
+            // Visual feedback
+            event.target.classList.add('active');
 
-        // Add to played notes
-        this.addPlayedNote(fullNote);
+            // Add to played notes
+            this.addPlayedNote(note);
+        } catch (error) {
+            console.error('Error playing note:', error);
+        }
     }
 
     stopNote(event) {
         const note = event.target.dataset.note;
-        const fullNote = `${note}${this.currentOctave}`;
         
-        const oscillatorData = this.oscillators.get(fullNote);
+        const oscillatorData = this.oscillators.get(note);
         if (oscillatorData) {
             oscillatorData.gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.1);
             oscillatorData.oscillator.stop(this.audioContext.currentTime + 0.1);
-            this.oscillators.delete(fullNote);
+            this.oscillators.delete(note);
         }
 
         // Remove visual feedback
@@ -234,6 +284,7 @@ class PianoApp {
     }
 
     playChordNote(note, frequency) {
+        this.ensureAudioContext();
         if (!this.audioContext) return;
 
         const oscillator = this.audioContext.createOscillator();
