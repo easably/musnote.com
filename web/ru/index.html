@@ -62,6 +62,9 @@
                             <a href="/ru/piano" class="nav-link">Пианино</a>
                         </li>
                         <li class="nav-item">
+                            <a href="/ru/chord-tutorial" class="nav-link">Учебник аккордов</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/ru/about" class="nav-link">О нас</a>
                         </li>
                     </ul>
@@ -103,7 +106,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="/assets/images/hero-piano.jpg" alt="Клавиатура пианино" width="600" height="400">
+                    <img src="/assets/images/hero-piano.svg" alt="Клавиатура пианино" width="600" height="400">
                 </div>
             </div>
         </section>
@@ -192,7 +195,7 @@
             
             <div class="footer-bottom">
                 <p class="footer-copyright">
-                    © 2024 MusNote. Все права защищены.
+                    © 2024 MusNote. <span data-translate="footer.rights">Все права защищены.</span>
                 </p>
             </div>
         </div>
@@ -201,5 +204,20 @@
     <!-- Scripts -->
     <script src="/assets/js/language.js"></script>
     <script src="/assets/js/main.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

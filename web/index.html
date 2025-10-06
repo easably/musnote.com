@@ -32,8 +32,7 @@
     <link rel="alternate" hreflang="x-default" href="https://musnote.com/">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -60,6 +59,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="/piano" class="nav-link" data-translate="nav.piano">Piano</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/chord-tutorial" class="nav-link" data-translate="nav.chord_tutorial">Chord Tutorial</a>
                         </li>
                         <li class="nav-item">
                             <a href="/about" class="nav-link" data-translate="nav.about">About</a>
@@ -103,7 +105,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="/assets/images/hero-piano.jpg" alt="Piano keyboard" width="600" height="400">
+                    <img src="/assets/images/hero-piano.svg" alt="Piano keyboard" width="600" height="400">
                 </div>
             </div>
         </section>
@@ -187,8 +189,8 @@
             </div>
             
             <div class="footer-bottom">
-                <p class="footer-copyright" data-translate="footer.copyright">
-                    © 2024 MusNote. All rights reserved.
+                <p class="footer-copyright">
+                    © 2024 MusNote. <span data-translate="footer.rights">All rights reserved.</span>
                 </p>
             </div>
         </div>
@@ -197,5 +199,20 @@
     <!-- Scripts -->
     <script src="/assets/js/language.js"></script>
     <script src="/assets/js/main.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

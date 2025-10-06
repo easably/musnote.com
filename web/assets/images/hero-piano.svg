@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="keyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#heroGradient)"/>
+  
+  <!-- Piano body -->
+  <rect x="50" y="150" width="500" height="200" fill="#2c3e50" rx="10" ry="10"/>
+  
+  <!-- Piano lid -->
+  <rect x="50" y="120" width="500" height="30" fill="#34495e" rx="5" ry="5"/>
+  
+  <!-- White keys -->
+  <g id="white-keys">
+    <!-- C -->
+    <rect x="70" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="82" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">C</text>
+    
+    <!-- D -->
+    <rect x="95" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="107" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">D</text>
+    
+    <!-- E -->
+    <rect x="120" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="132" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">E</text>
+    
+    <!-- F -->
+    <rect x="145" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="157" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">F</text>
+    
+    <!-- G -->
+    <rect x="170" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="182" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">G</text>
+    
+    <!-- A -->
+    <rect x="195" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="207" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">A</text>
+    
+    <!-- B -->
+    <rect x="220" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="232" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">B</text>
+    
+    <!-- C5 -->
+    <rect x="245" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="257" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">C</text>
+    
+    <!-- D5 -->
+    <rect x="270" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="282" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">D</text>
+    
+    <!-- E5 -->
+    <rect x="295" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="307" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">E</text>
+    
+    <!-- F5 -->
+    <rect x="320" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="332" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">F</text>
+    
+    <!-- G5 -->
+    <rect x="345" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="357" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">G</text>
+    
+    <!-- A5 -->
+    <rect x="370" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="382" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">A</text>
+    
+    <!-- B5 -->
+    <rect x="395" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="407" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">B</text>
+    
+    <!-- C6 -->
+    <rect x="420" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="432" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">C</text>
+    
+    <!-- D6 -->
+    <rect x="445" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="457" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">D</text>
+    
+    <!-- E6 -->
+    <rect x="470" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="482" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">E</text>
+    
+    <!-- F6 -->
+    <rect x="495" y="200" width="25" height="120" fill="url(#keyGradient)" rx="3" ry="3"/>
+    <text x="507" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#2c3e50">F</text>
+  </g>
+  
+  <!-- Black keys -->
+  <g id="black-keys">
+    <!-- C# -->
+    <rect x="82" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="89" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">C#</text>
+    
+    <!-- D# -->
+    <rect x="107" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="114" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">D#</text>
+    
+    <!-- F# -->
+    <rect x="157" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="164" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">F#</text>
+    
+    <!-- G# -->
+    <rect x="182" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="189" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">G#</text>
+    
+    <!-- A# -->
+    <rect x="207" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="214" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">A#</text>
+    
+    <!-- C#5 -->
+    <rect x="257" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="264" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">C#</text>
+    
+    <!-- D#5 -->
+    <rect x="282" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="289" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">D#</text>
+    
+    <!-- F#5 -->
+    <rect x="332" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="339" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">F#</text>
+    
+    <!-- G#5 -->
+    <rect x="357" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="364" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">G#</text>
+    
+    <!-- A#5 -->
+    <rect x="382" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="389" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">A#</text>
+    
+    <!-- C#6 -->
+    <rect x="432" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="439" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">C#</text>
+    
+    <!-- D#6 -->
+    <rect x="457" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="464" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">D#</text>
+    
+    <!-- F#6 -->
+    <rect x="507" y="200" width="15" height="80" fill="#2c3e50" rx="2" ry="2"/>
+    <text x="514" y="250" text-anchor="middle" font-family="Arial" font-size="8" fill="#fff">F#</text>
+  </g>
+  
+  <!-- Musical notes floating around -->
+  <g id="floating-notes" opacity="0.7">
+    <circle cx="100" cy="80" r="3" fill="#fff"/>
+    <line x1="103" y1="80" x2="103" y2="60" stroke="#fff" stroke-width="1"/>
+    
+    <circle cx="200" cy="100" r="3" fill="#fff"/>
+    <line x1="203" y1="100" x2="203" y2="80" stroke="#fff" stroke-width="1"/>
+    
+    <circle cx="300" cy="70" r="3" fill="#fff"/>
+    <line x1="303" y1="70" x2="303" y2="50" stroke="#fff" stroke-width="1"/>
+    
+    <circle cx="400" cy="90" r="3" fill="#fff"/>
+    <line x1="403" y1="90" x2="403" y2="70" stroke="#fff" stroke-width="1"/>
+    
+    <circle cx="500" cy="60" r="3" fill="#fff"/>
+    <line x1="503" y1="60" x2="503" y2="40" stroke="#fff" stroke-width="1"/>
+  </g>
+</svg>

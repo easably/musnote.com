@@ -7,6 +7,7 @@
     "hero.description": "Master piano, understand chords, and explore the beautiful world of music theory with our interactive learning platform.",
     "hero.start_learning": "Start Learning",
     "hero.learn_more": "Learn More",
+    "footer.rights": "All rights reserved.",
     "features.title": "Why Choose MusNote?",
     "features.interactive.title": "Interactive Piano",
     "features.interactive.description": "Practice on our virtual piano with real-time feedback and note recognition.",
@@ -30,7 +31,16 @@
     "piano.clear": "Clear",
     "piano.play_chord": "Play C Major",
     "piano.played_notes": "Played Notes:",
-    "piano.chord_helper": "Chord Helper"
+    "piano.chord_helper": "Chord Helper",
+    "nav.chord_tutorial": "Chord Tutorial",
+    "chord_tutorial.title": "Chord Tutorial",
+    "chord_tutorial.description": "Learn piano chords with interactive visualization. Click on a chord to see it highlighted on the piano keyboard.",
+    "chord_tutorial.select_chord": "Select a Chord",
+    "chord_tutorial.major_chords": "Major Chords",
+    "chord_tutorial.minor_chords": "Minor Chords",
+    "chord_tutorial.seventh_chords": "Seventh Chords",
+    "chord_tutorial.piano_keyboard": "Piano Keyboard",
+    "chord_tutorial.selected_chord": "Selected Chord"
   },
   "ru": {
     "nav.home": "Главная",
@@ -40,6 +50,7 @@
     "hero.description": "Освойте пианино, изучите аккорды и исследуйте прекрасный мир теории музыки с нашей интерактивной платформой обучения.",
     "hero.start_learning": "Начать обучение",
     "hero.learn_more": "Узнать больше",
+    "footer.rights": "Все права защищены.",
     "features.title": "Почему выбирают MusNote?",
     "features.interactive.title": "Интерактивное пианино",
     "features.interactive.description": "Практикуйтесь на нашем виртуальном пианино с обратной связью в реальном времени и распознаванием нот.",
@@ -63,7 +74,16 @@
     "piano.clear": "Очистить",
     "piano.play_chord": "Играть C мажор",
     "piano.played_notes": "Сыгранные ноты:",
-    "piano.chord_helper": "Помощник аккордов"
+    "piano.chord_helper": "Помощник аккордов",
+    "nav.chord_tutorial": "Учебник аккордов",
+    "chord_tutorial.title": "Учебник аккордов",
+    "chord_tutorial.description": "Изучайте аккорды пианино с интерактивной визуализацией. Нажмите на аккорд, чтобы увидеть его подсветку на клавиатуре пианино.",
+    "chord_tutorial.select_chord": "Выберите аккорд",
+    "chord_tutorial.major_chords": "Мажорные аккорды",
+    "chord_tutorial.minor_chords": "Минорные аккорды",
+    "chord_tutorial.seventh_chords": "Септаккорды",
+    "chord_tutorial.piano_keyboard": "Клавиатура пианино",
+    "chord_tutorial.selected_chord": "Выбранный аккорд"
   },
   "de": {
     "nav.home": "Startseite",
@@ -73,6 +93,7 @@
     "hero.description": "Meistern Sie das Klavier, verstehen Sie Akkorde und erkunden Sie die wunderschöne Welt der Musiktheorie mit unserer interaktiven Lernplattform.",
     "hero.start_learning": "Lernen beginnen",
     "hero.learn_more": "Mehr erfahren",
+    "footer.rights": "Alle Rechte vorbehalten.",
     "features.title": "Warum MusNote wählen?",
     "features.interactive.title": "Interaktives Klavier",
     "features.interactive.description": "Üben Sie auf unserem virtuellen Klavier mit Echtzeit-Feedback und Notenerkennung.",
@@ -96,6 +117,15 @@
     "piano.clear": "Löschen",
     "piano.play_chord": "C-Dur spielen",
     "piano.played_notes": "Gespielte Noten:",
-    "piano.chord_helper": "Akkord-Helfer"
+    "piano.chord_helper": "Akkord-Helfer",
+    "nav.chord_tutorial": "Akkord-Tutorial",
+    "chord_tutorial.title": "Akkord-Tutorial",
+    "chord_tutorial.description": "Lernen Sie Klavierakkorde mit interaktiver Visualisierung. Klicken Sie auf einen Akkord, um ihn auf der Klaviatur hervorzuheben.",
+    "chord_tutorial.select_chord": "Wählen Sie einen Akkord",
+    "chord_tutorial.major_chords": "Dur-Akkorde",
+    "chord_tutorial.minor_chords": "Moll-Akkorde",
+    "chord_tutorial.seventh_chords": "Septakkorde",
+    "chord_tutorial.piano_keyboard": "Klaviatur",
+    "chord_tutorial.selected_chord": "Ausgewählter Akkord"
   }
 }

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учебник аккордов - MusNote</title>
+    <meta name="description" content="Интерактивный учебник аккордов с визуализацией клавиатуры пианино">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="аккорды пианино, теория музыки, учебник аккордов, уроки пианино">
+    <meta name="author" content="MusNote">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Учебник аккордов - MusNote">
+    <meta property="og:description" content="Интерактивный учебник аккордов с визуализацией клавиатуры пианино">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musnote.com/ru/chord-tutorial">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Учебник аккордов - MusNote">
+    <meta name="twitter:description" content="Интерактивный учебник аккордов с визуализацией клавиатуры пианино">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/chord-tutorial.css">
+    
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Учебник аккордов - MusNote",
+        "description": "Интерактивный учебник аккордов с визуализацией клавиатуры пианино",
+        "url": "https://musnote.com/ru/chord-tutorial",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser"
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/ru/" aria-label="MusNote Главная">
+                        <img src="/assets/images/logo.svg" alt="MusNote" width="40" height="40">
+                    </a>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="/ru/" data-translate="nav.home">Главная</a></li>
+                        <li><a href="/ru/piano" data-translate="nav.piano">Пианино</a></li>
+                        <li><a href="/ru/chord-tutorial" class="active" data-translate="nav.chord_tutorial">Учебник аккордов</a></li>
+                        <li><a href="/ru/about" data-translate="nav.about">О нас</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn active" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="de">DE</button>
+                    </div>
+                    <button class="mobile-menu-toggle" aria-label="Переключить мобильное меню">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Chord Tutorial Section -->
+        <section class="chord-tutorial">
+            <div class="container">
+                <div class="tutorial-header">
+                    <h1 class="tutorial-title" data-translate="chord_tutorial.title">Учебник аккордов</h1>
+                    <p class="tutorial-description" data-translate="chord_tutorial.description">
+                        Изучайте аккорды пианино с интерактивной визуализацией. Нажмите на аккорд, чтобы увидеть его подсветку на клавиатуре пианино.
+                    </p>
+                </div>
+
+                <!-- Chord Selector -->
+                <div class="chord-selector">
+                    <h2 data-translate="chord_tutorial.select_chord">Выберите аккорд</h2>
+                    <div class="chord-categories">
+                        <!-- Major Chords -->
+                        <div class="chord-category">
+                            <h3 data-translate="chord_tutorial.major_chords">Мажорные аккорды</h3>
+                            <div class="chord-buttons">
+                                <button class="chord-btn" data-chord="C">C</button>
+                                <button class="chord-btn" data-chord="D">D</button>
+                                <button class="chord-btn" data-chord="E">E</button>
+                                <button class="chord-btn" data-chord="F">F</button>
+                                <button class="chord-btn" data-chord="G">G</button>
+                                <button class="chord-btn" data-chord="A">A</button>
+                                <button class="chord-btn" data-chord="B">B</button>
+                            </div>
+                        </div>
+
+                        <!-- Minor Chords -->
+                        <div class="chord-category">
+                            <h3 data-translate="chord_tutorial.minor_chords">Минорные аккорды</h3>
+                            <div class="chord-buttons">
+                                <button class="chord-btn" data-chord="Cm">Cm</button>
+                                <button class="chord-btn" data-chord="Dm">Dm</button>
+                                <button class="chord-btn" data-chord="Em">Em</button>
+                                <button class="chord-btn" data-chord="Fm">Fm</button>
+                                <button class="chord-btn" data-chord="Gm">Gm</button>
+                                <button class="chord-btn" data-chord="Am">Am</button>
+                                <button class="chord-btn" data-chord="Bm">Bm</button>
+                            </div>
+                        </div>
+
+                        <!-- Seventh Chords -->
+                        <div class="chord-category">
+                            <h3 data-translate="chord_tutorial.seventh_chords">Септаккорды</h3>
+                            <div class="chord-buttons">
+                                <button class="chord-btn" data-chord="C7">C7</button>
+                                <button class="chord-btn" data-chord="D7">D7</button>
+                                <button class="chord-btn" data-chord="E7">E7</button>
+                                <button class="chord-btn" data-chord="F7">F7</button>
+                                <button class="chord-btn" data-chord="G7">G7</button>
+                                <button class="chord-btn" data-chord="A7">A7</button>
+                                <button class="chord-btn" data-chord="B7">B7</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Piano Keyboard -->
+                <div class="piano-section">
+                    <h2 data-translate="chord_tutorial.piano_keyboard">Клавиатура пианино</h2>
+                    <div class="piano-container">
+                        <svg id="piano-keyboard" viewBox="0 0 1200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- White Keys -->
+                            <g id="white-keys">
+                                <!-- C -->
+                                <rect class="piano-key white-key" data-note="C4" x="0" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="30" y="130" text-anchor="middle" class="key-label">C</text>
+                                
+                                <!-- D -->
+                                <rect class="piano-key white-key" data-note="D4" x="60" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="90" y="130" text-anchor="middle" class="key-label">D</text>
+                                
+                                <!-- E -->
+                                <rect class="piano-key white-key" data-note="E4" x="120" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="150" y="130" text-anchor="middle" class="key-label">E</text>
+                                
+                                <!-- F -->
+                                <rect class="piano-key white-key" data-note="F4" x="180" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="210" y="130" text-anchor="middle" class="key-label">F</text>
+                                
+                                <!-- G -->
+                                <rect class="piano-key white-key" data-note="G4" x="240" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="270" y="130" text-anchor="middle" class="key-label">G</text>
+                                
+                                <!-- A -->
+                                <rect class="piano-key white-key" data-note="A4" x="300" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="330" y="130" text-anchor="middle" class="key-label">A</text>
+                                
+                                <!-- B -->
+                                <rect class="piano-key white-key" data-note="B4" x="360" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="390" y="130" text-anchor="middle" class="key-label">B</text>
+                                
+                                <!-- C5 -->
+                                <rect class="piano-key white-key" data-note="C5" x="420" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="450" y="130" text-anchor="middle" class="key-label">C</text>
+                                
+                                <!-- D5 -->
+                                <rect class="piano-key white-key" data-note="D5" x="480" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="510" y="130" text-anchor="middle" class="key-label">D</text>
+                                
+                                <!-- E5 -->
+                                <rect class="piano-key white-key" data-note="E5" x="540" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="570" y="130" text-anchor="middle" class="key-label">E</text>
+                                
+                                <!-- F5 -->
+                                <rect class="piano-key white-key" data-note="F5" x="600" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="630" y="130" text-anchor="middle" class="key-label">F</text>
+                                
+                                <!-- G5 -->
+                                <rect class="piano-key white-key" data-note="G5" x="660" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="690" y="130" text-anchor="middle" class="key-label">G</text>
+                                
+                                <!-- A5 -->
+                                <rect class="piano-key white-key" data-note="A5" x="720" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="750" y="130" text-anchor="middle" class="key-label">A</text>
+                                
+                                <!-- B5 -->
+                                <rect class="piano-key white-key" data-note="B5" x="780" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="810" y="130" text-anchor="middle" class="key-label">B</text>
+                                
+                                <!-- C6 -->
+                                <rect class="piano-key white-key" data-note="C6" x="840" y="50" width="60" height="120" rx="5" ry="5"/>
+                                <text x="870" y="130" text-anchor="middle" class="key-label">C</text>
+                            </g>
+                            
+                            <!-- Black Keys -->
+                            <g id="black-keys">
+                                <!-- C# -->
+                                <rect class="piano-key black-key" data-note="C#4" x="45" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="60" y="100" text-anchor="middle" class="key-label black-label">C#</text>
+                                
+                                <!-- D# -->
+                                <rect class="piano-key black-key" data-note="D#4" x="105" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="120" y="100" text-anchor="middle" class="key-label black-label">D#</text>
+                                
+                                <!-- F# -->
+                                <rect class="piano-key black-key" data-note="F#4" x="225" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="240" y="100" text-anchor="middle" class="key-label black-label">F#</text>
+                                
+                                <!-- G# -->
+                                <rect class="piano-key black-key" data-note="G#4" x="285" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="300" y="100" text-anchor="middle" class="key-label black-label">G#</text>
+                                
+                                <!-- A# -->
+                                <rect class="piano-key black-key" data-note="A#4" x="345" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="360" y="100" text-anchor="middle" class="key-label black-label">A#</text>
+                                
+                                <!-- C#5 -->
+                                <rect class="piano-key black-key" data-note="C#5" x="465" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="480" y="100" text-anchor="middle" class="key-label black-label">C#</text>
+                                
+                                <!-- D#5 -->
+                                <rect class="piano-key black-key" data-note="D#5" x="525" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="540" y="100" text-anchor="middle" class="key-label black-label">D#</text>
+                                
+                                <!-- F#5 -->
+                                <rect class="piano-key black-key" data-note="F#5" x="645" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="660" y="100" text-anchor="middle" class="key-label black-label">F#</text>
+                                
+                                <!-- G#5 -->
+                                <rect class="piano-key black-key" data-note="G#5" x="705" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="720" y="100" text-anchor="middle" class="key-label black-label">G#</text>
+                                
+                                <!-- A#5 -->
+                                <rect class="piano-key black-key" data-note="A#5" x="765" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="780" y="100" text-anchor="middle" class="key-label black-label">A#</text>
+                                
+                                <!-- C#6 -->
+                                <rect class="piano-key black-key" data-note="C#6" x="885" y="50" width="30" height="80" rx="3" ry="3"/>
+                                <text x="900" y="100" text-anchor="middle" class="key-label black-label">C#</text>
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <!-- Chord Info -->
+                    <div class="chord-info">
+                        <h3 data-translate="chord_tutorial.selected_chord">Выбранный аккорд</h3>
+                        <div class="current-chord">
+                            <span class="chord-name" id="current-chord-name">Нет</span>
+                            <div class="chord-notes" id="chord-notes"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-translate="footer.about">О MusNote</h3>
+                    <p data-translate="footer.description">
+                        Изучайте теорию музыки и пианино с нашими интерактивными инструментами и учебниками.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3 data-translate="footer.links">Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="/ru/" data-translate="nav.home">Главная</a></li>
+                        <li><a href="/ru/piano" data-translate="nav.piano">Пианино</a></li>
+                        <li><a href="/ru/chord-tutorial" data-translate="nav.chord_tutorial">Учебник аккордов</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 data-translate="footer.languages">Языки</h3>
+                    <div class="language-links">
+                        <a href="/" hreflang="en">English</a>
+                        <a href="/ru/" hreflang="ru">Русский</a>
+                        <a href="/de/" hreflang="de">Deutsch</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MusNote. <span data-translate="footer.rights">Все права защищены.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/language.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/chord-tutorial.js"></script>
+</body>
+</html>

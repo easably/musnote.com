@@ -6,8 +6,8 @@ class LanguageManager {
         this.init();
     }
 
-    init() {
-        this.loadTranslations();
+    async init() {
+        await this.loadTranslations();
         this.setupLanguageSelector();
         this.applyTranslations();
     }
