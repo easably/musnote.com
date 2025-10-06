@@ -1,5 +1,5 @@
 // Simple Service Worker for MusNote
-const CACHE_NAME = 'musnote-v1';
+const CACHE_NAME = 'musnote-v2';
 const urlsToCache = [
   '/',
   '/assets/css/main.css',

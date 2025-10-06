@@ -177,9 +177,24 @@ class PianoApp {
         this.ensureAudioContext();
         if (!this.audioContext) return;
 
-        const note = event.target.dataset.note;
+        const fullNote = event.target.dataset.note; // e.g., "C3", "C4", "C5"
         const octave = parseInt(event.target.dataset.octave) || this.currentOctave;
+        
+        // Extract note name from full note (remove octave number)
+        let note = fullNote.replace(/\d+$/, ''); // Remove trailing digits
+        
+        // Fallback: if regex didn't work, try manual extraction
+        if (note === fullNote) {
+            // Extract note name manually (e.g., "C#4" -> "C#")
+            const match = fullNote.match(/^([A-G]#?)/);
+            if (match) {
+                note = match[1];
+            }
+        }
         const frequency = this.getFrequency(note, octave);
+
+        // Debug: log the note and frequency
+        console.log(`Full note: ${fullNote}, extracted note: ${note}, octave: ${octave}, frequency: ${frequency}Hz`);
 
         // Validate frequency before playing
         if (!isFinite(frequency) || frequency <= 0 || frequency > 20000) {
@@ -206,26 +221,26 @@ class PianoApp {
 
             oscillator.start();
 
-            this.oscillators.set(note, { oscillator, gainNode });
+            this.oscillators.set(fullNote, { oscillator, gainNode });
 
             // Visual feedback
             event.target.classList.add('active');
 
-            // Add to played notes
-            this.addPlayedNote(note);
+        // Add to played notes
+        this.addPlayedNote(fullNote);
         } catch (error) {
             console.error('Error playing note:', error);
         }
     }
 
     stopNote(event) {
-        const note = event.target.dataset.note;
+        const fullNote = event.target.dataset.note; // e.g., "C3", "C4", "C5"
         
-        const oscillatorData = this.oscillators.get(note);
+        const oscillatorData = this.oscillators.get(fullNote);
         if (oscillatorData) {
             oscillatorData.gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.1);
             oscillatorData.oscillator.stop(this.audioContext.currentTime + 0.1);
-            this.oscillators.delete(note);
+            this.oscillators.delete(fullNote);
         }
 
         // Remove visual feedback
