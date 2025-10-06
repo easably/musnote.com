@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- English pages -->
+  <url>
+    <loc>https://musnote.com/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/piano</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/piano"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/piano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/piano"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/articles</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/articles"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/about</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/about"/>
+  </url>
+  
+  <!-- Russian pages -->
+  <url>
+    <loc>https://musnote.com/ru/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/ru/piano</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/piano"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/piano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/piano"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/ru/articles</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/articles"/>
+  </url>
+  
+  <!-- German pages -->
+  <url>
+    <loc>https://musnote.com/de/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/de/piano</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/piano"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/piano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/piano"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/de/articles</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/articles"/>
+  </url>
+  
+  <!-- Article pages -->
+  <url>
+    <loc>https://musnote.com/articles/piano-basics-beginners</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/articles/piano-basics-beginners"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/articles/piano-basics-beginners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/articles/piano-basics-beginners"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/ru/articles/piano-basics-beginners</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/articles/piano-basics-beginners"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/articles/piano-basics-beginners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/articles/piano-basics-beginners"/>
+  </url>
+  
+  <url>
+    <loc>https://musnote.com/de/articles/piano-basics-beginners</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/articles/piano-basics-beginners"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/articles/piano-basics-beginners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/articles/piano-basics-beginners"/>
+  </url>
+  
+</urlset>

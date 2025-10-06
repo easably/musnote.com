@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Piano - MusNote</title>
+    <meta name="description" content="Practice piano with our interactive virtual piano. Learn notes, chords, and scales with real-time feedback.">
+    <meta name="keywords" content="piano, virtual piano, music practice, piano learning, interactive piano">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musnote.com/piano">
+    <meta property="og:title" content="Interactive Piano - MusNote">
+    <meta property="og:description" content="Practice piano with our interactive virtual piano. Learn notes, chords, and scales with real-time feedback.">
+    <meta property="og:image" content="https://musnote.com/assets/images/og-piano.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://musnote.com/piano">
+    <meta property="twitter:title" content="Interactive Piano - MusNote">
+    <meta property="twitter:description" content="Practice piano with our interactive virtual piano. Learn notes, chords, and scales with real-time feedback.">
+    <meta property="twitter:image" content="https://musnote.com/assets/images/og-piano.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://musnote.com/piano">
+    
+    <!-- Hreflang for multilingual support -->
+    <link rel="alternate" hreflang="en" href="https://musnote.com/piano">
+    <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/piano">
+    <link rel="alternate" hreflang="de" href="https://musnote.com/de/piano">
+    <link rel="alternate" hreflang="x-default" href="https://musnote.com/piano">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/piano.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/" class="logo">
+                        <img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40">
+                    </a>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link" data-translate="nav.home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/piano" class="nav-link active" data-translate="nav.piano">Piano</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link" data-translate="nav.about">About</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-actions">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <select id="language-selector" class="lang-select">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="ru">🇷🇺 Русский</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Piano Section -->
+        <section class="piano-section">
+            <div class="container">
+                <div class="piano-header">
+                    <h1 class="piano-title" data-translate="piano.title">Interactive Piano</h1>
+                    <p class="piano-description" data-translate="piano.description">
+                        Click on the keys to play notes. Use the controls below to change octaves and explore different sounds.
+                    </p>
+                </div>
+
+                <!-- Piano Controls -->
+                <div class="piano-controls">
+                    <div class="control-group">
+                        <label for="octave-select" data-translate="piano.octave">Octave:</label>
+                        <select id="octave-select" class="control-select">
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="volume-control" data-translate="piano.volume">Volume:</label>
+                        <input type="range" id="volume-control" class="volume-slider" min="0" max="100" value="70">
+                        <span id="volume-display">70%</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button id="clear-notes" class="btn btn-outline" data-translate="piano.clear">Clear</button>
+                        <button id="play-chord" class="btn btn-primary" data-translate="piano.play_chord">Play C Major</button>
+                    </div>
+                </div>
+
+                <!-- Virtual Piano -->
+                <div class="piano-container">
+                    <div class="piano-keyboard" id="piano-keyboard">
+                        <!-- Keys will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Note Display -->
+                <div class="note-display">
+                    <h3 data-translate="piano.played_notes">Played Notes:</h3>
+                    <div id="played-notes" class="notes-list"></div>
+                </div>
+
+                <!-- Chord Helper -->
+                <div class="chord-helper">
+                    <h3 data-translate="piano.chord_helper">Chord Helper</h3>
+                    <div class="chord-buttons">
+                        <button class="chord-btn" data-chord="C">C</button>
+                        <button class="chord-btn" data-chord="D">D</button>
+                        <button class="chord-btn" data-chord="E">E</button>
+                        <button class="chord-btn" data-chord="F">F</button>
+                        <button class="chord-btn" data-chord="G">G</button>
+                        <button class="chord-btn" data-chord="A">A</button>
+                        <button class="chord-btn" data-chord="B">B</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title" data-translate="footer.about">About MusNote</h3>
+                    <p class="footer-description" data-translate="footer.description">
+                        Your comprehensive platform for learning music theory and piano.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title" data-translate="footer.links">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/piano" data-translate="nav.piano">Piano</a></li>
+                        <li><a href="/about" data-translate="nav.about">About</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title" data-translate="footer.languages">Languages</h3>
+                    <ul class="footer-links">
+                        <li><a href="/" hreflang="en">English</a></li>
+                        <li><a href="/ru/" hreflang="ru">Русский</a></li>
+                        <li><a href="/de/" hreflang="de">Deutsch</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-translate="footer.copyright">
+                    © 2024 MusNote. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/language.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/piano.js"></script>
+</body>
+</html>

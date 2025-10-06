@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивное пианино - MusNote</title>
+    <meta name="description" content="Практикуйтесь на пианино с нашим интерактивным виртуальным пианино. Изучайте ноты, аккорды и гаммы с обратной связью в реальном времени.">
+    <meta name="keywords" content="пианино, виртуальное пианино, практика музыки, изучение пианино, интерактивное пианино">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musnote.com/ru/piano">
+    <meta property="og:title" content="Интерактивное пианино - MusNote">
+    <meta property="og:description" content="Практикуйтесь на пианино с нашим интерактивным виртуальным пианино. Изучайте ноты, аккорды и гаммы с обратной связью в реальном времени.">
+    <meta property="og:image" content="https://musnote.com/assets/images/og-piano.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://musnote.com/ru/piano">
+    <meta property="twitter:title" content="Интерактивное пианино - MusNote">
+    <meta property="twitter:description" content="Практикуйтесь на пианино с нашим интерактивным виртуальным пианино. Изучайте ноты, аккорды и гаммы с обратной связью в реальном времени.">
+    <meta property="twitter:image" content="https://musnote.com/assets/images/og-piano.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://musnote.com/ru/piano">
+    
+    <!-- Hreflang for multilingual support -->
+    <link rel="alternate" hreflang="en" href="https://musnote.com/piano">
+    <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/piano">
+    <link rel="alternate" hreflang="de" href="https://musnote.com/de/piano">
+    <link rel="alternate" hreflang="x-default" href="https://musnote.com/piano">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/piano.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/ru/" class="logo">
+                        <img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40">
+                    </a>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="/ru/" class="nav-link">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/ru/piano" class="nav-link active">Пианино</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/ru/about" class="nav-link">О нас</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-actions">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <select id="language-selector" class="lang-select">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="ru" selected>🇷🇺 Русский</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Переключить меню">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Piano Section -->
+        <section class="piano-section">
+            <div class="container">
+                <div class="piano-header">
+                    <h1 class="piano-title">Интерактивное пианино</h1>
+                    <p class="piano-description">
+                        Нажимайте на клавиши, чтобы играть ноты. Используйте элементы управления ниже для изменения октав и изучения разных звуков.
+                    </p>
+                </div>
+
+                <!-- Piano Controls -->
+                <div class="piano-controls">
+                    <div class="control-group">
+                        <label for="octave-select">Октава:</label>
+                        <select id="octave-select" class="control-select">
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="volume-control">Громкость:</label>
+                        <input type="range" id="volume-control" class="volume-slider" min="0" max="100" value="70">
+                        <span id="volume-display">70%</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button id="clear-notes" class="btn btn-outline">Очистить</button>
+                        <button id="play-chord" class="btn btn-primary">Играть C мажор</button>
+                    </div>
+                </div>
+
+                <!-- Virtual Piano -->
+                <div class="piano-container">
+                    <div class="piano-keyboard" id="piano-keyboard">
+                        <!-- Keys will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Note Display -->
+                <div class="note-display">
+                    <h3>Сыгранные ноты:</h3>
+                    <div id="played-notes" class="notes-list"></div>
+                </div>
+
+                <!-- Chord Helper -->
+                <div class="chord-helper">
+                    <h3>Помощник аккордов</h3>
+                    <div class="chord-buttons">
+                        <button class="chord-btn" data-chord="C">C</button>
+                        <button class="chord-btn" data-chord="D">D</button>
+                        <button class="chord-btn" data-chord="E">E</button>
+                        <button class="chord-btn" data-chord="F">F</button>
+                        <button class="chord-btn" data-chord="G">G</button>
+                        <button class="chord-btn" data-chord="A">A</button>
+                        <button class="chord-btn" data-chord="B">B</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">О MusNote</h3>
+                    <p class="footer-description">
+                        Ваша комплексная платформа для изучения теории музыки и пианино.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="/ru/piano">Пианино</a></li>
+                        <li><a href="/ru/about">О нас</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Языки</h3>
+                    <ul class="footer-links">
+                        <li><a href="/" hreflang="en">English</a></li>
+                        <li><a href="/ru/" hreflang="ru">Русский</a></li>
+                        <li><a href="/de/" hreflang="de">Deutsch</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2024 MusNote. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/language.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/piano.js"></script>
+</body>
+</html>
