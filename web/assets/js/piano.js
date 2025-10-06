@@ -249,16 +249,50 @@ class PianoApp {
     clearPlayedNotes() {
         this.playedNotes = [];
         this.updatePlayedNotesDisplay();
+        
+        // Stop all oscillators
+        this.oscillators.forEach(({ oscillator, gainNode }) => {
+            try {
+                gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.1);
+                oscillator.stop(this.audioContext.currentTime + 0.1);
+            } catch (error) {
+                console.warn('Error stopping oscillator:', error);
+            }
+        });
+        this.oscillators.clear();
+        
+        // Remove visual feedback from all keys
+        const keyboard = document.getElementById('piano-keyboard');
+        if (keyboard) {
+            const activeKeys = keyboard.querySelectorAll('.active');
+            activeKeys.forEach(key => key.classList.remove('active'));
+            
+            // Also clear chord highlights
+            this.clearChordHighlights();
+        }
     }
 
     playCMajorChord() {
         const chordNotes = ['C', 'E', 'G'];
+        
+        // Clear previous chord highlights
+        this.clearChordHighlights();
+        
+        // Highlight all chord keys immediately
+        this.highlightChordKeys(chordNotes);
+        
+        // Play notes with delay
         chordNotes.forEach((note, index) => {
             setTimeout(() => {
                 const frequency = this.getFrequency(note, this.currentOctave);
                 this.playChordNote(note, frequency);
             }, index * 100);
         });
+        
+        // Clear highlights after animation
+        setTimeout(() => {
+            this.clearChordHighlights();
+        }, chordNotes.length * 100 + 1000);
     }
 
     playChord(chord) {
@@ -274,13 +308,48 @@ class PianoApp {
 
         const notes = chordNotes[chord];
         if (notes) {
+            // Clear previous chord highlights
+            this.clearChordHighlights();
+            
+            // Highlight all chord keys immediately
+            this.highlightChordKeys(notes);
+            
+            // Play notes with delay
             notes.forEach((note, index) => {
                 setTimeout(() => {
                     const frequency = this.getFrequency(note, this.currentOctave);
                     this.playChordNote(note, frequency);
                 }, index * 150);
             });
+            
+            // Clear highlights after animation
+            setTimeout(() => {
+                this.clearChordHighlights();
+            }, notes.length * 150 + 1000);
         }
+    }
+
+    highlightChordKeys(notes) {
+        const keyboard = document.getElementById('piano-keyboard');
+        if (!keyboard) return;
+
+        notes.forEach(note => {
+            // Find all keys with this note across all octaves
+            const keys = keyboard.querySelectorAll(`[data-note="${note}3"], [data-note="${note}4"], [data-note="${note}5"]`);
+            keys.forEach(key => {
+                key.classList.add('chord-highlight');
+            });
+        });
+    }
+
+    clearChordHighlights() {
+        const keyboard = document.getElementById('piano-keyboard');
+        if (!keyboard) return;
+
+        const highlightedKeys = keyboard.querySelectorAll('.chord-highlight');
+        highlightedKeys.forEach(key => {
+            key.classList.remove('chord-highlight');
+        });
     }
 
     playChordNote(note, frequency) {
