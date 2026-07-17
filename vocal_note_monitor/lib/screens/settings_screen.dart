@@ -73,92 +73,93 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: ListView(
               padding: const EdgeInsets.only(top: 8, bottom: 32),
               children: [
-            _SliderSetting(
-              label: 'Threshold of volume',
-              value: _draft.volumeThreshold,
-              min: 0,
-              max: 10,
-              displayValue: _draft.volumeThreshold.toStringAsFixed(2),
-              onChanged: (v) => _update(_draft.copyWith(volumeThreshold: v)),
-            ),
-            _SliderSetting(
-              label: 'Horizontal zooming',
-              value: _draft.horizontalZoom,
-              min: 0.25,
-              max: 4,
-              displayValue: _draft.horizontalZoom.toStringAsFixed(2),
-              onChanged: (v) => _update(_draft.copyWith(horizontalZoom: v)),
-            ),
-            _SliderSetting(
-              label: 'Vertical zooming',
-              value: _draft.verticalZoom,
-              min: 0.25,
-              max: 4,
-              displayValue: _draft.verticalZoom.toStringAsFixed(2),
-              onChanged: (v) => _update(_draft.copyWith(verticalZoom: v)),
-            ),
-            _ToggleSetting(
-              label: 'Indicate lines of a semitone',
-              value: _draft.showSemitoneLines,
-              onChanged: (v) => _update(_draft.copyWith(showSemitoneLines: v)),
-            ),
-            _SliderSetting(
-              label: 'Calibration',
-              value: _draft.a4Frequency,
-              min: 400,
-              max: 480,
-              displayValue: 'A4 = ${_draft.a4Frequency.round()} Hz',
-              onChanged: (v) => _update(_draft.copyWith(a4Frequency: v)),
-            ),
-            _ToggleSetting(
-              label: 'Auto scroll',
-              value: _draft.autoScroll,
-              onChanged: (v) => _update(_draft.copyWith(autoScroll: v)),
-            ),
-            _ToggleSetting(
-              label: 'Display tuner',
-              value: _draft.displayTuner,
-              onChanged: (v) => _update(_draft.copyWith(displayTuner: v)),
-            ),
-            _ScalePicker(
-              scale: _draft.scale,
-              onChanged: (scale) => _update(_draft.copyWith(scale: scale)),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
-              child: Text(
-                'Color',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                _SliderSetting(
+                  label: 'Threshold of volume',
+                  value: _draft.volumeThreshold,
+                  min: 0,
+                  max: 10,
+                  displayValue: _draft.volumeThreshold.toStringAsFixed(2),
+                  onChanged: (v) =>
+                      _update(_draft.copyWith(volumeThreshold: v)),
                 ),
-              ),
-            ),
-            _ColorSetting(
-              label: 'Pitch',
-              color: _draft.pitchColor,
-              onChanged: (c) => _update(_draft.copyWith(pitchColor: c)),
-            ),
-            _ColorSetting(
-              label: '1st Tonic',
-              color: _draft.tonicColor,
-              onChanged: (c) => _update(_draft.copyWith(tonicColor: c)),
-            ),
-            _ColorSetting(
-              label: '2nd Supertonic',
-              color: _draft.supertonicColor,
-              onChanged: (c) => _update(_draft.copyWith(supertonicColor: c)),
-            ),
-            _ColorSetting(
-              label: '3rd Mediant',
-              color: _draft.mediantColor,
-              onChanged: (c) => _update(_draft.copyWith(mediantColor: c)),
-            ),
-            _ColorSetting(
-              label: '4th Subdominant',
-              color: _draft.subdominantColor,
-              onChanged: (c) => _update(_draft.copyWith(subdominantColor: c)),
-            ),
+                _SliderSetting(
+                  label: 'Horizontal zooming',
+                  value: _draft.horizontalZoom,
+                  min: 0.25,
+                  max: 4,
+                  displayValue: _draft.horizontalZoom.toStringAsFixed(2),
+                  onChanged: (v) => _update(_draft.copyWith(horizontalZoom: v)),
+                ),
+                _SliderSetting(
+                  label: 'Vertical zooming',
+                  value: _draft.verticalZoom,
+                  min: 0.25,
+                  max: 4,
+                  displayValue: _draft.verticalZoom.toStringAsFixed(2),
+                  onChanged: (v) => _update(_draft.copyWith(verticalZoom: v)),
+                ),
+                _ToggleSetting(
+                  label: 'Indicate lines of a semitone',
+                  value: _draft.showSemitoneLines,
+                  onChanged: (v) =>
+                      _update(_draft.copyWith(showSemitoneLines: v)),
+                ),
+                _SliderSetting(
+                  label: 'Calibration',
+                  value: _draft.a4Frequency,
+                  min: 400,
+                  max: 480,
+                  displayValue: 'A4 = ${_draft.a4Frequency.round()} Hz',
+                  onChanged: (v) => _update(_draft.copyWith(a4Frequency: v)),
+                ),
+                _ToggleSetting(
+                  label: 'Auto scroll',
+                  value: _draft.autoScroll,
+                  onChanged: (v) => _update(_draft.copyWith(autoScroll: v)),
+                ),
+                _ToggleSetting(
+                  label: 'Display tuner',
+                  value: _draft.displayTuner,
+                  onChanged: (v) => _update(_draft.copyWith(displayTuner: v)),
+                ),
+                _ScalePicker(
+                  scale: _draft.scale,
+                  onChanged: (scale) => _update(_draft.copyWith(scale: scale)),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                  child: Text(
+                    'Color',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                _ColorSetting(
+                  label: 'Pitch',
+                  color: _draft.pitchColor,
+                  onChanged: (c) => _update(_draft.copyWith(pitchColor: c)),
+                ),
+                _ColorSetting(
+                  label: '1st Tonic',
+                  color: _draft.tonicColor,
+                  onChanged: (c) => _update(_draft.copyWith(tonicColor: c)),
+                ),
+                _ColorSetting(
+                  label: '2nd Supertonic',
+                  color: _draft.supertonicColor,
+                  onChanged: (c) =>
+                      _update(_draft.copyWith(supertonicColor: c)),
+                ),
+                _ColorSetting(
+                  label: '3rd Mediant',
+                  color: _draft.mediantColor,
+                  onChanged: (c) => _update(_draft.copyWith(mediantColor: c)),
+                ),
+                _ColorSetting(
+                  label: '4th Subdominant',
+                  color: _draft.subdominantColor,
+                  onChanged: (c) =>
+                      _update(_draft.copyWith(subdominantColor: c)),
+                ),
               ],
             ),
           ),
@@ -240,10 +241,7 @@ class _ToggleSetting extends StatelessWidget {
 }
 
 class _ScalePicker extends StatelessWidget {
-  const _ScalePicker({
-    required this.scale,
-    required this.onChanged,
-  });
+  const _ScalePicker({required this.scale, required this.onChanged});
 
   final MusicalScale scale;
   final ValueChanged<MusicalScale> onChanged;

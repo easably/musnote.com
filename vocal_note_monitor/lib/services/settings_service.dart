@@ -24,7 +24,8 @@ class SettingsService extends ChangeNotifier {
       a4Frequency: prefs.getDouble('a4Frequency') ?? 440.0,
       autoScroll: prefs.getBool('autoScroll') ?? false,
       displayTuner: prefs.getBool('displayTuner') ?? true,
-      scale: MusicalScale.scales[scaleIndex.clamp(0, MusicalScale.scales.length - 1)],
+      scale: MusicalScale
+          .scales[scaleIndex.clamp(0, MusicalScale.scales.length - 1)],
       pitchColor: Color(prefs.getInt('pitchColor') ?? 0xFFFFEB3B),
       tonicColor: Color(prefs.getInt('tonicColor') ?? 0xFF9E9E9E),
       supertonicColor: Color(prefs.getInt('supertonicColor') ?? 0xFF616161),
@@ -51,9 +52,15 @@ class SettingsService extends ChangeNotifier {
     await prefs.setInt('scaleIndex', scaleIndex >= 0 ? scaleIndex : 0);
     await prefs.setInt('pitchColor', newSettings.pitchColor.toARGB32());
     await prefs.setInt('tonicColor', newSettings.tonicColor.toARGB32());
-    await prefs.setInt('supertonicColor', newSettings.supertonicColor.toARGB32());
+    await prefs.setInt(
+      'supertonicColor',
+      newSettings.supertonicColor.toARGB32(),
+    );
     await prefs.setInt('mediantColor', newSettings.mediantColor.toARGB32());
-    await prefs.setInt('subdominantColor', newSettings.subdominantColor.toARGB32());
+    await prefs.setInt(
+      'subdominantColor',
+      newSettings.subdominantColor.toARGB32(),
+    );
   }
 
   Future<void> resetToDefaults() => update(AppSettings.defaults);

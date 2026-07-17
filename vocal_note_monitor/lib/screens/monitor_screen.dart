@@ -48,20 +48,18 @@ class MonitorScreen extends StatelessWidget {
     showMonitorActionSheet(
       context,
       onSave: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Recording saved')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Recording saved')));
       },
       onLoad: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Recording loaded')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Recording loaded')));
       },
       onSettings: () {
         Navigator.of(context).push(
-          CupertinoPageRoute<void>(
-            builder: (_) => const SettingsScreen(),
-          ),
+          CupertinoPageRoute<void>(builder: (_) => const SettingsScreen()),
         );
       },
     );
@@ -85,10 +83,7 @@ class _HeaderSection extends StatelessWidget {
             children: [
               Text(
                 settings.scale.displayName,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 15,
-                ),
+                style: const TextStyle(color: Colors.white70, fontSize: 15),
               ),
               const Spacer(),
             ],
@@ -103,10 +98,7 @@ class _HeaderSection extends StatelessWidget {
               letterSpacing: 2,
             ),
           ),
-          TunerGauge(
-            note: note,
-            visible: settings.displayTuner,
-          ),
+          TunerGauge(note: note, visible: settings.displayTuner),
         ],
       ),
     );

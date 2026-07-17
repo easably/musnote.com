@@ -26,14 +26,12 @@ class ControlBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _CircleButton(
-            icon: Icons.stop,
-            onPressed: onStop,
-            size: 48,
-          ),
+          _CircleButton(icon: Icons.stop, onPressed: onStop, size: 48),
           const SizedBox(width: 32),
           _CircleButton(
-            icon: state == RecordingState.recording ? Icons.pause : Icons.fiber_manual_record,
+            icon: state == RecordingState.recording
+                ? Icons.pause
+                : Icons.fiber_manual_record,
             onPressed: onRecord,
             size: 64,
             iconColor: Colors.red,
@@ -41,11 +39,7 @@ class ControlBar extends StatelessWidget {
             filled: state == RecordingState.recording,
           ),
           const SizedBox(width: 32),
-          _CircleButton(
-            icon: Icons.play_arrow,
-            onPressed: onPlay,
-            size: 48,
-          ),
+          _CircleButton(icon: Icons.play_arrow, onPressed: onPlay, size: 48),
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.menu, color: Colors.white, size: 28),
@@ -84,16 +78,9 @@ class _CircleButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: filled ? iconColor.withValues(alpha: 0.2) : Colors.transparent,
-          border: Border.all(
-            color: borderColor ?? Colors.white54,
-            width: 2,
-          ),
+          border: Border.all(color: borderColor ?? Colors.white54, width: 2),
         ),
-        child: Icon(
-          icon,
-          color: iconColor,
-          size: size * 0.45,
-        ),
+        child: Icon(icon, color: iconColor, size: size * 0.45),
       ),
     );
   }

@@ -120,16 +120,17 @@ class PitchService extends ChangeNotifier {
       final vibrato = sin(_simulationStep * 0.3) * 0.15;
       final glide = sin(_simulationStep * 0.05) * 0.3;
       final midi = baseMidi + vibrato + glide;
-      final frequency =
-          MusicalNote.frequencyForMidi(midi, a4Frequency: a4Frequency);
+      final frequency = MusicalNote.frequencyForMidi(
+        midi,
+        a4Frequency: a4Frequency,
+      );
       _addPitchPoint(frequency, 3.0 + Random().nextDouble());
       _simulationStep++;
     });
   }
 
   void _addPitchPoint(double frequency, double amplitude) {
-    final note =
-        MusicalNote.fromFrequency(frequency, a4Frequency: a4Frequency);
+    final note = MusicalNote.fromFrequency(frequency, a4Frequency: a4Frequency);
     currentNote = note;
 
     _history.add(

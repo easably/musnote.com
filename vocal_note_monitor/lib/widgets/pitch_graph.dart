@@ -149,7 +149,9 @@ class PitchGraphPainter extends CustomPainter {
     final now = history.last.timestamp;
     final cutoff = now.subtract(visibleDuration);
 
-    final visiblePoints = history.where((p) => p.timestamp.isAfter(cutoff)).toList();
+    final visiblePoints = history
+        .where((p) => p.timestamp.isAfter(cutoff))
+        .toList();
     if (visiblePoints.length < 2) return;
 
     final path = Path();

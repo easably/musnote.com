@@ -1,6 +1,19 @@
 import 'dart:math';
 
-const _noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const _noteNames = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
+];
 
 class MusicalNote {
   const MusicalNote({
@@ -38,7 +51,10 @@ class MusicalNote {
     return a4Frequency * pow(2, (midi - 69) / 12);
   }
 
-  static MusicalNote fromFrequency(double frequency, {double a4Frequency = 440}) {
+  static MusicalNote fromFrequency(
+    double frequency, {
+    double a4Frequency = 440,
+  }) {
     if (frequency <= 0) {
       return const MusicalNote(
         name: '—',

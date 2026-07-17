@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/musical_note.dart';
 
 class TunerGauge extends StatelessWidget {
-  const TunerGauge({
-    super.key,
-    required this.note,
-    this.visible = true,
-  });
+  const TunerGauge({super.key, required this.note, this.visible = true});
 
   final MusicalNote note;
   final bool visible;
@@ -28,10 +24,7 @@ class TunerGauge extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          CustomPaint(
-            size: const Size(200, 24),
-            painter: _TunerPainter(),
-          ),
+          CustomPaint(size: const Size(200, 24), painter: _TunerPainter()),
           Positioned(
             top: 0,
             left: 100 + needleOffset * 60 - 6,
