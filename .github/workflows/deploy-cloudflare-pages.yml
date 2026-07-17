@@ -1,0 +1,36 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy web/ to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          # Sole secret: repository Settings → Secrets → CLOUDFLARE_API_TOKEN
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Repository Settings → Variables → CLOUDFLARE_ACCOUNT_ID
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy web --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT || 'musnote' }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

@@ -199,17 +199,9 @@ web/
 
 ## 🚀 Deployment
 
-### Static Hosting
-- **GitHub Pages**: Direct deployment
-- **Netlify**: Automatic builds
-- **Vercel**: Edge deployment
-- **AWS S3**: Static website hosting
+Primary: **Cloudflare Pages** via GitHub Actions (see root `DEPLOYMENT.md`).
 
-### Server Requirements
-- **Apache**: With mod_rewrite enabled
-- **Nginx**: With proper configuration
-- **PHP**: Not required (static site)
-- **SSL**: HTTPS certificate required
+Secret: `CLOUDFLARE_API_TOKEN` · Variables: `CLOUDFLARE_ACCOUNT_ID`, optional `CLOUDFLARE_PAGES_PROJECT`.
 
 ## 📊 Analytics
 

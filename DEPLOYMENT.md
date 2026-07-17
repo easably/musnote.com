@@ -1,169 +1,60 @@
-# Deployment Guide
+# Deployment — Cloudflare Pages
 
-## Docker Deployment
+Static site in `web/` is deployed to [Cloudflare Pages](https://pages.cloudflare.com/).
 
-### Prerequisites
-- Docker installed locally
-- GitHub account with access to GitHub Container Registry
-- DigitalOcean account (for deployment)
+## One-time Cloudflare setup
 
-### Building Docker Image Locally
+1. Create a Cloudflare account and open **Workers & Pages**.
+2. Create a Pages project (name, e.g. `musnote`) — or let the first deploy create it via Wrangler.
+3. Create an API token:
+   - **My Profile → API Tokens → Create Token**
+   - Template **Edit Cloudflare Workers**, or custom permissions:
+     - Account → Cloudflare Pages → Edit
+     - Account → Account Settings → Read (if required by Wrangler)
+4. Copy your **Account ID** from the Cloudflare dashboard sidebar.
 
-```bash
-# Build the image
-docker build -t musnote .
+## GitHub configuration
 
-# Run locally for testing
-docker run -p 8080:80 musnote
+### Secret (token — the only secret)
 
-# Visit http://localhost:8080 in your browser
-```
+| Name | Value |
+|------|--------|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API token |
 
-### GitHub Actions Automatic Build
+Repository → **Settings → Secrets and variables → Actions → Secrets**.
 
-The repository is configured with GitHub Actions to automatically:
-1. Build Docker image on every push to `main` branch
-2. Push the image to GitHub Container Registry (ghcr.io)
-3. Tag the image appropriately
+### Variables (non-secret)
 
-The workflow runs automatically when you push to the repository.
+| Name | Value |
+|------|--------|
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare Account ID |
+| `CLOUDFLARE_PAGES_PROJECT` | Pages project name (optional, default `musnote`) |
 
-### Accessing the Docker Image
+Repository → **Settings → Secrets and variables → Actions → Variables**.
 
-After GitHub Actions builds the image, it will be available at:
-```
-ghcr.io/<your-github-username>/musnote.com:latest
-```
+## Deploy
 
-To make the image public:
-1. Go to your GitHub profile
-2. Click on "Packages"
-3. Find "musnote.com"
-4. Click "Package settings"
-5. Scroll to "Danger Zone"
-6. Click "Change visibility" and set to "Public"
+Workflow: `.github/workflows/deploy-cloudflare-pages.yml`
 
-### Deploying to DigitalOcean
+Runs on:
+- push to `main` / `master`
+- pull requests (preview deployments)
+- manual **workflow_dispatch**
 
-#### Option 1: Using DigitalOcean App Platform
-
-1. Log in to DigitalOcean
-2. Create a new App
-3. Choose "Docker Hub or Container Registry"
-4. Enter: `ghcr.io/<your-github-username>/musnote.com:latest`
-5. If private, add GitHub Container Registry credentials:
-   - Registry: `ghcr.io`
-   - Username: Your GitHub username
-   - Password: GitHub Personal Access Token with `read:packages` scope
-6. Deploy
-
-#### Option 2: Using DigitalOcean Droplet
-
-1. Create a Droplet with Docker pre-installed
-2. SSH into the droplet
-3. Log in to GitHub Container Registry:
-   ```bash
-   echo $GITHUB_TOKEN | docker login ghcr.io -u <your-github-username> --password-stdin
-   ```
-4. Pull and run the image:
-   ```bash
-   docker pull ghcr.io/<your-github-username>/musnote.com:latest
-   docker run -d -p 80:80 --name musnote --restart unless-stopped \
-     ghcr.io/<your-github-username>/musnote.com:latest
-   ```
-
-#### Option 3: Automated Deployment with GitHub Actions
-
-You can extend the workflow to automatically deploy to DigitalOcean by adding deployment steps:
-
-```yaml
-# Add to .github/workflows/docker-build.yml after build step
-- name: Deploy to DigitalOcean
-  uses: appleboy/ssh-action@master
-  with:
-    host: ${{ secrets.DO_HOST }}
-    username: ${{ secrets.DO_USERNAME }}
-    key: ${{ secrets.DO_SSH_KEY }}
-    script: |
-      docker pull ghcr.io/${{ github.repository }}:latest
-      docker stop musnote || true
-      docker rm musnote || true
-      docker run -d -p 80:80 --name musnote --restart unless-stopped \
-        ghcr.io/${{ github.repository }}:latest
-```
-
-Required GitHub Secrets:
-- `DO_HOST`: Your droplet IP address
-- `DO_USERNAME`: SSH username (usually `root`)
-- `DO_SSH_KEY`: Your SSH private key
-
-### Updating the Deployment
-
-To update the deployment:
-1. Push changes to the `main` branch
-2. GitHub Actions will automatically build and push a new image
-3. Pull the latest image on your server:
-   ```bash
-   docker pull ghcr.io/<your-github-username>/musnote.com:latest
-   docker stop musnote
-   docker rm musnote
-   docker run -d -p 80:80 --name musnote --restart unless-stopped \
-     ghcr.io/<your-github-username>/musnote.com:latest
-   ```
-
-### Health Check
-
-The container includes a health check. To verify:
-```bash
-docker ps
-# Look for "healthy" status
-```
-
-### Viewing Logs
+Command used:
 
 ```bash
-docker logs musnote
-docker logs -f musnote  # Follow logs
+wrangler pages deploy web --project-name=<CLOUDFLARE_PAGES_PROJECT>
 ```
 
-### Stopping the Container
+## Local preview
+
+Serve the static folder locally (any static server):
 
 ```bash
-docker stop musnote
-docker rm musnote
+npx --yes serve web
+# or
+python3 -m http.server -d web 8080
 ```
 
-## SSL/HTTPS Setup
-
-For production, you should add SSL/HTTPS. Options:
-
-1. **Using DigitalOcean Load Balancer** (recommended for App Platform)
-   - Automatically provides SSL certificates
-
-2. **Using Let's Encrypt with Nginx**
-   - Add Certbot to your Dockerfile
-   - Configure nginx for SSL
-
-3. **Using Cloudflare**
-   - Point your domain to Cloudflare
-   - Enable SSL in Cloudflare
-   - Point Cloudflare to your droplet IP
-
-## Environment Variables
-
-The current setup doesn't require environment variables, but if you need to add them:
-
-```bash
-docker run -d -p 80:80 \
-  -e VARIABLE_NAME=value \
-  --name musnote \
-  ghcr.io/<your-github-username>/musnote.com:latest
-```
-
-## Monitoring
-
-Consider setting up monitoring:
-- DigitalOcean Monitoring
-- Docker stats: `docker stats musnote`
-- Health checks: `curl http://your-droplet-ip/`
-
+No Docker image or container is required.
