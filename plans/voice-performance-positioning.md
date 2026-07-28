@@ -96,8 +96,16 @@ karaoke (entertainment), party, song quiz, play-along hits
 Hero of musnote.com should move toward **voice performance for languages (then career)**.  
 `/piano` stays as a **pitch literacy** tool (see the note), not the brand story.
 
-## Open decisions
+## Site tools (shipped)
 
-- Final app display name  
-- First language focus (EN for non-natives assumed)  
-- Which existing TTS/STT stack to wire first for language karaoke MVP  
+Public pages under `/tools/` calling FreeDubbing (`https://api.freedubbing.com`):
+
+| Path | Job |
+|------|-----|
+| `/tools/` | Hub |
+| `/tools/audio-to-text` | STT — song/speech → transcript |
+| `/tools/slow-pronunciation` | TTS with speed — clear slow model |
+| `/tools/find-my-octave` | Mic range + transpose preview |
+| `/tools/shadow-phrase` | Language karaoke — model + live pitch |
+
+Override API base in the browser: `window.MUSNOTE_API_BASE`.

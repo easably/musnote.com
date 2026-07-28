@@ -173,15 +173,15 @@ class LanguageManager {
 
     updateMetaTags(language) {
         const titles = {
-            en: 'MusNote - Music Learning Platform',
-            ru: 'MusNote - Платформа для изучения музыки',
-            de: 'MusNote - Musiklernplattform'
+            en: 'MusNote — Voice Performance for Career & Languages',
+            ru: 'MusNote — Голос для карьеры и языков',
+            de: 'MusNote — Stimme für Karriere & Sprachen'
         };
         
         const descriptions = {
-            en: 'Learn music theory, practice piano, and explore musical notes with MusNote - your comprehensive music learning platform.',
-            ru: 'Изучайте теорию музыки, практикуйтесь на пианино и исследуйте музыкальные ноты с MusNote - вашей комплексной платформой для изучения музыки.',
-            de: 'Lernen Sie Musiktheorie, üben Sie Klavier und erkunden Sie musikalische Noten mit MusNote - Ihrer umfassenden Musiklernplattform.'
+            en: 'Voice tools for language intonation and speaking confidence: audio to text, slow pronunciation, octave matching, and phrase shadowing.',
+            ru: 'Инструменты голоса для интонации языка и уверенной речи: аудио в текст, медленное произношение, октава и shadowing.',
+            de: 'Stimm-Tools für Sprachintonation und Sprechsicherheit: Audio zu Text, langsame Aussprache, Oktave und Shadowing.'
         };
 
         document.title = titles[language] || titles.en;

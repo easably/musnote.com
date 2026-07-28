@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow a Phrase — Intonation Practice | MusNote</title>
+    <meta name="description" content="Language karaoke for learners: hear a model phrase, speak along, and watch live pitch. Repeat the phrase — see if your intonation matches.">
+    <meta name="keywords" content="shadowing pronunciation, intonation practice, language karaoke, speak like a native intonation, pitch while speaking, English shadowing">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musnote.com/tools/shadow-phrase">
+    <meta property="og:title" content="Shadow a Phrase — Intonation Practice | MusNote">
+    <meta property="og:description" content="Generate a model line, speak along, and watch live pitch — honest intonation practice for languages.">
+    <meta property="og:image" content="https://musnote.com/assets/images/logo.svg">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shadow a Phrase | MusNote">
+    <meta name="twitter:description" content="Repeat the phrase. See if your intonation matches.">
+
+    <link rel="canonical" href="https://musnote.com/tools/shadow-phrase">
+    <link rel="alternate" hreflang="en" href="https://musnote.com/tools/shadow-phrase">
+    <link rel="alternate" hreflang="x-default" href="https://musnote.com/tools/shadow-phrase">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/" class="logo"><img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40"></a>
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="/tools/" class="nav-link active">Tools</a></li>
+                        <li class="nav-item"><a href="/tools/slow-pronunciation" class="nav-link">Slow pronunciation</a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="tool-hero">
+            <div class="container">
+                <p class="tool-breadcrumb"><a href="/">Home</a> / <a href="/tools/">Tools</a> / Shadow phrase</p>
+                <h1>Shadow a phrase</h1>
+                <p class="lead"><strong>Repeat the phrase. See if your intonation matches.</strong> Model audio from TTS, live pitch from your mic — language practice, not party karaoke.</p>
+            </div>
+        </section>
+
+        <section class="tool-section">
+            <div class="container">
+                <div class="tool-panel tool-form">
+                    <h2>1. Model phrase</h2>
+                    <div class="field">
+                        <label for="phrase">Text to shadow</label>
+                        <textarea id="phrase" placeholder="Could we move the meeting to Thursday afternoon?"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="language">Language</label>
+                        <select id="language">
+                            <option value="en-us">English (US)</option>
+                            <option value="en-gb">English (UK)</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="speed">Model speed: <span id="speed-val">0.85×</span></label>
+                        <input id="speed" type="range" min="0.5" max="1.2" step="0.05" value="0.85">
+                    </div>
+                    <div class="tool-actions">
+                        <button type="button" class="btn-tool" id="btn-model">Play model</button>
+                    </div>
+                    <audio id="player" controls style="width:100%;margin-top:1rem;display:none"></audio>
+                </div>
+
+                <div class="tool-panel">
+                    <h2>2. Your voice — live pitch</h2>
+                    <p class="hint">Start the mic, play the model, then speak along. Watch whether your pitch line stays steady and follows the phrase shape.</p>
+                    <div class="pitch-readout">
+                        <div class="pitch-stat"><div class="value" id="live-note">—</div><div class="label">Your note</div></div>
+                        <div class="pitch-stat"><div class="value" id="live-hz">—</div><div class="label">Hz</div></div>
+                    </div>
+                    <div class="tool-actions">
+                        <button type="button" class="btn-tool" id="btn-mic-start">Start mic</button>
+                        <button type="button" class="btn-tool-secondary" id="btn-mic-stop" disabled>Stop mic</button>
+                    </div>
+                    <div id="status" class="tool-status" role="status"></div>
+                </div>
+
+                <div class="seo-faq">
+                    <details open>
+                        <summary>What we claim (v1)</summary>
+                        <p>You can hear a clear model and see your live pitch while shadowing. We do <em>not</em> claim automatic “accent erasure.” Intonation first; career speaking confidence next.</p>
+                    </details>
+                    <details>
+                        <summary>How this differs from karaoke apps</summary>
+                        <p>Same “repeat after” format, different goal: language intonation and speaking confidence — curated phrases, not hit-song entertainment.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="footer-copyright"><a href="/tools/">All voice tools</a> · © 2026 MusNote</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/freedubbing-api.js"></script>
+    <script src="/assets/js/pitch-detect.js"></script>
+    <script src="/assets/js/tools-shadow-phrase.js"></script>
+</body>
+</html>

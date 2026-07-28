@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find My Octave — Match Song to Your Range | MusNote</title>
+    <meta name="description" content="Detect your comfortable singing or speaking octave with the mic, then preview a reference clip shifted toward your range. Practice in your octave.">
+    <meta name="keywords" content="find my octave, singing range, transpose song to my key, vocal range detector, pitch monitor, comfortable singing octave">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musnote.com/tools/find-my-octave">
+    <meta property="og:title" content="Find My Octave — Match Song to Your Range | MusNote">
+    <meta property="og:description" content="Measure your pitch range, then shift a reference clip so practice sits in your octave.">
+    <meta property="og:image" content="https://musnote.com/assets/images/logo.svg">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Find My Octave | MusNote">
+    <meta name="twitter:description" content="Detect your octave and adapt a clip to your range.">
+
+    <link rel="canonical" href="https://musnote.com/tools/find-my-octave">
+    <link rel="alternate" hreflang="en" href="https://musnote.com/tools/find-my-octave">
+    <link rel="alternate" hreflang="x-default" href="https://musnote.com/tools/find-my-octave">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/" class="logo"><img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40"></a>
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="/tools/" class="nav-link active">Tools</a></li>
+                        <li class="nav-item"><a href="/piano" class="nav-link">Piano</a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="tool-hero">
+            <div class="container">
+                <p class="tool-breadcrumb"><a href="/">Home</a> / <a href="/tools/">Tools</a> / Find my octave</p>
+                <h1>Find my octave, then adapt a clip</h1>
+                <p class="lead">Measure your comfortable pitch range with the microphone. Upload a short reference (song line or teacher take), see the suggested transpose, and preview it in your octave.</p>
+            </div>
+        </section>
+
+        <section class="tool-section">
+            <div class="container">
+                <div class="tool-panel">
+                    <h2>1. Detect your range</h2>
+                    <p class="hint">Allow microphone access. Hum or sing steadily for 10–20 seconds across low → high notes you can reach comfortably.</p>
+                    <div class="pitch-readout">
+                        <div class="pitch-stat"><div class="value" id="live-note">—</div><div class="label">Live note</div></div>
+                        <div class="pitch-stat"><div class="value" id="low-note">—</div><div class="label">Your low</div></div>
+                        <div class="pitch-stat"><div class="value" id="high-note">—</div><div class="label">Your high</div></div>
+                        <div class="pitch-stat"><div class="value" id="center-note">—</div><div class="label">Center</div></div>
+                    </div>
+                    <div class="tool-actions">
+                        <button type="button" class="btn-tool" id="btn-mic-start">Start mic</button>
+                        <button type="button" class="btn-tool-secondary" id="btn-mic-stop" disabled>Stop</button>
+                        <button type="button" class="btn-tool-secondary" id="btn-mic-reset">Reset range</button>
+                    </div>
+                </div>
+
+                <div class="tool-panel tool-form">
+                    <h2>2. Adapt a reference clip to your octave</h2>
+                    <p class="hint">Upload a short audio snippet. We estimate its pitch center and shift playback toward your center (playback-rate transpose — good for practice previews).</p>
+                    <div class="field">
+                        <label for="ref-file">Reference audio</label>
+                        <input id="ref-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.webm">
+                    </div>
+                    <div class="pitch-readout">
+                        <div class="pitch-stat"><div class="value" id="ref-center">—</div><div class="label">Clip center</div></div>
+                        <div class="pitch-stat"><div class="value" id="semitones">—</div><div class="label">Shift (semitones)</div></div>
+                    </div>
+                    <div class="field">
+                        <label for="manual-shift">Manual fine-tune (semitones): <span id="manual-val">0</span></label>
+                        <input id="manual-shift" type="range" min="-12" max="12" step="1" value="0">
+                    </div>
+                    <div class="tool-actions">
+                        <button type="button" class="btn-tool" id="btn-analyze" disabled>Analyze clip</button>
+                        <button type="button" class="btn-tool-secondary" id="btn-play-orig" disabled>Play original</button>
+                        <button type="button" class="btn-tool" id="btn-play-shifted" disabled>Play in my octave</button>
+                        <button type="button" class="btn-tool-secondary" id="btn-stop-audio" disabled>Stop audio</button>
+                    </div>
+                    <div id="status" class="tool-status" role="status"></div>
+                </div>
+
+                <div class="seo-faq">
+                    <details open>
+                        <summary>Why octave matching for languages?</summary>
+                        <p>Shadowing a model that sits far outside your range is exhausting. Matching octave keeps focus on intonation shape — the language skill — not strain.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="footer-copyright"><a href="/tools/">All voice tools</a> · © 2026 MusNote</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/pitch-detect.js"></script>
+    <script src="/assets/js/tools-find-my-octave.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio to Text — Transcribe Song or Speech | MusNote</title>
+    <meta name="description" content="Convert song audio or speech to text with timestamps. Free STT tool for language learners who need lyrics or a shadowing script from a recording.">
+    <meta name="keywords" content="audio to text, song to lyrics, speech to text, transcribe audio, shadowing script, lyrics from audio">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://musnote.com/tools/audio-to-text">
+    <meta property="og:title" content="Audio to Text — Transcribe Song or Speech | MusNote">
+    <meta property="og:description" content="Upload a clip or paste an audio URL. Get transcript + timestamps for language practice.">
+    <meta property="og:image" content="https://musnote.com/assets/images/logo.svg">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Audio to Text | MusNote">
+    <meta name="twitter:description" content="Turn song or speech audio into text with timestamps.">
+
+    <link rel="canonical" href="https://musnote.com/tools/audio-to-text">
+    <link rel="alternate" hreflang="en" href="https://musnote.com/tools/audio-to-text">
+    <link rel="alternate" hreflang="x-default" href="https://musnote.com/tools/audio-to-text">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/" class="logo"><img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40"></a>
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="/tools/" class="nav-link active">Tools</a></li>
+                        <li class="nav-item"><a href="/piano" class="nav-link">Piano</a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="tool-hero">
+            <div class="container">
+                <p class="tool-breadcrumb"><a href="/">Home</a> / <a href="/tools/">Tools</a> / Audio to text</p>
+                <h1>Audio / song → text</h1>
+                <p class="lead">Get a transcript from a recording so you can study the words, then shadow the phrase with clear pronunciation tools.</p>
+            </div>
+        </section>
+
+        <section class="tool-section">
+            <div class="container">
+                <div class="tool-panel tool-form">
+                    <h2>1. Upload a file</h2>
+                    <p class="hint">MP3, WAV, M4A, or similar. Short clips (under a few minutes) work best.</p>
+                    <div class="field">
+                        <label for="audio-file">Audio file</label>
+                        <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.webm">
+                    </div>
+                    <div class="tool-actions">
+                        <button type="button" class="btn-tool" id="btn-file">Transcribe file</button>
+                    </div>
+                </div>
+
+                <div class="tool-panel tool-form">
+                    <h2>2. Or paste an audio / page URL</h2>
+                    <p class="hint">Direct link to an audio file, or a page where the audio URL is in the HTML.</p>
+                    <div class="field">
+                        <label for="audio-url">URL</label>
+                        <input id="audio-url" type="url" placeholder="https://…/lesson.mp3" autocomplete="off">
+                    </div>
+                    <div class="tool-actions">
+                        <button type="button" class="btn-tool" id="btn-url">Transcribe URL</button>
+                    </div>
+                </div>
+
+                <div id="status" class="tool-status" role="status"></div>
+
+                <div class="tool-panel tool-result" id="result" hidden>
+                    <h2>Transcript</h2>
+                    <div class="tool-actions" style="margin-bottom:0.75rem">
+                        <button type="button" class="btn-tool-secondary" id="btn-copy">Copy text</button>
+                        <a class="btn-tool-secondary" id="link-slow" href="/tools/slow-pronunciation">Practice slow pronunciation →</a>
+                    </div>
+                    <pre id="transcript" class="transcript-box"></pre>
+                    <ul class="segments-list" id="segments"></ul>
+                </div>
+
+                <div class="seo-faq">
+                    <details open>
+                        <summary>How does song-to-text help language learners?</summary>
+                        <p>You get the words on screen, then move to slow pronunciation or phrase shadowing — the MusNote path from audio → text → intonation practice.</p>
+                    </details>
+                    <details>
+                        <summary>Is this karaoke?</summary>
+                        <p>No. This is a study transcript for shadowing and pronunciation — not entertainment scoring for hit songs.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="footer-copyright"><a href="/tools/">All voice tools</a> · © 2026 MusNote</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/freedubbing-api.js"></script>
+    <script src="/assets/js/tools-audio-to-text.js"></script>
+</body>
+</html>
