@@ -3,182 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusNote — Voice Performance for Career &amp; Languages</title>
-    <meta name="description" content="Voice tools for language intonation and speaking confidence: audio to text, slow pronunciation, octave matching, and phrase shadowing. Repeat the phrase — see if your intonation matches.">
-    <meta name="keywords" content="intonation practice, shadowing pronunciation, voice confidence, slow pronunciation, audio to text, find my octave, language speaking practice">
+    <title>MusNote — Hear your voice. Match the phrase.</title>
+    <meta name="description" content="Voice mirror for language intonation and speaking confidence. Shadow a phrase, see your pitch live, train clearer speech — piano is only an ear helper.">
+    <meta name="keywords" content="intonation practice, shadowing pronunciation, voice confidence, slow pronunciation, pitch while speaking, language speaking practice">
     <meta name="author" content="MusNote">
-    
-    <!-- Open Graph / Facebook -->
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://musnote.com/">
-    <meta property="og:title" content="MusNote — Voice Performance for Career &amp; Languages">
-    <meta property="og:description" content="Shadow phrases with live pitch, slow clear speech, and song-to-text tools for language learners — then career speaking confidence.">
-    <meta property="og:image" content="https://musnote.com/assets/images/logo.svg">
+    <meta property="og:title" content="MusNote — Hear your voice. Match the phrase.">
+    <meta property="og:description" content="Live pitch feedback for language learners and speakers. Repeat the phrase — see if your intonation matches.">
+    <meta property="og:image" content="https://musnote.com/assets/images/hero-voice.svg">
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://musnote.com/">
-    <meta property="twitter:title" content="MusNote — Voice Performance for Career &amp; Languages">
-    <meta property="twitter:description" content="Shadow phrases with live pitch, slow clear speech, and song-to-text tools for language learners.">
-    <meta property="twitter:image" content="https://musnote.com/assets/images/logo.svg">
+    <meta property="twitter:title" content="MusNote — Hear your voice. Match the phrase.">
+    <meta property="twitter:description" content="Live pitch feedback for language learners and speakers.">
+    <meta property="twitter:image" content="https://musnote.com/assets/images/hero-voice.svg">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://musnote.com/">
-    
-    <!-- Hreflang for multilingual support -->
     <link rel="alternate" hreflang="en" href="https://musnote.com/">
     <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
     <link rel="alternate" hreflang="de" href="https://musnote.com/de/">
     <link rel="alternate" hreflang="x-default" href="https://musnote.com/">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="/assets/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/assets/css/home.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <a href="/" class="logo">
-                        <img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40">
+                    <a href="/" class="logo" aria-label="MusNote home">
+                        <img src="/assets/images/logo.svg" alt="" width="28" height="28">
+                        <span class="logo-word">MusNote</span>
                     </a>
                 </div>
-                
+
                 <div class="nav-menu" id="nav-menu">
                     <ul class="nav-list">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link" data-translate="nav.home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/tools/" class="nav-link" data-translate="nav.tools">Tools</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/piano" class="nav-link" data-translate="nav.piano">Piano</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/chord-tutorial" class="nav-link" data-translate="nav.chord_tutorial">Chord Tutorial</a>
-                        </li>
+                        <li class="nav-item"><a href="/tools/" class="nav-link" data-translate="nav.tools">Voice tools</a></li>
+                        <li class="nav-item"><a href="/tools/shadow-phrase" class="nav-link">Shadow a phrase</a></li>
+                        <li class="nav-item"><a href="/piano" class="nav-link" data-translate="nav.piano">Ear helper</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="nav-actions">
-                    <!-- Language Selector -->
                     <div class="language-selector">
-                        <select id="language-selector" class="lang-select">
-                            <option value="en">🇺🇸 English</option>
-                            <option value="ru">🇷🇺 Русский</option>
-                            <option value="de">🇩🇪 Deutsch</option>
+                        <select id="language-selector" class="lang-select" aria-label="Language">
+                            <option value="en">EN</option>
+                            <option value="ru">RU</option>
+                            <option value="de">DE</option>
                         </select>
                     </div>
-                    
-                    <!-- Mobile Menu Toggle -->
+                    <a href="/tools/shadow-phrase" class="btn btn-primary">Try shadowing</a>
                     <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span></span><span></span><span></span>
                     </button>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main class="main">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="hero-title" data-translate="hero.title"></h1>
+                    <div class="brand-mark" aria-hidden="false">
+                        <span class="word">MusNote</span>
+                        <span class="dot" aria-hidden="true"></span>
+                    </div>
+                    <h1 class="hero-title">Hear your voice.<br><em>Match the phrase.</em></h1>
                     <p class="hero-description" data-translate="hero.description">
+                        A calm voice mirror for language intonation and speaking confidence — not karaoke, not a piano school.
                     </p>
                     <div class="hero-actions">
-                        <a href="/tools/" class="btn btn-primary" data-translate="hero.start_learning"></a>
-                        <a href="/tools/shadow-phrase" class="btn btn-secondary" data-translate="hero.learn_more"></a>
+                        <a href="/tools/shadow-phrase" class="btn btn-primary" data-translate="hero.start_learning">Shadow a phrase</a>
+                        <a href="/tools/" class="btn btn-secondary" data-translate="hero.learn_more">Browse voice tools</a>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <img src="/assets/images/hero-piano.svg" alt="Piano keyboard" width="600" height="400">
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <h2 class="section-title" data-translate="features.title"></h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/piano.svg" alt="Piano" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title" data-translate="features.interactive.title"></h3>
-                        <p class="feature-description" data-translate="features.interactive.description">
-                        </p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/theory.svg" alt="Music Theory" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title" data-translate="features.theory.title"></h3>
-                        <p class="feature-description" data-translate="features.theory.description">
-                        </p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/practice.svg" alt="Practice" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title" data-translate="features.practice.title"></h3>
-                        <p class="feature-description" data-translate="features.practice.description">
-                        </p>
-                    </div>
+                <div class="hero-visual">
+                    <img src="/assets/images/hero-voice.svg" width="960" height="640" alt="Live pitch contour for your speaking voice">
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section -->
-        <section class="cta">
+        <section class="section">
             <div class="container">
-                <h2 class="section-title" data-translate="cta.title"></h2>
-                <p class="cta-description" data-translate="cta.description">
+                <p class="section-kicker">How practice works</p>
+                <h2 class="section-title" data-translate="features.title">See the melody of speech — then train it</h2>
+                <p class="section-lead">
+                    Start with intonation and rhythm. Accent phonemes can come later. Career speaking confidence grows from the same mirror.
                 </p>
-                <div class="cta-actions">
-                    <a href="/tools/" class="btn btn-primary" data-translate="cta.start_now"></a>
-                    <a href="/tools/slow-pronunciation" class="btn btn-outline" data-translate="cta.learn_more"></a>
+                <div class="pathway">
+                    <div class="pathway-item">
+                        <div class="pathway-num">01</div>
+                        <div>
+                            <h3 data-translate="features.interactive.title">Shadow with live pitch</h3>
+                            <p data-translate="features.interactive.description">Hear a clear model. Speak along. Watch whether your pitch line follows the phrase.</p>
+                        </div>
+                    </div>
+                    <div class="pathway-item">
+                        <div class="pathway-num">02</div>
+                        <div>
+                            <h3 data-translate="features.theory.title">Slow the model down</h3>
+                            <p data-translate="features.theory.description">Generate slowed pronunciation so rhythm and contour are easier to catch.</p>
+                        </div>
+                    </div>
+                    <div class="pathway-item">
+                        <div class="pathway-num">03</div>
+                        <div>
+                            <h3 data-translate="features.practice.title">Study from real audio</h3>
+                            <p data-translate="features.practice.description">Turn a clip into text, find your comfortable octave, then practice in range.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-muted">
+            <div class="container">
+                <p class="section-kicker">Tools</p>
+                <h2 class="section-title">Built for the queries you already have</h2>
+                <p class="section-lead">Audio to text. Slow pronunciation. Octave fit. Phrase shadowing — one calm surface each.</p>
+                <div class="tools-strip">
+                    <a class="tool-link" href="/tools/shadow-phrase">
+                        <strong>Shadow a phrase</strong>
+                        <span>Repeat the phrase. See if your intonation matches.</span>
+                    </a>
+                    <a class="tool-link" href="/tools/slow-pronunciation">
+                        <strong>Slow pronunciation</strong>
+                        <span>Hear a clear, slowed model from any text.</span>
+                    </a>
+                    <a class="tool-link" href="/tools/audio-to-text">
+                        <strong>Audio → text</strong>
+                        <span>Transcribe a clip into a study script.</span>
+                    </a>
+                    <a class="tool-link" href="/tools/find-my-octave">
+                        <strong>Find my octave</strong>
+                        <span>Measure your range, adapt a reference clip.</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="helper-band">
+                    <div>
+                        <h2>Piano is an ear helper — not the product</h2>
+                        <p>
+                            Use the fixed keyboard when you want to <em>see</em> a pitch as a note while training voice control.
+                            It supports the ear; it is not why MusNote exists.
+                        </p>
+                    </div>
+                    <a href="/piano" class="btn btn-outline">Open ear helper</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="closing">
+            <div class="container">
+                <h2 class="section-title" data-translate="cta.title">Languages first. Career voice next.</h2>
+                <p class="section-lead" data-translate="cta.description">
+                    Intonation and shadowing now. Speaking confidence for interviews and presentations with the same mirror.
+                </p>
+                <div class="hero-actions">
+                    <a href="/tools/shadow-phrase" class="btn btn-primary" data-translate="cta.start_now">Start with a phrase</a>
+                    <a href="/tools/slow-pronunciation" class="btn btn-ghost" data-translate="cta.learn_more">Or slow pronunciation →</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3 class="footer-title" data-translate="footer.about">About MusNote</h3>
+                    <h3 class="footer-title">MusNote</h3>
                     <p class="footer-description" data-translate="footer.description">
-                        Your comprehensive platform for learning music theory and piano.
+                        Voice performance for career &amp; languages — intonation, shadowing, speaking confidence.
                     </p>
                 </div>
-                
                 <div class="footer-section">
-                    <h3 class="footer-title" data-translate="footer.links">Quick Links</h3>
+                    <h3 class="footer-title" data-translate="footer.links">Practice</h3>
                     <ul class="footer-links">
-                        <li><a href="/tools/" data-translate="nav.tools">Tools</a></li>
-                        <li><a href="/piano" data-translate="nav.piano">Piano</a></li>
-                        <li><a href="/tools/audio-to-text">Audio to text</a></li>
+                        <li><a href="/tools/">Voice tools</a></li>
+                        <li><a href="/tools/shadow-phrase">Shadow phrase</a></li>
+                        <li><a href="/piano">Ear helper (piano)</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-section">
                     <h3 class="footer-title" data-translate="footer.languages">Languages</h3>
                     <ul class="footer-links">
@@ -188,32 +202,13 @@
                     </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p class="footer-copyright">
-                    © 2024 MusNote. <span data-translate="footer.rights">All rights reserved.</span>
-                </p>
+                <p class="footer-copyright">© 2026 MusNote. <span data-translate="footer.rights">All rights reserved.</span></p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="/assets/js/language.js"></script>
-    <script src="/assets/js/main.js"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
+    <script src="/assets/js/site-chrome.js"></script>
 </body>
 </html>

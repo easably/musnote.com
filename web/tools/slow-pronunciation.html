@@ -30,16 +30,20 @@
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <a href="/" class="logo"><img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40"></a>
+                    <a href="/" class="logo" aria-label="MusNote home">
+                        <img src="/assets/images/logo.svg" alt="" width="28" height="28">
+                        <span class="logo-word">MusNote</span>
+                    </a>
                 </div>
                 <div class="nav-menu" id="nav-menu">
                     <ul class="nav-list">
-                        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="/tools/" class="nav-link active">Tools</a></li>
-                        <li class="nav-item"><a href="/tools/shadow-phrase" class="nav-link">Shadow phrase</a></li>
+                        <li class="nav-item"><a href="/tools/" class="nav-link active">Voice tools</a></li>
+                        <li class="nav-item"><a href="/tools/shadow-phrase" class="nav-link">Shadow a phrase</a></li>
+                        <li class="nav-item"><a href="/piano" class="nav-link">Ear helper</a></li>
                     </ul>
                 </div>
                 <div class="nav-actions">
+                    <a href="/tools/shadow-phrase" class="btn btn-primary">Try shadowing</a>
                     <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
                 </div>
             </div>
@@ -117,8 +121,8 @@
         </div>
     </footer>
 
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/freedubbing-api.js"></script>
-    <script src="/assets/js/tools-slow-pronunciation.js"></script>
+    <script src="/assets/js/site-chrome.js"></script>
+    <script src="/assets/js/musnote-voice-api.js"></script>
+    <script src="/assets/js/page-slow-pronunciation.js"></script>
 </body>
 </html>

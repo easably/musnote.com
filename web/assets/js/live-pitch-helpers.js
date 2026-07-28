@@ -1,5 +1,6 @@
 /**
- * Lightweight browser pitch helpers for octave / range tools.
+ * Live pitch helpers for octave finder + shadow phrase pages.
+ * Exposes: window.MusnotePitch (LivePitchMonitor, analyzeBufferRange, playPitched, …)
  */
 (function (global) {
   const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];

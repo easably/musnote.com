@@ -32,7 +32,7 @@
     setStatus('info', 'Generating model audio…');
     try {
       if (objectUrl) URL.revokeObjectURL(objectUrl);
-      const result = await MusnoteApi.synthesizeSpeech({
+      const result = await (window.MusnoteVoiceCloud || window.MusnoteApi).synthesizeSpeech({
         text,
         language: document.getElementById('language').value,
         voice: 'female',

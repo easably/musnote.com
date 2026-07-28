@@ -30,22 +30,21 @@
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <a href="/" class="logo">
-                        <img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40">
+                    <a href="/" class="logo" aria-label="MusNote home">
+                        <img src="/assets/images/logo.svg" alt="" width="28" height="28">
+                        <span class="logo-word">MusNote</span>
                     </a>
                 </div>
                 <div class="nav-menu" id="nav-menu">
                     <ul class="nav-list">
-                        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="/tools/" class="nav-link active">Tools</a></li>
-                        <li class="nav-item"><a href="/piano" class="nav-link">Piano</a></li>
-                        <li class="nav-item"><a href="/chord-tutorial" class="nav-link">Chords</a></li>
+                        <li class="nav-item"><a href="/tools/" class="nav-link active">Voice tools</a></li>
+                        <li class="nav-item"><a href="/tools/shadow-phrase" class="nav-link">Shadow a phrase</a></li>
+                        <li class="nav-item"><a href="/piano" class="nav-link">Ear helper</a></li>
                     </ul>
                 </div>
                 <div class="nav-actions">
-                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-                        <span></span><span></span><span></span>
-                    </button>
+                    <a href="/tools/shadow-phrase" class="btn btn-primary">Try shadowing</a>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
                 </div>
             </div>
         </nav>
@@ -125,6 +124,6 @@
             </div>
         </div>
     </footer>
-    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/site-chrome.js"></script>
 </body>
 </html>

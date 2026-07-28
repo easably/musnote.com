@@ -1,6 +1,9 @@
 /**
- * FreeDubbing API client for MusNote tools.
- * Default: https://api.freedubbing.com (override with window.MUSNOTE_API_BASE).
+ * MusNote voice cloud API (STT / TTS).
+ * Backend today: FreeDubbing (https://api.freedubbing.com).
+ * Override host: window.MUSNOTE_API_BASE = "https://…"
+ *
+ * Public surface: MusnoteVoiceCloud (alias: MusnoteApi for older pages).
  */
 (function (global) {
   const API_BASE = (global.MUSNOTE_API_BASE || 'https://api.freedubbing.com').replace(/\/$/, '');
@@ -125,11 +128,14 @@
     };
   }
 
-  global.MusnoteApi = {
+  /** STT/TTS helpers for MusNote tool pages. */
+  global.MusnoteVoiceCloud = {
     API_BASE,
     httpsUrl,
     synthesizeSpeech,
     synthesizeSpeechV3,
     speechToText,
   };
+  // Older page scripts still call MusnoteApi.*
+  global.MusnoteApi = global.MusnoteVoiceCloud;
 })(window);

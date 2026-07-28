@@ -1,0 +1,74 @@
+/**
+ * MusNote design system — Grammarly-inspired calm product UI
+ * Tokens only. Import before main.css / tools.css.
+ */
+:root {
+  /* Brand — soft emerald (Grammarly-adjacent, not purple) */
+  --mn-green-50: #eefbf6;
+  --mn-green-100: #d5f5e9;
+  --mn-green-200: #a8e9d0;
+  --mn-green-400: #2fd39a;
+  --mn-green-500: #15c39a;
+  --mn-green-600: #0e9f6e;
+  --mn-green-700: #0b7a56;
+  --mn-green-800: #0a5c42;
+
+  /* Neutrals */
+  --mn-ink: #0f1f1a;
+  --mn-ink-soft: #3d4f48;
+  --mn-muted: #6b7c75;
+  --mn-line: #dce6e1;
+  --mn-surface: #ffffff;
+  --mn-surface-2: #f6faf8;
+  --mn-wash: #e8f6f0;
+
+  /* Semantic */
+  --mn-focus: #15c39a;
+  --mn-danger: #c23b3b;
+  --mn-ok: #0e9f6e;
+
+  /* Type */
+  --mn-font-sans: "Outfit", "Segoe UI", sans-serif;
+  --mn-font-display: "Source Serif 4", Georgia, serif;
+  --mn-fs-xs: 0.8125rem;
+  --mn-fs-sm: 0.9375rem;
+  --mn-fs-md: 1.0625rem;
+  --mn-fs-lg: 1.25rem;
+  --mn-fs-xl: clamp(1.75rem, 3.5vw, 2.5rem);
+  --mn-fs-hero: clamp(2.4rem, 6vw, 4.25rem);
+  --mn-lh-tight: 1.08;
+  --mn-lh-snug: 1.25;
+  --mn-lh-body: 1.65;
+
+  /* Space */
+  --mn-space-1: 0.25rem;
+  --mn-space-2: 0.5rem;
+  --mn-space-3: 0.75rem;
+  --mn-space-4: 1rem;
+  --mn-space-5: 1.5rem;
+  --mn-space-6: 2rem;
+  --mn-space-7: 3rem;
+  --mn-space-8: 4.5rem;
+  --mn-space-9: 6.5rem;
+
+  /* Radius / elevation — restrained */
+  --mn-radius-sm: 0.5rem;
+  --mn-radius-md: 0.75rem;
+  --mn-radius-lg: 1.25rem;
+  --mn-shadow-soft: 0 12px 40px rgba(15, 31, 26, 0.06);
+  --mn-shadow-lift: 0 18px 50px rgba(14, 159, 110, 0.12);
+
+  /* Layout */
+  --mn-container: 1120px;
+  --mn-header-h: 4.25rem;
+
+  /* Motion */
+  --mn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --mn-dur: 420ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mn-dur: 1ms;
+  }
+}

@@ -45,7 +45,7 @@
     document.getElementById('btn-file').disabled = true;
     document.getElementById('btn-url').disabled = true;
     try {
-      const data = await MusnoteApi.speechToText(payload);
+      const data = await (window.MusnoteVoiceCloud || window.MusnoteApi).speechToText(payload);
       setStatus('ok', `Done${data.language ? ` · detected language: ${data.language}` : ''}${data.duration ? ` · ${Number(data.duration).toFixed(1)}s` : ''}`);
       showResult(data);
     } catch (err) {

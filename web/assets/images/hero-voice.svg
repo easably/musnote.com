@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" fill="none" role="img" aria-label="Live voice pitch contour">
+  <defs>
+    <linearGradient id="wash" x1="120" y1="40" x2="860" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8F6F0"/>
+      <stop offset="0.55" stop-color="#F6FAF8"/>
+      <stop offset="1" stop-color="#D5F5E9"/>
+    </linearGradient>
+    <linearGradient id="line" x1="80" y1="320" x2="880" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#15C39A"/>
+      <stop offset="1" stop-color="#0E9F6E"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="960" height="640" rx="28" fill="url(#wash)"/>
+  <g opacity="0.35" stroke="#A8E9D0" stroke-width="1">
+    <path d="M80 160 H880"/>
+    <path d="M80 260 H880"/>
+    <path d="M80 360 H880"/>
+    <path d="M80 460 H880"/>
+  </g>
+  <path d="M80 390 C160 370 190 250 280 270 C370 290 390 430 480 400 C570 370 590 220 680 250 C770 280 820 340 880 300"
+        stroke="url(#line)" stroke-width="5" stroke-linecap="round" fill="none" filter="url(#soft)"/>
+  <circle cx="680" cy="250" r="11" fill="#15C39A"/>
+  <circle cx="680" cy="250" r="22" fill="#15C39A" opacity="0.18"/>
+  <g font-family="Outfit, sans-serif" fill="#0A5C42">
+    <text x="80" y="72" font-size="18" font-weight="600">Your pitch · live</text>
+    <text x="80" y="100" font-size="14" fill="#6B7C75">A4 · +8 cents · steady</text>
+  </g>
+  <g font-family="Outfit, sans-serif" fill="#0E9F6E">
+    <text x="760" y="72" font-size="14" font-weight="600" text-anchor="end">Match the phrase</text>
+  </g>
+</svg>

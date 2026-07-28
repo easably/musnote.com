@@ -173,15 +173,15 @@ class LanguageManager {
 
     updateMetaTags(language) {
         const titles = {
-            en: 'MusNote — Voice Performance for Career & Languages',
-            ru: 'MusNote — Голос для карьеры и языков',
-            de: 'MusNote — Stimme für Karriere & Sprachen'
+            en: 'MusNote — Hear your voice. Match the phrase.',
+            ru: 'MusNote — Услышь голос. Попади во фразу.',
+            de: 'MusNote — Hör deine Stimme. Triff die Phrase.'
         };
         
         const descriptions = {
-            en: 'Voice tools for language intonation and speaking confidence: audio to text, slow pronunciation, octave matching, and phrase shadowing.',
-            ru: 'Инструменты голоса для интонации языка и уверенной речи: аудио в текст, медленное произношение, октава и shadowing.',
-            de: 'Stimm-Tools für Sprachintonation und Sprechsicherheit: Audio zu Text, langsame Aussprache, Oktave und Shadowing.'
+            en: 'A calm voice mirror for language intonation and speaking confidence — shadow phrases with live pitch.',
+            ru: 'Спокойное зеркало голоса для интонации языка и уверенной речи — shadowing с live pitch.',
+            de: 'Ein ruhiger Stimmspiegel für Sprachintonation und Sprechsicherheit — Shadowing mit Live-Pitch.'
         };
 
         document.title = titles[language] || titles.en;
