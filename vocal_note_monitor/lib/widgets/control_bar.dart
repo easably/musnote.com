@@ -91,6 +91,7 @@ void showMonitorActionSheet(
   required VoidCallback onSave,
   required VoidCallback onLoad,
   required VoidCallback onSettings,
+  VoidCallback? onIdeas,
 }) {
   showCupertinoModalPopup<void>(
     context: context,
@@ -117,6 +118,14 @@ void showMonitorActionSheet(
           },
           child: const Text('Settings'),
         ),
+        if (onIdeas != null)
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
+              onIdeas();
+            },
+            child: const Text('Ideas (preview)'),
+          ),
       ],
       cancelButton: CupertinoActionSheetAction(
         isDefaultAction: true,

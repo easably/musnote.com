@@ -7,6 +7,7 @@ import '../services/settings_service.dart';
 import '../widgets/control_bar.dart';
 import '../widgets/pitch_graph.dart';
 import '../widgets/tuner_gauge.dart';
+import '../ideas/ideas_hub_screen.dart';
 import 'settings_screen.dart';
 
 class MonitorScreen extends StatelessWidget {
@@ -60,6 +61,11 @@ class MonitorScreen extends StatelessWidget {
       onSettings: () {
         Navigator.of(context).push(
           CupertinoPageRoute<void>(builder: (_) => const SettingsScreen()),
+        );
+      },
+      onIdeas: () {
+        Navigator.of(context).push(
+          CupertinoPageRoute<void>(builder: (_) => const IdeasHubScreen()),
         );
       },
     );
