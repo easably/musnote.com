@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tastenmuster: CFG und iDEA — MusNote</title>
+<meta name="description" content="Nicht 24 Akkorde auswendig. Merk dir CFG und iDEA, dann übe das Muster.">
+<link rel="canonical" href="https://musnote.com/de/chords/patterns/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/patterns/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/patterns/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/patterns/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/patterns/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="patterns">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/de/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/de/">Überblick</a><a data-page="patterns" href="/de/chords/patterns/">Muster</a><a data-page="hops" href="/de/chords/hops/">Sprünge</a><a data-page="clock" href="/de/chords/clock/">Uhr</a><a data-page="chart" href="/de/chords/chart/">Verzeichnis</a><a data-page="voice" href="/tools/">Stimme</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de" selected>DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Tastenmuster</span>
+  <h1>Lern nicht 24 Akkorde auswendig.<br>Merk dir zwei Wörter: <span class="hl1">CFG</span> und <span class="hl2">iDEA</span>.</h1>
+  <p class="lead">Jeder Dur- oder Molldreiklang am Klavier ist ein Muster aus weißen und schwarzen Tasten. Es gibt vier Muster. Die Dreiergruppe des Akkordbuchstabens sagt, welches.</p>
+  <div class="words">
+    <div class="word cfg"><div class="big">CFG</div><p>Die drei Hauptakkorde von C-Dur — darauf stehen tausende Lieder. <b>Dur = alles weiß.</b></p></div>
+    <div class="word dea"><div class="big"><small>i</small>DEA</div><p>Versteckt im Wort <i>idea</i>. <b>Moll = alles weiß.</b> Dur hat eine schwarze Taste in der Mitte.</p></div>
+  </div>
+</section>
+<section class="wrap steps">
+  <div class="card"><h3><span class="num">1</span> Gerüst — einen Buchstaben überspringen</h3><p class="muted" style="margin:0">Nimm den Akkordbuchstaben, überspring einen, nimm den nächsten. Auf den weißen Tasten ist das „jede zweite“.</p><div class="alpha" id="alpha"></div></div>
+  <div class="card"><h3><span class="num">2</span> Muster — welche Tasten schwarz werden</h3><p class="muted" style="margin:0">Das Muster sagt, welche Gerüstnote auf die nächste schwarze Taste rückt. Das Muster steht im Blatt unten.</p>
+    <div style="display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;font-size:.9rem;color:var(--mn-ink-soft)"><span>alles weiß</span><span>schwarz in der Mitte</span><span>weiß in der Mitte</span></div>
+  </div>
+</section>
+<section class="wrap">
+  <h2>Kreuztausch-Blatt</h2>
+  <p class="muted" style="margin-top:0">Zeig auf ein Feld — gleiche Muster leuchten. Klick einen Akkord — er liegt auf der Tastatur.</p>
+  <div class="card sheet-scroll">
+    <div class="sheet" id="sheet">
+      <div></div>
+      <div class="colh hl1">CFG<small>C · F · G</small></div>
+      <div class="colh hl2">iDEA<small>D · E · A</small></div>
+      <div class="colh">Auf eine schwarze Taste<small>dieselben Gruppen, ± ein Halbton</small></div>
+      <div class="colh">Die B-Familie<small>drei besondere — extra lernen</small></div>
+      <div class="rowh" style="grid-row:2">Dur</div>
+      <div class="rowh" style="grid-row:3">Moll</div>
+      <div class="cross" id="cross"><div class="swap-badge" title="Dur / Moll">⇄</div></div>
+    </div>
+    <p class="sheet-note"><b>Regel:</b> Dur und Moll tauschen die Gruppen einfach — über Kreuz. Schwarztasten-Akkorde (D♭, E♭, A♭ und C♯m, F♯m, G♯m) sind dieselben Gruppen, einen Halbton verschoben: Muster schwarz-weiß-schwarz.</p>
+  </div>
+</section>
+<section class="wrap">
+  <div class="card stage">
+    <div>
+      <div class="chord-name-big" id="stName">C</div>
+      <div class="sub" id="stType"></div>
+      <div style="margin-top:14px;display:flex;align-items:center;gap:10px"><span id="stDots"></span><b id="stPname"></b></div>
+      <ol class="explain" id="stExplain"></ol>
+      <div class="notes-row" id="stNotes" style="margin-bottom:18px"></div>
+      <div class="actions"><button class="btn primary" id="btnPlay">♪ Spielen</button><button class="btn" id="btnFlip"></button></div>
+    </div>
+    <div>
+      <svg id="kb" aria-label="Piano"></svg>
+      <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>Grundton</span><span><b style="background:var(--c-t)"></b>Terz — die Stimmung</span><span><b style="background:var(--c-f)"></b>Quinte</span><span class="muted">Zahlen unter den Noten sind Finger der rechten Hand</span></div>
+    </div>
+  </div>
+</section>
+<section class="wrap" id="trainer">
+  <div class="card">
+    <h2>Trainer: welches Muster?</h2>
+    <p class="muted" style="margin:0">Du siehst den Namen — du wählst das Muster. Ein paar Minuten am Tag, und du antwortest ohne Nachdenken.</p>
+    <div class="quiz-top">
+      <div class="q-chord" id="qChord">E</div>
+      <div class="q-opts" id="qOpts">
+        <button class="q-opt" data-p="www"><span class="dots lg"><i class="w"></i><i class="w"></i><i class="w"></i></span>alles weiß</button>
+        <button class="q-opt" data-p="wbw"><span class="dots lg"><i class="w"></i><i class="b"></i><i class="w"></i></span>schwarz in der Mitte</button>
+        <button class="q-opt" data-p="bwb"><span class="dots lg"><i class="b"></i><i class="w"></i><i class="b"></i></span>weiß in der Mitte</button>
+        <button class="q-opt" data-p="odd"><span style="font-size:1.3rem;line-height:22px">B…</span>B-Familie (besonders)</button>
+      </div>
+    </div>
+    <div class="fb" id="qFb"></div>
+    <svg id="qkb" style="max-width:520px;margin-top:8px" aria-label="Piano"></svg>
+    <div class="score"><span>Serie: <b id="streak">0</b> · Rekord: <b id="best">0</b></span><button class="btn" id="qNext">Weiter →</button></div>
+  </div>
+</section>
+<footer class="note wrap">Noten sind üblich geschrieben (Es, nicht Dis, in c-Moll). Der Klang ist ein eingebauter Synth.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-patterns.js"></script>
+</body>
+</html>

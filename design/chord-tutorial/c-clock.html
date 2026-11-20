@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вариант C · Часы аккордов — MusNote</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .stage { display: grid; grid-template-columns: minmax(300px, 460px) 1fr; gap: 32px; align-items: center; }
+  #clock { width: 100%; height: auto; display: block; user-select: none; }
+  .node { cursor: pointer; }
+  .node circle { transition: transform .2s; transform-box: fill-box; transform-origin: center; }
+  .node:hover circle { transform: scale(1.1); }
+  .node.w circle { fill: #fff; stroke: #b8c8c1; stroke-width: 1.5; }
+  .node.b circle { fill: #1b2622; }
+  .node text { font-weight: 700; text-anchor: middle; font-family: var(--mn-font-sans); pointer-events: none; }
+  .node.w text { fill: var(--mn-ink); } .node.b text { fill: #fff; }
+  .poly { fill: rgba(16,185,129,.10); stroke: var(--mn-ink); stroke-width: 2.5; stroke-linejoin: round; }
+  .ring { fill: none; stroke-width: 6; }
+  .oarc { fill: none; stroke-width: 4; stroke-linecap: round; }
+  .olabel { font-weight: 800; font-size: 17px; text-anchor: middle; font-family: var(--mn-font-sans); }
+  .center-name { font-family: var(--mn-font-display); font-weight: 700; font-size: 46px; text-anchor: middle; fill: var(--mn-ink); }
+  .center-sub { font-size: 13px; text-anchor: middle; fill: var(--mn-muted); font-family: var(--mn-font-sans); letter-spacing: .06em; text-transform: uppercase; }
+  .ticks line { stroke: #dfe8e4; stroke-width: 1; }
+
+  .panel .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+  .rot { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .mn { margin-top: 22px; display: grid; gap: 10px; }
+  .mn div { display: flex; gap: 12px; align-items: center; background: var(--mn-surface-2); border-radius: 12px; padding: 10px 14px; font-size: .95rem; }
+  .mn svg { flex: none; }
+  .kbd { display: inline-block; border: 1px solid var(--mn-line); border-bottom-width: 2px; border-radius: 6px; padding: 0 6px; font-size: .8rem; background: #fff; }
+  @media (max-width: 860px) { .stage { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="index.html">Mus<span>Note</span> · аккорды</a>
+  <nav class="variants"><a href="index.html">Обзор</a><a href="a-trios.html">A · Узоры</a><a href="b-hops.html">B · Прыжки</a><a href="c-clock.html">C · Часы</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">До Ре Ми</button></div>
+</div></header>
+
+<section class="hero wrap">
+  <span class="eyebrow">Вариант C · Часы аккордов</span>
+  <h1>Одна фигура — двенадцать аккордов.</h1>
+  <p class="lead">Разложи 12 клавиш октавы по кругу, как цифры на часах. Любой мажорный аккорд — это <b>один и тот же треугольник</b>. Повернул — получил новый аккорд. Минор — тот же треугольник, где средняя вершина сдвинута на один час назад.</p>
+</section>
+
+<section class="wrap">
+  <div class="card stage">
+    <svg id="clock" viewBox="0 0 440 440" aria-label="Круг из 12 клавиш с фигурой аккорда"></svg>
+    <div class="panel">
+      <div class="chord-name-big" id="name">C</div>
+      <div class="muted" id="sub" style="font-weight:600">мажор</div>
+      <div class="row"><span id="dots"></span><div class="notes-row" id="notes"></div></div>
+      <div class="row">
+        <div class="seg" id="types"><button data-t="maj" class="on">Мажор ▲</button><button data-t="min">Минор ▼</button><button data-t="dom7">Септаккорд 7</button></div>
+      </div>
+      <div class="rot">
+        <button class="btn" id="ccw" title="Стрелка влево">⟲ −1 час</button>
+        <button class="btn" id="cw" title="Стрелка вправо">⟳ +1 час</button>
+        <button class="btn primary" id="play">♪ Сыграть</button>
+        <button class="btn green" id="tour">▶ Покрутить по кругу квинт</button>
+      </div>
+      <div class="mn">
+        <div><svg width="34" height="30" viewBox="0 0 34 30"><polygon points="17,3 31,27 3,27" fill="none" stroke="#0f1f1a" stroke-width="2.5"/></svg><span><b>Мажор:</b> стороны 4 · 3 · 5 часов. Форма всегда одна.</span></div>
+        <div><svg width="34" height="30" viewBox="0 0 34 30"><polygon points="17,27 31,3 3,3" fill="none" stroke="#f59e0b" stroke-width="2.5"/></svg><span><b>Минор:</b> 3 · 4 · 5 — тот же треугольник в зеркале.</span></div>
+        <div><span style="font-size:1.3rem;width:34px;text-align:center">🕐</span><span>1 час на круге = 1 клавиша. Нажми на любую ноту или жми <span class="kbd">←</span> <span class="kbd">→</span>.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="card">
+    <svg id="kb"></svg>
+    <div class="legend" style="margin-top:12px">
+      <span><b style="background:var(--c-r)"></b>основа</span>
+      <span><b style="background:var(--c-t)"></b>терция</span>
+      <span><b style="background:var(--c-f)"></b>квинта</span>
+      <span><b style="background:var(--c-s)"></b>септима</span>
+      <span class="muted">цвета вершин на часах = цвета клавиш</span>
+    </div>
+  </div>
+</section>
+
+<footer class="note wrap">Прототип для обсуждения. Та же фигура работает для любых аккордов: септаккорд — четырёхугольник 4·3·3·2.</footer>
+
+<script src="shared.js"></script>
+<script>
+const svg = document.getElementById('clock');
+const CX = 220, CY = 220, R = 148, RA = R + 34;
+const PC_NAMES = [['C', 0], ['C', 1], ['D', 0], ['E', -1], ['E', 0], ['F', 0], ['F', 1], ['G', 0], ['A', -1], ['A', 0], ['B', -1], ['B', 0]];
+const ROLE = ['r', 't', 'f', 's'];
+const RC = { r: 'var(--c-r)', t: 'var(--c-t)', f: 'var(--c-f)', s: 'var(--c-s)' };
+const SHAPES = { maj: [0, 4, 7, 7], min: [0, 3, 7, 7], dom7: [0, 4, 7, 10] };
+const ang = h => ((-90 + h * 30) * Math.PI) / 180;
+const pos = (h, r) => [CX + r * Math.cos(ang(h)), CY + r * Math.sin(ang(h))];
+
+const ticks = MN.el('g', { class: 'ticks' }, svg);
+for (let i = 0; i < 12; i++) { const [x1, y1] = pos(i + .5, R - 30), [x2, y2] = pos(i + .5, R + 30); MN.el('line', { x1, y1, x2, y2 }, ticks); }
+const arcsG = MN.el('g', {}, svg);
+const poly = MN.el('polygon', { class: 'poly' }, svg);
+const nodesG = MN.el('g', {}, svg);
+const ringsG = MN.el('g', {}, svg);
+const centerName = MN.el('text', { x: CX, y: CY + 10, class: 'center-name' }, svg);
+const centerSub = MN.el('text', { x: CX, y: CY + 36, class: 'center-sub' }, svg);
+const rings = ROLE.map(r => MN.el('circle', { class: 'ring', r: 29, stroke: RC[r] }, ringsG));
+
+const nodeTexts = [];
+PC_NAMES.forEach(([L, a], i) => {
+  const [x, y] = pos(i, R);
+  const g = MN.el('g', { class: 'node ' + (a ? 'b' : 'w'), transform: `translate(${x},${y})` }, nodesG);
+  MN.el('circle', { r: 22 }, g);
+  const t = MN.el('text', { y: 5 }, g);
+  nodeTexts.push([t, L, a]);
+  g.addEventListener('click', () => setRoot(i));
+});
+function relabelNodes() {
+  nodeTexts.forEach(([t, L, a]) => {
+    const s = MN.letterLabel(L) + MN.ACC[a];
+    t.textContent = s; t.setAttribute('font-size', s.length > 3 ? 10 : s.length > 2 ? 12 : 15);
+  });
+}
+
+let type = 'maj', rootT = 0, rootH = 0, offs = [...SHAPES.maj], offsT = [...SHAPES.maj], running = false;
+const pcNow = () => ((rootT % 12) + 12) % 12;
+
+function arcPath(a, b) {
+  const [x1, y1] = pos(a, RA), [x2, y2] = pos(b, RA);
+  return `M${x1} ${y1} A${RA} ${RA} 0 ${b - a > 6 ? 1 : 0} 1 ${x2} ${y2}`;
+}
+function draw() {
+  const pts = offs.map(o => pos(rootH + o, R));
+  poly.setAttribute('points', pts.map(p => p.join(',')).join(' '));
+  poly.style.stroke = type === 'min' ? 'var(--c-t)' : 'var(--mn-ink)';
+  pts.forEach(([x, y], i) => { rings[i].setAttribute('cx', x); rings[i].setAttribute('cy', y); });
+  rings[3].style.opacity = Math.min(1, Math.max(0, (offs[3] - offs[2]) / 2));
+  arcsG.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    const a = offs[i], b = i < 3 ? offs[i + 1] : offs[0] + 12;
+    const tLen = (i < 3 ? offsT[i + 1] : offsT[0] + 12) - offsT[i];
+    if (b - a < 0.15 || tLen === 0) continue;
+    const col = ['var(--c-t)', 'var(--c-f)', 'var(--c-s)', '#b3c3bc'][i]; // colour of the vertex we arrive at; closing edge is grey
+    MN.el('path', { d: arcPath(rootH + a + .25, rootH + b - .25), class: 'oarc', stroke: col }, arcsG);
+    const [lx, ly] = pos(rootH + (a + b) / 2, RA + 18);
+    const t = MN.el('text', { x: lx, y: ly + 6, class: 'olabel', fill: col }, arcsG);
+    t.textContent = tLen;
+  }
+}
+function loop() {
+  let moving = false;
+  const step = (cur, tgt) => { const n = cur + (tgt - cur) * 0.16; if (Math.abs(tgt - n) > 0.002) { moving = true; return n; } return tgt; };
+  rootH = step(rootH, rootT);
+  offs = offs.map((o, i) => step(o, offsT[i]));
+  draw();
+  if (moving) requestAnimationFrame(loop); else running = false;
+}
+const kick = () => { if (!running) { running = true; requestAnimationFrame(loop); } };
+
+const kb = MN.keyboard(document.getElementById('kb'), { whites: 14, W: 50, H: 170 });
+function update(sound = true) {
+  const c = MN.chord(MN.rootFor(pcNow(), type), type);
+  centerName.textContent = c.name;
+  centerSub.textContent = MN.TYPES[type].label;
+  document.getElementById('name').textContent = c.name;
+  document.getElementById('sub').textContent = { maj: 'мажор — треугольник 4·3·5', min: 'минор — треугольник 3·4·5', dom7: 'септаккорд — четырёхугольник 4·3·3·2' }[type];
+  document.getElementById('dots').innerHTML = MN.dots(c.pattern, true);
+  document.getElementById('notes').innerHTML = c.notes.map(n => `<span class="note-chip ${n.role}">${MN.noteLabel(n)}</span>`).join('');
+  kb.show(c.notes, { fingers: true });
+  if (sound) MN.play(c.notes.map(n => n.midi), { arp: false });
+}
+function setRoot(pc, sound = true) {
+  const d = ((((pc - pcNow()) % 12) + 18) % 12) - 6;
+  rootT += d; kick(); update(sound);
+}
+function setType(t) {
+  type = t; offsT = [...SHAPES[t]];
+  document.querySelectorAll('#types button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  kick(); update();
+}
+document.getElementById('types').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setType(b.dataset.t); });
+document.getElementById('cw').onclick = () => setRoot(pcNow() + 1);
+document.getElementById('ccw').onclick = () => setRoot(pcNow() + 11);
+document.getElementById('play').onclick = () => MN.play(MN.chord(MN.rootFor(pcNow(), type), type).notes.map(n => n.midi));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') { setRoot(pcNow() + 1); e.preventDefault(); }
+  if (e.key === 'ArrowLeft') { setRoot(pcNow() + 11); e.preventDefault(); }
+});
+let tourTimer = null;
+document.getElementById('tour').onclick = e => {
+  const btn = e.currentTarget;
+  if (tourTimer) { clearInterval(tourTimer); tourTimer = null; btn.textContent = '▶ Покрутить по кругу квинт'; return; }
+  btn.textContent = '■ Стоп';
+  let n = 0;
+  tourTimer = setInterval(() => {
+    setRoot(pcNow() + 7);
+    if (++n >= 12) { clearInterval(tourTimer); tourTimer = null; btn.textContent = '▶ Покрутить по кругу квинт'; }
+  }, 1300);
+};
+document.addEventListener('notation', () => { relabelNodes(); kb.relabel(); update(false); });
+relabelNodes(); draw(); update(false);
+</script>
+</body>
+</html>

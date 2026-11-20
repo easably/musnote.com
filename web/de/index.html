@@ -1,223 +1,55 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusNote - Musiklernplattform</title>
-    <meta name="description" content="Lernen Sie Musiktheorie, üben Sie Klavier und erkunden Sie musikalische Noten mit MusNote - Ihrer umfassenden Musiklernplattform.">
-    <meta name="keywords" content="Musik, Klavier, Noten, Akkorde, Lernen, Theorie, Übung">
-    <meta name="author" content="MusNote">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://musnote.com/de/">
-    <meta property="og:title" content="MusNote - Musiklernplattform">
-    <meta property="og:description" content="Lernen Sie Musiktheorie, üben Sie Klavier und erkunden Sie musikalische Noten mit MusNote - Ihrer umfassenden Musiklernplattform.">
-    <meta property="og:image" content="https://musnote.com/assets/images/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://musnote.com/de/">
-    <meta property="twitter:title" content="MusNote - Musiklernplattform">
-    <meta property="twitter:description" content="Lernen Sie Musiktheorie, üben Sie Klavier und erkunden Sie musikalische Noten mit MusNote - Ihrer umfassenden Musiklernplattform.">
-    <meta property="twitter:image" content="https://musnote.com/assets/images/og-image.jpg">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://musnote.com/de/">
-    
-    <!-- Hreflang for multilingual support -->
-    <link rel="alternate" hreflang="en" href="https://musnote.com/">
-    <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
-    <link rel="alternate" hreflang="de" href="https://musnote.com/de/">
-    <link rel="alternate" hreflang="x-default" href="https://musnote.com/">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="/assets/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusNote — Akkorde, die hängen bleiben</title>
+<meta name="description" content="Eine Regel baut den Klavierakkord. Drei Bilder: Tastenmuster, Sprünge und die Akkorduhr. Danach ein kurzer Trainer.">
+<link rel="canonical" href="https://musnote.com/de/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-brand">
-                    <a href="/de/" class="logo">
-                        <img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40">
-                    </a>
-                </div>
-                
-                <div class="nav-menu" id="nav-menu">
-                    <ul class="nav-list">
-                        <li class="nav-item">
-                            <a href="/de/" class="nav-link">Startseite</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/de/piano" class="nav-link">Klavier</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/de/chord-tutorial" class="nav-link">Akkord-Tutorial</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/de/about" class="nav-link">Über uns</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="nav-actions">
-                    <!-- Language Selector -->
-                    <div class="language-selector">
-                        <select id="language-selector" class="lang-select">
-                            <option value="en">🇺🇸 English</option>
-                            <option value="ru">🇷🇺 Русский</option>
-                            <option value="de" selected>🇩🇪 Deutsch</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Mobile Menu Toggle -->
-                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menü umschalten">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
+<body data-page="home">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/de/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/de/">Überblick</a><a data-page="patterns" href="/de/chords/patterns/">Muster</a><a data-page="hops" href="/de/chords/hops/">Sprünge</a><a data-page="clock" href="/de/chords/clock/">Uhr</a><a data-page="chart" href="/de/chords/chart/">Verzeichnis</a><a data-page="voice" href="/tools/">Stimme</a></nav>
+  
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de" selected>DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Akkorde</span>
+  <h1>So bleiben Akkorde hängen</h1>
+  <p class="lead">Eine Regel baut den Akkord. Ein Bild macht die Regel fest. Drei Wege — jeder mit eigenem Haken.</p>
+  <div class="hero-actions"><a class="btn primary" href="/de/chords/patterns/">Mit Mustern starten</a></div>
+</section>
+<section class="wrap variants-grid"><a class="card vcard" href="/de/chords/patterns/">
+    <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><rect x="10" y="10" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><rect x="115" y="10" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="10" y="68" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="115" y="68" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><g font-family="Outfit,sans-serif" font-weight="800" font-size="18" text-anchor="middle"><text x="57" y="42">CFG</text><text x="162" y="42">DEA</text><text x="57" y="100">Cm</text><text x="162" y="100">Dm</text></g></svg></div>
+    <span class="tag">Merken</span>
+    <h3>Tastenmuster: CFG und iDEA</h3>
+    <p>24 Akkorde werden zu 4 Mustern aus weißen und schwarzen Tasten. Die Dreiergruppe des Buchstabens sagt, welches.</p>
+    <span class="go">Öffnen →</span>
+  </a>
+<a class="card vcard" href="/de/chords/hops/">
+    <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#c3d1cb"><rect x="10" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="38" y="60" width="28" height="64" rx="3" fill="#a7f3d0"/><rect x="66" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="94" y="60" width="28" height="64" rx="3" fill="#fde68a"/><rect x="122" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="150" y="60" width="28" height="64" rx="3" fill="#bfdbfe"/><rect x="178" y="60" width="28" height="64" rx="3" fill="#fff"/></g><path d="M52 56 C52 18, 108 18, 108 56" fill="none" stroke="#f59e0b" stroke-width="3.5"/><path d="M108 56 C108 26, 164 26, 164 56" fill="none" stroke="#3b82f6" stroke-width="3.5"/><circle cx="80" cy="27" r="12" fill="#f59e0b"/><text x="80" y="32" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit,sans-serif">4</text><circle cx="136" cy="33" r="12" fill="#3b82f6"/><text x="136" y="38" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit,sans-serif">3</text></svg></div>
+    <span class="tag">Verstehen</span>
+    <h3>Sprünge: 4+3 und 3+4</h3>
+    <p>Ein Akkord sind zwei Sprünge von jeder Taste. Die Animation zählt jede Taste und zeichnet die Bögen.</p>
+    <span class="go">Öffnen →</span>
+  </a>
+<a class="card vcard" href="/de/chords/clock/">
+    <div class="thumb"><svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="56" fill="none" stroke="#dfe8e4"/><polygon points="70,14 118.5,98 42,118.5" fill="rgba(16,185,129,.12)" stroke="#0f1f1a" stroke-width="2.5"/><circle cx="70" cy="14" r="9" fill="#10b981"/><circle cx="118.5" cy="98" r="9" fill="#f59e0b"/><circle cx="42" cy="118.5" r="9" fill="#3b82f6"/></svg></div>
+    <span class="tag">Das System sehen</span>
+    <h3>Akkorduhr</h3>
+    <p>12 Tasten im Kreis. Dur ist ein Dreieck, das sich drehen lässt. Moll ist dasselbe Dreieck im Spiegel.</p>
+    <span class="go">Öffnen →</span>
+  </a></section>
+<p class="hub-note wrap">CFG und iDEA schon im Kopf? <a href="/de/chords/patterns/#trainer">Muster-Trainer öffnen →</a></p>
+<script src="/assets/js/chords-shared.js"></script>
 
-    <!-- Main Content -->
-    <main class="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title" data-translate="hero.title"></h1>
-                    <p class="hero-description" data-translate="hero.description">
-                    </p>
-                    <div class="hero-actions">
-                        <a href="/de/piano" class="btn btn-primary" data-translate="hero.start_learning"></a>
-                        <a href="/de/about" class="btn btn-secondary" data-translate="hero.learn_more"></a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="/assets/images/hero-piano.svg" alt="Klaviatur" width="600" height="400">
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <h2 class="section-title">Warum MusNote wählen?</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/piano.svg" alt="Klavier" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title">Interaktives Klavier</h3>
-                        <p class="feature-description">
-                            Üben Sie auf unserem virtuellen Klavier mit Echtzeit-Feedback und Notenerkennung.
-                        </p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/theory.svg" alt="Musiktheorie" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title">Musiktheorie</h3>
-                        <p class="feature-description">
-                            Lernen Sie Akkorde, Skalen und Musiktheorie-Konzepte mit detaillierten Erklärungen.
-                        </p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/practice.svg" alt="Übung" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title">Interaktive Übung</h3>
-                        <p class="feature-description">
-                            Üben Sie mit geführten Übungen und Echtzeit-Feedback, um Ihre Fähigkeiten zu verbessern.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section class="cta">
-            <div class="container">
-                <h2 class="section-title">Bereit, Ihre musikalische Reise zu beginnen?</h2>
-                <p class="cta-description">
-                    Schließen Sie sich Tausenden von Musikern an, die bereits mit MusNote lernen.
-                </p>
-                <div class="cta-actions">
-                    <a href="/de/piano" class="btn btn-primary">Jetzt starten</a>
-                    <a href="/de/about" class="btn btn-outline">Mehr erfahren</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 class="footer-title">Über MusNote</h3>
-                    <p class="footer-description">
-                        Ihre umfassende Plattform zum Lernen von Musiktheorie und Klavier.
-                    </p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Schnelle Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="/de/piano">Klavier</a></li>
-                        <li><a href="/de/about">Über uns</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Sprachen</h3>
-                    <ul class="footer-links">
-                        <li><a href="/" hreflang="en">English</a></li>
-                        <li><a href="/ru/" hreflang="ru">Русский</a></li>
-                        <li><a href="/de/" hreflang="de">Deutsch</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    © 2024 MusNote. <span data-translate="footer.rights">Alle Rechte vorbehalten.</span>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="/assets/js/language.js"></script>
-    <script src="/assets/js/main.js"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
 </body>
 </html>

@@ -3,6 +3,10 @@
 # Enable rewrite engine
 RewriteEngine On
 
+# Old chord lesson opens the chord chart
+RewriteRule ^chord-tutorial(\.html)?/?$ /chords/chart/ [R=301,L]
+RewriteRule ^(ru|de)/chord-tutorial(\.html)?/?$ /$1/chords/chart/ [R=301,L]
+
 # Security headers
 Header always set X-Content-Type-Options nosniff
 Header always set X-Frame-Options DENY

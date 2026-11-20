@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вариант B · Прыжки — MusNote</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .types { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .type { border: 2px solid var(--mn-line); background: #fff; border-radius: 16px; padding: 14px; cursor: pointer; text-align: left; font: inherit; color: var(--mn-ink); transition: border-color .15s, transform .15s; }
+  .type:hover { transform: translateY(-2px); }
+  .type.on { border-color: var(--mn-ink); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  .type .f { font-size: 1.7rem; font-weight: 800; letter-spacing: .02em; }
+  .type .n { font-weight: 700; }
+  .type .d { font-size: .82rem; color: var(--mn-muted); line-height: 1.35; margin-top: 4px; }
+  .t4 { color: var(--c-t); } .t3 { color: var(--c-f); } .t7 { color: var(--c-s); }
+
+  .stage-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; }
+  .formula { font-size: 1.6rem; font-weight: 800; color: var(--mn-ink-soft); }
+  .hint { font-size: .95rem; color: var(--mn-muted); }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .arc { fill: none; stroke-width: 3.5; stroke-linecap: round; }
+  .arc.draw { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw .5s var(--mn-ease) forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .arc-label circle { stroke: #fff; stroke-width: 3; }
+  .arc-label text { fill: #fff; font-weight: 800; font-size: 18px; text-anchor: middle; font-family: var(--mn-font-sans); }
+  .count circle { fill: var(--mn-ink); }
+  .count text { fill: #fff; font-size: 11px; font-weight: 700; text-anchor: middle; font-family: var(--mn-font-sans); }
+  .count { animation: pop .2s; }
+  .frame path { fill: none; stroke: var(--c-f); stroke-width: 2.5; }
+  .frame text { fill: var(--c-f); font-weight: 700; font-size: 14px; font-family: var(--mn-font-sans); }
+  .marker.slide { transition: transform .5s var(--mn-ease); }
+
+  .tips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tip .ill { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
+  .tip p { margin: 0; font-size: .92rem; color: var(--mn-ink-soft); }
+  .count-demo { display: flex; gap: 3px; margin: 6px 0 10px; }
+  .count-demo span { flex: 1; height: 46px; border-radius: 6px; border: 1px solid var(--mn-line); display: grid; place-items: end center; padding-bottom: 4px; font-size: .75rem; font-weight: 700; }
+  .count-demo span.b { background: var(--mn-ink); color: #fff; height: 32px; border-color: var(--mn-ink); }
+  .count-demo span.end { background: var(--c-t-soft); }
+  .count-demo span.st { background: var(--c-r-soft); }
+
+  @media (max-width: 900px) { .types { grid-template-columns: repeat(2, 1fr); } .tips { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .tips { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="index.html">Mus<span>Note</span> · аккорды</a>
+  <nav class="variants"><a href="index.html">Обзор</a><a href="a-trios.html">A · Узоры</a><a href="b-hops.html">B · Прыжки</a><a href="c-clock.html">C · Часы</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">До Ре Ми</button></div>
+</div></header>
+
+<section class="hero wrap">
+  <span class="eyebrow">Вариант B · Прыжки</span>
+  <h1>Аккорд — это два прыжка по клавишам.</h1>
+  <p class="lead">Считай подряд <b>все</b> клавиши — и белые, и чёрные. Мажор: прыжок на <b class="t4">4</b>, потом на <b class="t3">3</b>. Минор — наоборот: <b class="t4">3</b>, потом <b class="t3">4</b>. Работает от любой клавиши, ничего не надо зубрить.</p>
+</section>
+
+<section class="wrap">
+  <div class="types" id="types">
+    <button class="type on" data-t="maj"><div class="f"><span class="t4">4</span>+<span class="t3">3</span></div><div class="n">Мажор</div><div class="d">широкий, потом узкий — звучит светло</div></button>
+    <button class="type" data-t="min"><div class="f"><span class="t4">3</span>+<span class="t3">4</span></div><div class="n">Минор</div><div class="d">узкий, потом широкий — звучит грустно</div></button>
+    <button class="type" data-t="dom7"><div class="f">4+3<span class="t7">+3</span></div><div class="n">Септаккорд (7)</div><div class="d">мажор и ещё один прыжок на 3</div></button>
+    <button class="type" data-t="dim"><div class="f">3+3</div><div class="n">Уменьшённый</div><div class="d">два узких — напряжённо, тревожно</div></button>
+    <button class="type" data-t="aug"><div class="f">4+4</div><div class="n">Увеличенный</div><div class="d">два широких — «подвешенно», как в кино</div></button>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="card">
+    <div class="stage-head">
+      <div>
+        <div class="hint">① Нажми любую клавишу — это основа аккорда. ② Смотри, как считаются прыжки.</div>
+        <div style="display:flex;align-items:baseline;gap:18px;margin-top:6px">
+          <span class="chord-name-big" id="name">C</span>
+          <span class="formula" id="formula">4 + 3</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn green" id="btnAnim">▶ Показать прыжки</button>
+        <button class="btn" id="btnPlay">♪ Сыграть</button>
+        <button class="btn" id="btnFlip">⇄ Мажор ↔ минор</button>
+      </div>
+    </div>
+    <svg id="kb"></svg>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:6px">
+      <div class="notes-row" id="notes"></div>
+      <div class="legend">
+        <span><b style="background:var(--c-r)"></b>основа</span>
+        <span><b style="background:var(--c-t)"></b>терция</span>
+        <span><b style="background:var(--c-f)"></b>квинта</span>
+        <span><b style="background:var(--c-s)"></b>септима</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap tips">
+  <div class="card tip">
+    <div class="ill">Считай всё</div>
+    <div class="count-demo"><span class="st">0</span><span class="b">1</span><span>2</span><span class="b">3</span><span class="end">4</span></div>
+    <p>C → E — это 4 шага: чёрные клавиши тоже считаются. Без них правило не работает.</p>
+  </div>
+  <div class="card tip">
+    <div class="ill" style="color:var(--c-f)">Рамка = 7</div>
+    <p>У мажора и минора крайние ноты одинаковые: 4+3 = 3+4 = 7. Рамка не двигается — меняется только середина.</p>
+  </div>
+  <div class="card tip">
+    <div class="ill" style="color:var(--c-t)">↓ 1 клавиша</div>
+    <p>Чтобы сделать из мажора минор, сдвинь <b>средний палец</b> на одну клавишу влево. Нажми «⇄» и посмотри.</p>
+  </div>
+  <div class="card tip">
+    <div class="ill">1 · 3 · 5</div>
+    <p>Пальцы правой руки: большой, средний, мизинец. Рука запоминает форму быстрее головы.</p>
+  </div>
+</section>
+
+<footer class="note wrap">Прототип для обсуждения. Звук — встроенный синтезатор: каждый шаг прыжка тихо «щёлкает» своей нотой.</footer>
+
+<script src="shared.js"></script>
+<script>
+const svg = document.getElementById('kb');
+const TOP = 100, H = 180, W = 48;
+const kb = MN.keyboard(svg, { W, H, top: TOP, bottom: 70, whites: 14, onKey: m => { setRoot(m); animate(); } });
+const arcsG = MN.el('g', {}, svg), countsG = MN.el('g', {}, svg), frameG = MN.el('g', { class: 'frame' }, svg);
+const ROLEC = { t: 'var(--c-t)', f: 'var(--c-f)', s: 'var(--c-s)' };
+
+let rootMidi = 60, type = 'maj', tok = 0;
+function current() {
+  const max = MN.TYPES[type].iv.at(-1)[1];
+  let base = rootMidi;
+  if (base + max > 83) base -= 12;
+  return MN.chord(MN.rootFor(base % 12, type), type, base);
+}
+function setRoot(m) { rootMidi = m; }
+
+function arc(from, to, role, animateIt) {
+  const x1 = kb.keys[from].cx, x2 = kb.keys[to].cx, gap = to - from;
+  const y = TOP - 30, h = 26 + gap * 9;
+  const p = MN.el('path', { d: `M${x1} ${y} C${x1} ${y - h}, ${x2} ${y - h}, ${x2} ${y}`, class: 'arc' + (animateIt ? ' draw' : ''), stroke: ROLEC[role] }, arcsG);
+  const g = MN.el('g', { class: 'arc-label', transform: `translate(${(x1 + x2) / 2},${y - h * 0.75})` }, arcsG);
+  MN.el('circle', { r: 15, fill: ROLEC[role] }, g);
+  MN.el('text', { y: 6 }, g).textContent = gap;
+  MN.el('circle', { cx: x2, cy: y, r: 4, fill: ROLEC[role] }, arcsG);
+}
+function frame(c) {
+  frameG.innerHTML = '';
+  const a = kb.keys[c.notes[0].midi], b = kb.keys[c.notes[2].midi];
+  const y = TOP + H + 14;
+  MN.el('path', { d: `M${a.cx} ${y - 8} V${y} H${b.cx} V${y - 8}` }, frameG);
+  const n = c.notes[2].semi;
+  const same = (type === 'maj' || type === 'min') ? ' · одинаковая у мажора и минора' : '';
+  MN.el('text', a.cx < 340 ? { x: Math.max(4, a.cx - 10), y: y + 22, 'text-anchor': 'start' } : { x: b.cx + 10, y: y + 22, 'text-anchor': 'end' }, frameG).textContent = `рамка ${n}${same}`;
+}
+function readout(c) {
+  document.getElementById('name').textContent = c.name;
+  const gaps = c.notes.slice(1).map((n, i) => n.semi - c.notes[i].semi);
+  document.getElementById('formula').innerHTML = gaps.map((g, i) => `<span style="color:${ROLEC[c.notes[i + 1].role]}">${g}</span>`).join(' + ');
+  document.getElementById('notes').innerHTML = c.notes.map(n => `<span class="note-chip ${n.role}">${MN.noteLabel(n)}</span>`).join('');
+}
+function render() {
+  tok++;
+  const c = current();
+  readout(c);
+  arcsG.innerHTML = ''; countsG.innerHTML = '';
+  kb.show(c.notes, { fingers: true });
+  for (let i = 1; i < c.notes.length; i++) arc(c.notes[i - 1].midi, c.notes[i].midi, c.notes[i].role, false);
+  frame(c);
+}
+async function animate() {
+  const my = ++tok;
+  const c = current();
+  readout(c);
+  arcsG.innerHTML = ''; countsG.innerHTML = ''; frameG.innerHTML = '';
+  let shown = [c.notes[0]];
+  kb.show(shown);
+  MN.tick(c.notes[0].midi);
+  await MN.sleep(450);
+  for (let i = 1; i < c.notes.length; i++) {
+    countsG.innerHTML = '';
+    const from = c.notes[i - 1].midi, to = c.notes[i].midi;
+    for (let k = 1; k <= to - from; k++) {
+      if (my !== tok) return;
+      const key = kb.keys[from + k];
+      kb.show(shown);
+      if (k < to - from) key.rect.classList.add('step');
+      const g = MN.el('g', { class: 'count', transform: `translate(${key.cx},${TOP - 12})` }, countsG);
+      MN.el('circle', { r: 10 }, g);
+      MN.el('text', { y: 4 }, g).textContent = k;
+      MN.tick(from + k);
+      await MN.sleep(320);
+    }
+    if (my !== tok) return;
+    shown = c.notes.slice(0, i + 1);
+    kb.show(shown);
+    arc(from, to, c.notes[i].role, true);
+    await MN.sleep(420);
+  }
+  if (my !== tok) return;
+  countsG.innerHTML = '';
+  kb.show(c.notes, { fingers: true });
+  frame(c);
+  MN.play(c.notes.map(n => n.midi), { arp: false });
+}
+
+document.getElementById('types').addEventListener('click', e => {
+  const b = e.target.closest('.type'); if (!b) return;
+  type = b.dataset.t;
+  document.querySelectorAll('.type').forEach(x => x.classList.toggle('on', x === b));
+  animate();
+});
+document.getElementById('btnAnim').onclick = animate;
+document.getElementById('btnPlay').onclick = () => MN.play(current().notes.map(n => n.midi));
+document.getElementById('btnFlip').onclick = () => {
+  if (type !== 'maj' && type !== 'min') type = 'maj';
+  const next = type === 'maj' ? 'min' : 'maj';
+  render();
+  const marker = kb.gM.querySelector('[data-role="t"]');
+  const oldC = current();
+  type = next;
+  document.querySelectorAll('.type').forEach(x => x.classList.toggle('on', x.dataset.t === type));
+  const newC = current();
+  if (marker && newC.notes[0].midi === oldC.notes[0].midi) {
+    const k0 = kb.keys[oldC.notes[1].midi], k1 = kb.keys[newC.notes[1].midi];
+    marker.removeAttribute('transform');
+    marker.style.transform = `translate(${k0.cx}px, ${kb.markerY(k0)}px)`;
+    marker.getBoundingClientRect();
+    marker.classList.add('slide');
+    marker.style.transform = `translate(${k1.cx}px, ${kb.markerY(k1)}px)`;
+    const myTok = tok;
+    setTimeout(() => { if (tok !== myTok) return; render(); MN.play(newC.notes.map(n => n.midi), { arp: false }); }, 520);
+  } else { render(); MN.play(newC.notes.map(n => n.midi), { arp: false }); }
+};
+document.addEventListener('notation', () => { kb.relabel(); render(); });
+render();
+</script>
+</body>
+</html>

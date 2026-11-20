@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akkorduhr — MusNote</title>
+<meta name="description" content="Zwölf Klaviertasten im Kreis. Dur ist ein Dreieck. Dreh es — der nächste Akkord.">
+<link rel="canonical" href="https://musnote.com/de/chords/clock/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/clock/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/clock/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/clock/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/clock/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="clock">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/de/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/de/">Überblick</a><a data-page="patterns" href="/de/chords/patterns/">Muster</a><a data-page="hops" href="/de/chords/hops/">Sprünge</a><a data-page="clock" href="/de/chords/clock/">Uhr</a><a data-page="chart" href="/de/chords/chart/">Verzeichnis</a><a data-page="voice" href="/tools/">Stimme</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de" selected>DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Akkorduhr</span>
+  <h1>Eine Figur — zwölf Akkorde.</h1>
+  <p class="lead">Leg die 12 Tasten der Oktave im Kreis aus, wie Stunden auf einer Uhr. Jeder Durakkord ist <b>dasselbe Dreieck</b>. Dreh es und du hast einen neuen Akkord. Moll ist das Dreieck, dessen mittlere Ecke eine Stunde zurückliegt.</p>
+</section>
+<section class="wrap"><div class="card stage clock-stage">
+  <svg id="clock" viewBox="0 0 440 440" aria-label="Kreis aus 12 Tasten mit der Akkordfigur"></svg>
+  <div class="panel">
+    <div class="chord-name-big" id="name">C</div>
+    <div class="muted" id="sub" style="font-weight:600"></div>
+    <div class="row"><span id="dots"></span><div class="notes-row" id="notes"></div></div>
+    <div class="row"><div class="seg" id="types"><button data-t="maj" class="on">Dur ▲</button><button data-t="min">Moll ▼</button><button data-t="dom7">Septakkord 7</button></div></div>
+    <div class="rot">
+      <button class="btn" id="ccw">⟲ −1 Stunde</button>
+      <button class="btn" id="cw">⟳ +1 Stunde</button>
+      <button class="btn primary" id="play">♪ Spielen</button>
+      <button class="btn green" id="tour"></button>
+    </div>
+    <div class="mn">
+      <div><svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><polygon points="17,3 31,27 3,27" fill="none" stroke="#0f1f1a" stroke-width="2.5"/></svg><span><b>Dur:</b> Seiten 4 · 3 · 5 Stunden. Die Form bleibt dieselbe.</span></div>
+      <div><svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><polygon points="17,27 31,3 3,3" fill="none" stroke="#f59e0b" stroke-width="2.5"/></svg><span><b>Moll:</b> 3 · 4 · 5 — dasselbe Dreieck im Spiegel.</span></div>
+      <div><span>1 Stunde auf dem Kreis = 1 Taste. Klick eine Note oder drück <span class="kbd">←</span> <span class="kbd">→</span>.</span></div>
+    </div>
+  </div>
+</div></section>
+<section class="wrap"><div class="card">
+  <svg id="kb" aria-label="Piano"></svg>
+  <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>Grundton</span><span><b style="background:var(--c-t)"></b>Terz</span><span><b style="background:var(--c-f)"></b>Quinte</span><span><b style="background:var(--c-s)"></b>Septime</span><span class="muted">Farben der Ecken = Farben der Tasten</span></div>
+</div></section>
+<footer class="note wrap">Dieselbe Figur gilt auch für andere Akkorde: ein Septakkord ist das Viereck 4·3·3·2.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-clock.js"></script>
+</body>
+</html>

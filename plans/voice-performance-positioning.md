@@ -93,8 +93,7 @@ karaoke (entertainment), party, song quiz, play-along hits
 
 ## Site implication
 
-Hero of musnote.com should move toward **voice performance for languages (then career)**.  
-`/piano` stays as a **pitch literacy** tool (see the note), not the brand story.
+**2026-11-20:** the first screen is the chord hub (`plans/chord-site-pages.md`). Voice tools stay in the menu at `/tools/`. `/piano` stays a pitch helper inside that voice section, not a chord-menu item.
 
 ## Site tools (shipped)
 

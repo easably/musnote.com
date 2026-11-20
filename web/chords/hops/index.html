@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chord hops: 4+3 and 3+4 — MusNote</title>
+<meta name="description" content="Build any chord as two hops on the piano. Major is 4 then 3. Minor is 3 then 4.">
+<link rel="canonical" href="https://musnote.com/chords/hops/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/hops/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/hops/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/hops/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/hops/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="hops">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/">Overview</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="hops" href="/chords/hops/">Hops</a><a data-page="clock" href="/chords/clock/">Clock</a><a data-page="chart" href="/chords/chart/">Chart</a><a data-page="voice" href="/tools/">Voice</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en" selected>EN</option><option value="ru">RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Hops</span>
+  <h1>A chord is two hops along the keys.</h1>
+  <p class="lead">Count <b>every</b> key in a row — white and black. Major: hop <b class="t4">4</b>, then <b class="t3">3</b>. Minor is the other way: <b class="t4">3</b>, then <b class="t3">4</b>. It works from any key. Nothing to memorize.</p>
+</section>
+<section class="wrap"><div class="types" id="types"><button class="type on" data-t="maj"><div class="f"><span class="t4">4</span>+<span class="t3">3</span></div><div class="n">Major</div><div class="d">wide, then narrow — sounds bright</div></button><button class="type " data-t="min"><div class="f"><span class="t4">3</span>+<span class="t3">4</span></div><div class="n">Minor</div><div class="d">narrow, then wide — sounds darker</div></button><button class="type " data-t="dom7"><div class="f">4+3<span class="t7">+3</span></div><div class="n">Seventh (7)</div><div class="d">major, plus one more hop of 3</div></button><button class="type " data-t="dim"><div class="f">3+3</div><div class="n">Diminished</div><div class="d">two narrow hops — tense</div></button><button class="type " data-t="aug"><div class="f">4+4</div><div class="n">Augmented</div><div class="d">two wide hops — suspended, like film music</div></button></div></section>
+<section class="wrap"><div class="card">
+  <div class="stage-head">
+    <div>
+      <div class="hint">① Press any key — that is the root. ② Watch the hops get counted.</div>
+      <div style="display:flex;align-items:baseline;gap:18px;margin-top:6px"><span class="chord-name-big" id="name">C</span><span class="formula" id="formula">4 + 3</span></div>
+    </div>
+    <div class="actions"><button class="btn green" id="btnAnim">▶ Show the hops</button><button class="btn" id="btnPlay">♪ Play</button><button class="btn" id="btnFlip">⇄ Major ↔ minor</button></div>
+  </div>
+  <svg id="kb" aria-label="Piano"></svg>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:6px"><div class="notes-row" id="notes"></div><div class="legend"><span><b style="background:var(--c-r)"></b>root</span><span><b style="background:var(--c-t)"></b>third</span><span><b style="background:var(--c-f)"></b>fifth</span><span><b style="background:var(--c-s)"></b>seventh</span></div></div>
+</div></section>
+<section class="wrap tips"><div class="card tip"><div class="ill">Count everything</div><div class="count-demo"><span class="st">0</span><span class="b">1</span><span>2</span><span class="b">3</span><span class="end">4</span></div><p>C → E is 4 steps: black keys count too. Without them the rule breaks.</p></div><div class="card tip"><div class="ill" style="color:var(--c-f)">Frame = 7</div><p>Major and minor share the outer notes: 4+3 = 3+4 = 7. The frame stays. Only the middle moves.</p></div><div class="card tip"><div class="ill" style="color:var(--c-t)">↓ 1 key</div><p>To turn major into minor, move the <b>middle finger</b> one key to the left. Press ⇄ and watch.</p></div><div class="card tip"><div class="ill">1 · 3 · 5</div><p>Right hand: thumb, middle, little finger. The hand remembers the shape faster than the head.</p></div></section>
+<footer class="note wrap">Each hop step quietly sounds its own note.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-hops.js"></script>
+</body>
+</html>

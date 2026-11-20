@@ -17,18 +17,16 @@ File: `web/assets/css/design-tokens.css`
 
 ## Layout rules (product)
 
-1. First viewport: **MusNote** brand + one headline + one sentence + CTA + one visual (pitch contour).
-2. Piano is **ear helper**, never hero.
+1. First viewport: **MusNote** plus the chord hub — one headline, one sentence, three cards (patterns, hops, clock). The button opens a chord page.
+2. Piano stays an **ear helper** inside voice tools. It is not a chord-menu item and not the first screen.
 3. Prefer pathway rows / tool links over decorative card grids.
 4. Motion: short rise + soft pulse only; respect `prefers-reduced-motion`.
 
 ## Homepage story
 
-1. Hear / match phrase (languages / intonation)
-2. How practice works (3 steps)
-3. Tools strip
-4. Explicit demotion of piano
-5. Languages → career closing
+1. Chord hub: patterns, hops, clock
+2. Footnote to the pattern trainer
+3. Voice tools stay one menu item away (`/tools/`)
 
 ## CSS layout
 

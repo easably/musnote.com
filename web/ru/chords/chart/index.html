@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Указатель аккордов — MusNote</title>
+<meta name="description" content="Выбери аккорд, увидь клавиши и сыграй.">
+<link rel="canonical" href="https://musnote.com/ru/chords/chart/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/chart/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/chart/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/chart/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/chart/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="chart">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/ru/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/ru/">Обзор</a><a data-page="patterns" href="/ru/chords/patterns/">Узоры</a><a data-page="hops" href="/ru/chords/hops/">Прыжки</a><a data-page="clock" href="/ru/chords/clock/">Часы</a><a data-page="chart" href="/ru/chords/chart/">Указатель</a><a data-page="voice" href="/tools/">Голос</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">До Ре Ми</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru" selected>RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Указатель аккордов</span>
+  <h1>Указатель аккордов</h1>
+  <p class="lead">Выбрал название — зажглись клавиши. Нажми «сыграть» или саму клавишу, чтобы услышать ноту.</p>
+</section>
+<section class="wrap"><div class="card">
+  <div class="chart-groups"><div><h2>Мажор</h2><div class="chips" data-chart="maj"></div></div><div><h2>Минор</h2><div class="chips" data-chart="min"></div></div><div><h2>Септаккорд</h2><div class="chips" data-chart="dom7"></div></div></div>
+  <div class="stage-head"><span class="chord-name-big" id="name">C</span><button class="btn primary" id="btnPlay">♪ Сыграть</button></div>
+  <svg id="kb" aria-label="Piano"></svg>
+  <div class="notes-row" id="notes" style="margin-top:12px"></div>
+  <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>основа</span><span><b style="background:var(--c-t)"></b>терция</span><span><b style="background:var(--c-f)"></b>квинта</span><span><b style="background:var(--c-s)"></b>септима</span></div>
+</div></section>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-chart.js"></script>
+</body>
+</html>

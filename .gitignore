@@ -17,6 +17,7 @@
 
 # misc
 .DS_Store
+.tmp/
 *.pem
 
 # debug
@@ -27,6 +28,8 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+__pycache__/
+.venv/
 
 # vercel
 .vercel

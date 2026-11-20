@@ -1,7 +1,6 @@
 // Simple Service Worker for MusNote
-const CACHE_NAME = 'musnote-v2';
+const CACHE_NAME = 'musnote-v3';
 const urlsToCache = [
-  '/',
   '/assets/css/main.css',
   '/assets/css/responsive.css',
   '/assets/js/main.js',
@@ -20,12 +19,13 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const accept = event.request.headers.get('accept') || '';
+  if (event.request.mode === 'navigate' || accept.includes('text/html')) {
+    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
+    return;
+  }
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      })
+    caches.match(event.request).then((response) => response || fetch(event.request))
   );
 });
 

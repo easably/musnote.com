@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key patterns: CFG and iDEA — MusNote</title>
+<meta name="description" content="Do not memorize 24 chords. Remember CFG and iDEA, then practice the pattern trainer.">
+<link rel="canonical" href="https://musnote.com/chords/patterns/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/patterns/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/patterns/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/patterns/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/patterns/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="patterns">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/">Overview</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="hops" href="/chords/hops/">Hops</a><a data-page="clock" href="/chords/clock/">Clock</a><a data-page="chart" href="/chords/chart/">Chart</a><a data-page="voice" href="/tools/">Voice</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en" selected>EN</option><option value="ru">RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Key patterns</span>
+  <h1>Do not memorize 24 chords.<br>Remember two words: <span class="hl1">CFG</span> and <span class="hl2">iDEA</span>.</h1>
+  <p class="lead">Every major or minor triad on the piano is a pattern of white and black keys. There are four patterns. The trio that holds the chord letter tells you which one.</p>
+  <div class="words">
+    <div class="word cfg"><div class="big">CFG</div><p>The three main chords of C major — thousands of songs stand on them. <b>Major = all white.</b></p></div>
+    <div class="word dea"><div class="big"><small>i</small>DEA</div><p>Hidden in the word <i>idea</i>. <b>Minor = all white.</b> Major has a black key in the middle.</p></div>
+  </div>
+</section>
+<section class="wrap steps">
+  <div class="card"><h3><span class="num">1</span> Skeleton — skip one letter</h3><p class="muted" style="margin:0">Take the chord letter, skip one, take the next. On the white keys that is “every other one”.</p><div class="alpha" id="alpha"></div></div>
+  <div class="card"><h3><span class="num">2</span> Pattern — which keys turn black</h3><p class="muted" style="margin:0">The pattern says which skeleton note moves to the next black key. Take the pattern from the sheet below.</p>
+    <div style="display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;font-size:.9rem;color:var(--mn-ink-soft)"><span>all white</span><span>black in the middle</span><span>white in the middle</span></div>
+  </div>
+</section>
+<section class="wrap">
+  <h2>Cross-swap sheet</h2>
+  <p class="muted" style="margin-top:0">Hover a cell to light the same pattern. Click a chord to put it on the keyboard.</p>
+  <div class="card sheet-scroll">
+    <div class="sheet" id="sheet">
+      <div></div>
+      <div class="colh hl1">CFG<small>C · F · G</small></div>
+      <div class="colh hl2">iDEA<small>D · E · A</small></div>
+      <div class="colh">Shift onto a black key<small>the same trios, ± a semitone</small></div>
+      <div class="colh">The B family<small>three special ones — learn apart</small></div>
+      <div class="rowh" style="grid-row:2">Major</div>
+      <div class="rowh" style="grid-row:3">Minor</div>
+      <div class="cross" id="cross"><div class="swap-badge" title="Major / Minor">⇄</div></div>
+    </div>
+    <p class="sheet-note"><b>Rule:</b> major and minor simply swap trios — crosswise. Black-key chords (D♭, E♭, A♭ and C♯m, F♯m, G♯m) are those same trios shifted by a semitone: pattern black-white-black.</p>
+  </div>
+</section>
+<section class="wrap">
+  <div class="card stage">
+    <div>
+      <div class="chord-name-big" id="stName">C</div>
+      <div class="sub" id="stType"></div>
+      <div style="margin-top:14px;display:flex;align-items:center;gap:10px"><span id="stDots"></span><b id="stPname"></b></div>
+      <ol class="explain" id="stExplain"></ol>
+      <div class="notes-row" id="stNotes" style="margin-bottom:18px"></div>
+      <div class="actions"><button class="btn primary" id="btnPlay">♪ Play</button><button class="btn" id="btnFlip"></button></div>
+    </div>
+    <div>
+      <svg id="kb" aria-label="Piano"></svg>
+      <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>root</span><span><b style="background:var(--c-t)"></b>third — the mood</span><span><b style="background:var(--c-f)"></b>fifth</span><span class="muted">numbers under the notes are right-hand fingers</span></div>
+    </div>
+  </div>
+</section>
+<section class="wrap" id="trainer">
+  <div class="card">
+    <h2>Trainer: which pattern?</h2>
+    <p class="muted" style="margin:0">You see the name — you pick the pattern. A few minutes a day, and you stop thinking about it.</p>
+    <div class="quiz-top">
+      <div class="q-chord" id="qChord">E</div>
+      <div class="q-opts" id="qOpts">
+        <button class="q-opt" data-p="www"><span class="dots lg"><i class="w"></i><i class="w"></i><i class="w"></i></span>all white</button>
+        <button class="q-opt" data-p="wbw"><span class="dots lg"><i class="w"></i><i class="b"></i><i class="w"></i></span>black in the middle</button>
+        <button class="q-opt" data-p="bwb"><span class="dots lg"><i class="b"></i><i class="w"></i><i class="b"></i></span>white in the middle</button>
+        <button class="q-opt" data-p="odd"><span style="font-size:1.3rem;line-height:22px">B…</span>B family (special)</button>
+      </div>
+    </div>
+    <div class="fb" id="qFb"></div>
+    <svg id="qkb" style="max-width:520px;margin-top:8px" aria-label="Piano"></svg>
+    <div class="score"><span>Streak: <b id="streak">0</b> · Best: <b id="best">0</b></span><button class="btn" id="qNext">Next →</button></div>
+  </div>
+</section>
+<footer class="note wrap">Notes are spelled the usual way (E♭, not D♯, in C minor). Sound is a built-in synth.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-patterns.js"></script>
+</body>
+</html>

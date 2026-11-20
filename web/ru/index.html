@@ -1,223 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusNote - Платформа для изучения музыки</title>
-    <meta name="description" content="Изучайте теорию музыки, практикуйтесь на пианино и исследуйте музыкальные ноты с MusNote - вашей комплексной платформой для изучения музыки.">
-    <meta name="keywords" content="музыка, пианино, ноты, аккорды, обучение, теория, практика">
-    <meta name="author" content="MusNote">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://musnote.com/ru/">
-    <meta property="og:title" content="MusNote - Платформа для изучения музыки">
-    <meta property="og:description" content="Изучайте теорию музыки, практикуйтесь на пианино и исследуйте музыкальные ноты с MusNote - вашей комплексной платформой для изучения музыки.">
-    <meta property="og:image" content="https://musnote.com/assets/images/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://musnote.com/ru/">
-    <meta property="twitter:title" content="MusNote - Платформа для изучения музыки">
-    <meta property="twitter:description" content="Изучайте теорию музыки, практикуйтесь на пианино и исследуйте музыкальные ноты с MusNote - вашей комплексной платформой для изучения музыки.">
-    <meta property="twitter:image" content="https://musnote.com/assets/images/og-image.jpg">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://musnote.com/ru/">
-    
-    <!-- Hreflang for multilingual support -->
-    <link rel="alternate" hreflang="en" href="https://musnote.com/">
-    <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
-    <link rel="alternate" hreflang="de" href="https://musnote.com/de/">
-    <link rel="alternate" hreflang="x-default" href="https://musnote.com/">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="/assets/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusNote — как запоминаются аккорды</title>
+<meta name="description" content="Одно правило строит аккорд на пианино. Три картинки: узоры клавиш, прыжки и часы аккордов. Дальше короткий тренажёр.">
+<link rel="canonical" href="https://musnote.com/ru/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-brand">
-                    <a href="/ru/" class="logo">
-                        <img src="/assets/images/logo.svg" alt="MusNote" width="120" height="40">
-                    </a>
-                </div>
-                
-                <div class="nav-menu" id="nav-menu">
-                    <ul class="nav-list">
-                        <li class="nav-item">
-                            <a href="/ru/" class="nav-link">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/ru/piano" class="nav-link">Пианино</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/ru/chord-tutorial" class="nav-link">Учебник аккордов</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/ru/about" class="nav-link">О нас</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="nav-actions">
-                    <!-- Language Selector -->
-                    <div class="language-selector">
-                        <select id="language-selector" class="lang-select">
-                            <option value="en">🇺🇸 English</option>
-                            <option value="ru" selected>🇷🇺 Русский</option>
-                            <option value="de">🇩🇪 Deutsch</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Mobile Menu Toggle -->
-                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Переключить меню">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
+<body data-page="home">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/ru/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/ru/">Обзор</a><a data-page="patterns" href="/ru/chords/patterns/">Узоры</a><a data-page="hops" href="/ru/chords/hops/">Прыжки</a><a data-page="clock" href="/ru/chords/clock/">Часы</a><a data-page="chart" href="/ru/chords/chart/">Указатель</a><a data-page="voice" href="/tools/">Голос</a></nav>
+  
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru" selected>RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Аккорды</span>
+  <h1>Как сделать, чтобы аккорды запоминались</h1>
+  <p class="lead">Одно правило, из которого аккорд строится сам, и одна картинка, которая это правило закрепляет. Три подхода — у каждого своя изюминка.</p>
+  <div class="hero-actions"><a class="btn primary" href="/ru/chords/patterns/">Начать с узоров</a></div>
+</section>
+<section class="wrap variants-grid"><a class="card vcard" href="/ru/chords/patterns/">
+    <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><rect x="10" y="10" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><rect x="115" y="10" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="10" y="68" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="115" y="68" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><g font-family="Outfit,sans-serif" font-weight="800" font-size="18" text-anchor="middle"><text x="57" y="42">CFG</text><text x="162" y="42">DEA</text><text x="57" y="100">Cm</text><text x="162" y="100">Dm</text></g></svg></div>
+    <span class="tag">Запомнить</span>
+    <h3>Узоры клавиш: CFG и iDEA</h3>
+    <p>24 аккорда сводятся к 4 узорам из белых и чёрных клавиш. Узор подсказывает тройка, в которой стоит буква.</p>
+    <span class="go">Открыть →</span>
+  </a>
+<a class="card vcard" href="/ru/chords/hops/">
+    <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#c3d1cb"><rect x="10" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="38" y="60" width="28" height="64" rx="3" fill="#a7f3d0"/><rect x="66" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="94" y="60" width="28" height="64" rx="3" fill="#fde68a"/><rect x="122" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="150" y="60" width="28" height="64" rx="3" fill="#bfdbfe"/><rect x="178" y="60" width="28" height="64" rx="3" fill="#fff"/></g><path d="M52 56 C52 18, 108 18, 108 56" fill="none" stroke="#f59e0b" stroke-width="3.5"/><path d="M108 56 C108 26, 164 26, 164 56" fill="none" stroke="#3b82f6" stroke-width="3.5"/><circle cx="80" cy="27" r="12" fill="#f59e0b"/><text x="80" y="32" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit,sans-serif">4</text><circle cx="136" cy="33" r="12" fill="#3b82f6"/><text x="136" y="38" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit,sans-serif">3</text></svg></div>
+    <span class="tag">Понять</span>
+    <h3>Прыжки: 4+3 и 3+4</h3>
+    <p>Аккорд строится от любой клавиши двумя прыжками. Анимация считает каждую клавишу и рисует дуги.</p>
+    <span class="go">Открыть →</span>
+  </a>
+<a class="card vcard" href="/ru/chords/clock/">
+    <div class="thumb"><svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="56" fill="none" stroke="#dfe8e4"/><polygon points="70,14 118.5,98 42,118.5" fill="rgba(16,185,129,.12)" stroke="#0f1f1a" stroke-width="2.5"/><circle cx="70" cy="14" r="9" fill="#10b981"/><circle cx="118.5" cy="98" r="9" fill="#f59e0b"/><circle cx="42" cy="118.5" r="9" fill="#3b82f6"/></svg></div>
+    <span class="tag">Увидеть систему</span>
+    <h3>Часы аккордов</h3>
+    <p>12 клавиш по кругу. Мажор — один и тот же треугольник, его можно крутить. Минор — тот же треугольник в зеркале.</p>
+    <span class="go">Открыть →</span>
+  </a></section>
+<p class="hub-note wrap">Уже помните CFG и iDEA? <a href="/ru/chords/patterns/#trainer">Открыть тренажёр узоров →</a></p>
+<script src="/assets/js/chords-shared.js"></script>
 
-    <!-- Main Content -->
-    <main class="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title" data-translate="hero.title"></h1>
-                    <p class="hero-description" data-translate="hero.description">
-                    </p>
-                    <div class="hero-actions">
-                        <a href="/ru/piano" class="btn btn-primary" data-translate="hero.start_learning"></a>
-                        <a href="/ru/about" class="btn btn-secondary" data-translate="hero.learn_more"></a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="/assets/images/hero-piano.svg" alt="Клавиатура пианино" width="600" height="400">
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <h2 class="section-title">Почему выбирают MusNote?</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/piano.svg" alt="Пианино" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title">Интерактивное пианино</h3>
-                        <p class="feature-description">
-                            Практикуйтесь на нашем виртуальном пианино с обратной связью в реальном времени и распознаванием нот.
-                        </p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/theory.svg" alt="Теория музыки" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title">Теория музыки</h3>
-                        <p class="feature-description">
-                            Изучайте аккорды, гаммы и концепции теории музыки с подробными объяснениями.
-                        </p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <img src="/assets/images/icons/practice.svg" alt="Практика" width="48" height="48">
-                        </div>
-                        <h3 class="feature-title">Интерактивная практика</h3>
-                        <p class="feature-description">
-                            Практикуйтесь с управляемыми упражнениями и обратной связью в реальном времени для улучшения навыков.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section class="cta">
-            <div class="container">
-                <h2 class="section-title">Готовы начать свое музыкальное путешествие?</h2>
-                <p class="cta-description">
-                    Присоединяйтесь к тысячам музыкантов, которые уже изучают с MusNote.
-                </p>
-                <div class="cta-actions">
-                    <a href="/ru/piano" class="btn btn-primary">Начать сейчас</a>
-                    <a href="/ru/about" class="btn btn-outline">Узнать больше</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 class="footer-title">О MusNote</h3>
-                    <p class="footer-description">
-                        Ваша комплексная платформа для изучения теории музыки и пианино.
-                    </p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Быстрые ссылки</h3>
-                    <ul class="footer-links">
-                        <li><a href="/ru/piano">Пианино</a></li>
-                        <li><a href="/ru/about">О нас</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Языки</h3>
-                    <ul class="footer-links">
-                        <li><a href="/" hreflang="en">English</a></li>
-                        <li><a href="/ru/" hreflang="ru">Русский</a></li>
-                        <li><a href="/de/" hreflang="de">Deutsch</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    © 2024 MusNote. <span data-translate="footer.rights">Все права защищены.</span>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="/assets/js/language.js"></script>
-    <script src="/assets/js/main.js"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
 </body>
 </html>

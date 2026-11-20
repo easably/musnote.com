@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chord chart — MusNote</title>
+<meta name="description" content="Look up a piano chord, see the keys, and play it.">
+<link rel="canonical" href="https://musnote.com/chords/chart/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/chart/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/chart/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/chart/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/chart/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="chart">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/">Overview</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="hops" href="/chords/hops/">Hops</a><a data-page="clock" href="/chords/clock/">Clock</a><a data-page="chart" href="/chords/chart/">Chart</a><a data-page="voice" href="/tools/">Voice</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en" selected>EN</option><option value="ru">RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Chord chart</span>
+  <h1>Chord chart</h1>
+  <p class="lead">Pick a name. The keys light up. Press play, or press a key to hear that note.</p>
+</section>
+<section class="wrap"><div class="card">
+  <div class="chart-groups"><div><h2>Major</h2><div class="chips" data-chart="maj"></div></div><div><h2>Minor</h2><div class="chips" data-chart="min"></div></div><div><h2>Seventh</h2><div class="chips" data-chart="dom7"></div></div></div>
+  <div class="stage-head"><span class="chord-name-big" id="name">C</span><button class="btn primary" id="btnPlay">♪ Play</button></div>
+  <svg id="kb" aria-label="Piano"></svg>
+  <div class="notes-row" id="notes" style="margin-top:12px"></div>
+  <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>root</span><span><b style="background:var(--c-t)"></b>third</span><span><b style="background:var(--c-f)"></b>fifth</span><span><b style="background:var(--c-s)"></b>seventh</span></div>
+</div></section>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-chart.js"></script>
+</body>
+</html>

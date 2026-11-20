@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Узоры клавиш: CFG и iDEA — MusNote</title>
+<meta name="description" content="Не зубри 24 аккорда. Запомни CFG и iDEA, потом потренируй узор.">
+<link rel="canonical" href="https://musnote.com/ru/chords/patterns/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/patterns/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/patterns/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/patterns/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/patterns/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="patterns">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/ru/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/ru/">Обзор</a><a data-page="patterns" href="/ru/chords/patterns/">Узоры</a><a data-page="hops" href="/ru/chords/hops/">Прыжки</a><a data-page="clock" href="/ru/chords/clock/">Часы</a><a data-page="chart" href="/ru/chords/chart/">Указатель</a><a data-page="voice" href="/tools/">Голос</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">До Ре Ми</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru" selected>RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Узоры клавиш</span>
+  <h1>Не зубри 24 аккорда.<br>Запомни два слова: <span class="hl1">CFG</span> и <span class="hl2">iDEA</span>.</h1>
+  <p class="lead">Любое мажорное или минорное трезвучие на пианино — это узор из белых и чёрных клавиш. Узоров всего четыре. Какой из них нужен — подсказывает тройка, в которую входит буква аккорда.</p>
+  <div class="words">
+    <div class="word cfg"><div class="big">CFG</div><p>Три главных аккорда до мажора — на них держатся тысячи песен. <b>Мажор = все белые.</b></p></div>
+    <div class="word dea"><div class="big"><small>i</small>DEA</div><p>Спрятано в слове <i>idea</i>. <b>Минор = все белые.</b> Мажор — с чёрной клавишей в середине.</p></div>
+  </div>
+</section>
+<section class="wrap steps">
+  <div class="card"><h3><span class="num">1</span> Скелет — «через одну букву»</h3><p class="muted" style="margin:0">Берёшь букву аккорда, одну пропускаешь, берёшь следующую. На белых клавишах это «через одну».</p><div class="alpha" id="alpha"></div></div>
+  <div class="card"><h3><span class="num">2</span> Узор — какие клавиши почернеют</h3><p class="muted" style="margin:0">Узор говорит, какую ноту скелета сдвинуть на соседнюю чёрную клавишу. Узор берёшь из шпаргалки ниже.</p>
+    <div style="display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;font-size:.9rem;color:var(--mn-ink-soft)"><span>все белые</span><span>чёрная в середине</span><span>белая в середине</span></div>
+  </div>
+</section>
+<section class="wrap">
+  <h2>Шпаргалка «крест-накрест»</h2>
+  <p class="muted" style="margin-top:0">Наведи на клетку — подсветятся клетки с тем же узором. Нажми на аккорд — он появится на клавиатуре.</p>
+  <div class="card sheet-scroll">
+    <div class="sheet" id="sheet">
+      <div></div>
+      <div class="colh hl1">CFG<small>C · F · G</small></div>
+      <div class="colh hl2">iDEA<small>D · E · A</small></div>
+      <div class="colh">Сдвиг на чёрную<small>те же тройки ±½ тона</small></div>
+      <div class="colh">Семья B<small>особые — выучить отдельно</small></div>
+      <div class="rowh" style="grid-row:2">Мажор</div>
+      <div class="rowh" style="grid-row:3">Минор</div>
+      <div class="cross" id="cross"><div class="swap-badge" title="Мажор / Минор">⇄</div></div>
+    </div>
+    <p class="sheet-note"><b>Правило:</b> мажор и минор просто меняют тройки местами — крест-накрест. А чёрные аккорды (D♭, E♭, A♭ и C♯m, F♯m, G♯m) — это те же тройки, сдвинутые на полутон: узор чёрная-белая-чёрная.</p>
+  </div>
+</section>
+<section class="wrap">
+  <div class="card stage">
+    <div>
+      <div class="chord-name-big" id="stName">C</div>
+      <div class="sub" id="stType"></div>
+      <div style="margin-top:14px;display:flex;align-items:center;gap:10px"><span id="stDots"></span><b id="stPname"></b></div>
+      <ol class="explain" id="stExplain"></ol>
+      <div class="notes-row" id="stNotes" style="margin-bottom:18px"></div>
+      <div class="actions"><button class="btn primary" id="btnPlay">♪ Сыграть</button><button class="btn" id="btnFlip"></button></div>
+    </div>
+    <div>
+      <svg id="kb" aria-label="Piano"></svg>
+      <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>основа</span><span><b style="background:var(--c-t)"></b>терция — «настроение»</span><span><b style="background:var(--c-f)"></b>квинта</span><span class="muted">цифры под нотами — пальцы правой руки</span></div>
+    </div>
+  </div>
+</section>
+<section class="wrap" id="trainer">
+  <div class="card">
+    <h2>Тренажёр: какой узор?</h2>
+    <p class="muted" style="margin:0">Видишь название — выбираешь узор. Пару дней по несколько минут — и будешь отвечать не задумываясь.</p>
+    <div class="quiz-top">
+      <div class="q-chord" id="qChord">E</div>
+      <div class="q-opts" id="qOpts">
+        <button class="q-opt" data-p="www"><span class="dots lg"><i class="w"></i><i class="w"></i><i class="w"></i></span>все белые</button>
+        <button class="q-opt" data-p="wbw"><span class="dots lg"><i class="w"></i><i class="b"></i><i class="w"></i></span>чёрная в середине</button>
+        <button class="q-opt" data-p="bwb"><span class="dots lg"><i class="b"></i><i class="w"></i><i class="b"></i></span>белая в середине</button>
+        <button class="q-opt" data-p="odd"><span style="font-size:1.3rem;line-height:22px">B…</span>семья B (особый)</button>
+      </div>
+    </div>
+    <div class="fb" id="qFb"></div>
+    <svg id="qkb" style="max-width:520px;margin-top:8px" aria-label="Piano"></svg>
+    <div class="score"><span>Серия: <b id="streak">0</b> · Рекорд: <b id="best">0</b></span><button class="btn" id="qNext">Дальше →</button></div>
+  </div>
+</section>
+<footer class="note wrap">Ноты подписаны по правилам (E♭, а не D♯ в до миноре). Звук — встроенный синтезатор.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-patterns.js"></script>
+</body>
+</html>

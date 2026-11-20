@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аккорды: варианты дизайна — MusNote</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .variants-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .vcard { display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform .2s var(--mn-ease), box-shadow .2s; }
+  .vcard:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(15,31,26,.10); }
+  .thumb { height: 170px; border-radius: 14px; background: var(--mn-surface-2); display: grid; place-items: center; margin-bottom: 16px; }
+  .vcard h3 { font-size: 1.25rem; }
+  .vcard .tag { font-size: .78rem; font-weight: 700; color: var(--mn-green-700); text-transform: uppercase; letter-spacing: .06em; }
+  .vcard p { margin: 6px 0; color: var(--mn-ink-soft); font-size: .95rem; }
+  .vcard dl { margin: 10px 0 0; font-size: .88rem; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+  .vcard dt { font-weight: 700; } .vcard dd { margin: 0; color: var(--mn-ink-soft); }
+  .vcard .go { margin-top: auto; padding-top: 14px; font-weight: 700; color: var(--mn-green-700); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  ol.flow { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+  ul.issues { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--mn-ink-soft); }
+  @media (max-width: 900px) { .variants-grid, .two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="index.html">Mus<span>Note</span> · аккорды</a>
+  <nav class="variants"><a href="index.html">Обзор</a><a href="a-trios.html">A · Узоры</a><a href="b-hops.html">B · Прыжки</a><a href="c-clock.html">C · Часы</a></nav>
+</div></header>
+
+<section class="hero wrap">
+  <span class="eyebrow">Редизайн /chord-tutorial</span>
+  <h1>Как сделать, чтобы аккорды запоминались</h1>
+  <p class="lead">Сейчас на странице 21 кнопка, и каждый аккорд приходится учить отдельно. Идея редизайна: дать <b>одно правило</b>, из которого аккорд строится сам, и <b>одну картинку</b>, которая это правило закрепляет. Ниже три подхода — у каждого своя изюминка.</p>
+</section>
+
+<section class="wrap variants-grid">
+  <a class="card vcard" href="a-trios.html">
+    <div class="thumb">
+      <svg width="220" height="130" viewBox="0 0 220 130">
+        <rect x="10" y="10" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/>
+        <rect x="115" y="10" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/>
+        <rect x="10" y="68" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/>
+        <rect x="115" y="68" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/>
+        <g font-family="Outfit" font-weight="800" font-size="18" text-anchor="middle"><text x="57" y="42">CFG</text><text x="162" y="42">DEA</text><text x="57" y="100">Cm…</text><text x="162" y="100">Dm…</text></g>
+        <circle cx="110" cy="65" r="15" fill="#0f1f1a"/><text x="110" y="71" fill="#fff" font-size="16" text-anchor="middle">⇄</text>
+      </svg>
+    </div>
+    <span class="tag">Вариант A · запомнить</span>
+    <h3>Узоры клавиш: CFG и iDEA</h3>
+    <p>24 аккорда сводятся к 4 узорам из белых/чёрных клавиш. Узор подсказывает тройка, в которой стоит буква.</p>
+    <dl><dt>Изюминка</dt><dd>два слова и шпаргалка «крест-накрест»: мажор и минор меняют тройки местами</dd><dt>Для чего</dt><dd>выучить наизусть + тренажёр</dd></dl>
+    <span class="go">Открыть →</span>
+  </a>
+  <a class="card vcard" href="b-hops.html">
+    <div class="thumb">
+      <svg width="220" height="130" viewBox="0 0 220 130">
+        <g stroke="#c3d1cb"><rect x="10" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="38" y="60" width="28" height="64" rx="3" fill="#a7f3d0"/><rect x="66" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="94" y="60" width="28" height="64" rx="3" fill="#fde68a"/><rect x="122" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="150" y="60" width="28" height="64" rx="3" fill="#bfdbfe"/><rect x="178" y="60" width="28" height="64" rx="3" fill="#fff"/></g>
+        <path d="M52 56 C52 18, 108 18, 108 56" fill="none" stroke="#f59e0b" stroke-width="3.5"/>
+        <path d="M108 56 C108 26, 164 26, 164 56" fill="none" stroke="#3b82f6" stroke-width="3.5"/>
+        <circle cx="80" cy="27" r="12" fill="#f59e0b"/><text x="80" y="32" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit">4</text>
+        <circle cx="136" cy="33" r="12" fill="#3b82f6"/><text x="136" y="38" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit">3</text>
+      </svg>
+    </div>
+    <span class="tag">Вариант B · понять</span>
+    <h3>Прыжки: 4+3 и 3+4</h3>
+    <p>Аккорд строится от любой клавиши двумя прыжками. Анимация считает каждую клавишу и рисует дуги.</p>
+    <dl><dt>Изюминка</dt><dd>«рамка 7 клавиш» не двигается, минор = средний палец на клавишу вниз (анимировано)</dd><dt>Для чего</dt><dd>понять принцип, строить любые аккорды, вкл. 7, dim, aug</dd></dl>
+    <span class="go">Открыть →</span>
+  </a>
+  <a class="card vcard" href="c-clock.html">
+    <div class="thumb">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="56" fill="none" stroke="#dfe8e4"/>
+        <g id="d"></g>
+        <polygon points="70,14 118.5,98 42,118.5" fill="rgba(16,185,129,.12)" stroke="#0f1f1a" stroke-width="2.5"/>
+        <circle cx="70" cy="14" r="9" fill="#10b981"/><circle cx="118.5" cy="98" r="9" fill="#f59e0b"/><circle cx="42" cy="118.5" r="9" fill="#3b82f6"/>
+      </svg>
+    </div>
+    <span class="tag">Вариант C · увидеть систему</span>
+    <h3>Часы аккордов</h3>
+    <p>12 клавиш по кругу. Мажор — один и тот же треугольник, его можно крутить. Минор — тот же треугольник в зеркале.</p>
+    <dl><dt>Изюминка</dt><dd>одна фигура → 12 аккордов; плавное вращение, синхронно с клавиатурой</dd><dt>Для чего</dt><dd>«вау»-блок в начале страницы, показывает всю систему разом</dd></dl>
+    <span class="go">Открыть →</span>
+  </a>
+</section>
+
+<section class="wrap two">
+  <div class="card">
+    <h2>Что предлагаю для сайта</h2>
+    <p class="muted" style="margin-top:0">Не выбирать один вариант, а собрать из них одну страницу — от «увидел» к «понял» к «запомнил»:</p>
+    <ol class="flow">
+      <li><b>Часы (C)</b> — первым экраном: сразу видно, что все аккорды устроены по одной схеме.</li>
+      <li><b>Прыжки (B)</b> — объяснение: как построить любой аккорд от любой клавиши.</li>
+      <li><b>Шпаргалка CFG / iDEA + тренажёр (A)</b> — чтобы через пару дней называть узор не задумываясь.</li>
+    </ol>
+    <p class="muted">Во всех вариантах одни и те же цвета: зелёный — основа, оранжевый — терция («настроение»), синий — квинта. Так они складываются в одну систему.</p>
+  </div>
+  <div class="card">
+    <h2>Что поправить на текущей странице</h2>
+    <ul class="issues">
+      <li>Минор записан через диезы: Cm = C–D♯–G. Правильно C–E♭–G — иначе ломается правило «через одну букву».</li>
+      <li>Клавиатура в SVG занимает 900 из 1200 по ширине — справа пустое место.</li>
+      <li>Нет правила построения — только список. Добавить формулы 4+3 / 3+4.</li>
+      <li>Нет D♭, E♭, F♯, A♭, B♭ и минорных аккордов от чёрных клавиш.</li>
+      <li>Аппликатура 1-3-5 и звучание (светло/грустно) не показаны.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="note wrap">Прототипы лежат в <code>design/chord-tutorial/</code>. Открываются прямо из папки, без сервера. Тексты на русском — для обсуждения; на сайте их можно перевести через <code>data-translate</code>.</footer>
+</body>
+</html>

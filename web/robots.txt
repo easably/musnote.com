@@ -8,4 +8,5 @@ Allow: /assets/
 Allow: /ru/
 Allow: /de/
 Allow: /piano
+Allow: /chords/
 Allow: /chord-tutorial

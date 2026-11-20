@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Часы аккордов — MusNote</title>
+<meta name="description" content="Двенадцать клавиш по кругу. Мажор — один треугольник. Повернул — новый аккорд.">
+<link rel="canonical" href="https://musnote.com/ru/chords/clock/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/clock/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/clock/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/clock/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/clock/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="clock">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/ru/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/ru/">Обзор</a><a data-page="patterns" href="/ru/chords/patterns/">Узоры</a><a data-page="hops" href="/ru/chords/hops/">Прыжки</a><a data-page="clock" href="/ru/chords/clock/">Часы</a><a data-page="chart" href="/ru/chords/chart/">Указатель</a><a data-page="voice" href="/tools/">Голос</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">До Ре Ми</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru" selected>RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Часы аккордов</span>
+  <h1>Одна фигура — двенадцать аккордов.</h1>
+  <p class="lead">Разложи 12 клавиш октавы по кругу, как цифры на часах. Любой мажорный аккорд — это <b>один и тот же треугольник</b>. Повернул — получил новый аккорд. Минор — тот же треугольник, где средняя вершина сдвинута на один час назад.</p>
+</section>
+<section class="wrap"><div class="card stage clock-stage">
+  <svg id="clock" viewBox="0 0 440 440" aria-label="Круг из 12 клавиш с фигурой аккорда"></svg>
+  <div class="panel">
+    <div class="chord-name-big" id="name">C</div>
+    <div class="muted" id="sub" style="font-weight:600"></div>
+    <div class="row"><span id="dots"></span><div class="notes-row" id="notes"></div></div>
+    <div class="row"><div class="seg" id="types"><button data-t="maj" class="on">Мажор ▲</button><button data-t="min">Минор ▼</button><button data-t="dom7">Септаккорд 7</button></div></div>
+    <div class="rot">
+      <button class="btn" id="ccw">⟲ −1 час</button>
+      <button class="btn" id="cw">⟳ +1 час</button>
+      <button class="btn primary" id="play">♪ Сыграть</button>
+      <button class="btn green" id="tour"></button>
+    </div>
+    <div class="mn">
+      <div><svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><polygon points="17,3 31,27 3,27" fill="none" stroke="#0f1f1a" stroke-width="2.5"/></svg><span><b>Мажор:</b> стороны 4 · 3 · 5 часов. Форма всегда одна.</span></div>
+      <div><svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><polygon points="17,27 31,3 3,3" fill="none" stroke="#f59e0b" stroke-width="2.5"/></svg><span><b>Минор:</b> 3 · 4 · 5 — тот же треугольник в зеркале.</span></div>
+      <div><span>1 час на круге = 1 клавиша. Нажми на любую ноту или жми <span class="kbd">←</span> <span class="kbd">→</span>.</span></div>
+    </div>
+  </div>
+</div></section>
+<section class="wrap"><div class="card">
+  <svg id="kb" aria-label="Piano"></svg>
+  <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>основа</span><span><b style="background:var(--c-t)"></b>терция</span><span><b style="background:var(--c-f)"></b>квинта</span><span><b style="background:var(--c-s)"></b>септима</span><span class="muted">цвета вершин на часах = цвета клавиш</span></div>
+</div></section>
+<footer class="note wrap">Та же фигура работает и для других аккордов: септаккорд — четырёхугольник 4·3·3·2.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-clock.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chord clock — MusNote</title>
+<meta name="description" content="Twelve piano keys in a circle. Major is one triangle. Turn it and you get the next chord.">
+<link rel="canonical" href="https://musnote.com/chords/clock/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/clock/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/clock/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/clock/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/clock/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="clock">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/">Overview</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="hops" href="/chords/hops/">Hops</a><a data-page="clock" href="/chords/clock/">Clock</a><a data-page="chart" href="/chords/chart/">Chart</a><a data-page="voice" href="/tools/">Voice</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en" selected>EN</option><option value="ru">RU</option><option value="de">DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Chord clock</span>
+  <h1>One shape — twelve chords.</h1>
+  <p class="lead">Lay the 12 keys of the octave around a circle, like hours on a clock. Any major chord is <b>the same triangle</b>. Turn it and you get a new chord. Minor is that triangle with the middle corner one hour back.</p>
+</section>
+<section class="wrap"><div class="card stage clock-stage">
+  <svg id="clock" viewBox="0 0 440 440" aria-label="Circle of 12 keys with the chord shape"></svg>
+  <div class="panel">
+    <div class="chord-name-big" id="name">C</div>
+    <div class="muted" id="sub" style="font-weight:600"></div>
+    <div class="row"><span id="dots"></span><div class="notes-row" id="notes"></div></div>
+    <div class="row"><div class="seg" id="types"><button data-t="maj" class="on">Major ▲</button><button data-t="min">Minor ▼</button><button data-t="dom7">Seventh 7</button></div></div>
+    <div class="rot">
+      <button class="btn" id="ccw">⟲ −1 hour</button>
+      <button class="btn" id="cw">⟳ +1 hour</button>
+      <button class="btn primary" id="play">♪ Play</button>
+      <button class="btn green" id="tour"></button>
+    </div>
+    <div class="mn">
+      <div><svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><polygon points="17,3 31,27 3,27" fill="none" stroke="#0f1f1a" stroke-width="2.5"/></svg><span><b>Major:</b> sides 4 · 3 · 5 hours. The shape never changes.</span></div>
+      <div><svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><polygon points="17,27 31,3 3,3" fill="none" stroke="#f59e0b" stroke-width="2.5"/></svg><span><b>Minor:</b> 3 · 4 · 5 — the same triangle in a mirror.</span></div>
+      <div><span>1 hour on the circle = 1 key. Click any note, or press <span class="kbd">←</span> <span class="kbd">→</span>.</span></div>
+    </div>
+  </div>
+</div></section>
+<section class="wrap"><div class="card">
+  <svg id="kb" aria-label="Piano"></svg>
+  <div class="legend" style="margin-top:12px"><span><b style="background:var(--c-r)"></b>root</span><span><b style="background:var(--c-t)"></b>third</span><span><b style="background:var(--c-f)"></b>fifth</span><span><b style="background:var(--c-s)"></b>seventh</span><span class="muted">corner colors on the clock = key colors</span></div>
+</div></section>
+<footer class="note wrap">The same shape works for other chords too: a seventh is the quadrilateral 4·3·3·2.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-clock.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akkordsprünge: 4+3 und 3+4 — MusNote</title>
+<meta name="description" content="Jeder Akkord sind zwei Sprünge auf den Tasten. Dur: 4, dann 3. Moll: 3, dann 4.">
+<link rel="canonical" href="https://musnote.com/de/chords/hops/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/chords/hops/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/chords/hops/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/chords/hops/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/hops/">
+<link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+</head>
+<body data-page="hops">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/de/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/de/">Überblick</a><a data-page="patterns" href="/de/chords/patterns/">Muster</a><a data-page="hops" href="/de/chords/hops/">Sprünge</a><a data-page="clock" href="/de/chords/clock/">Uhr</a><a data-page="chart" href="/de/chords/chart/">Verzeichnis</a><a data-page="voice" href="/tools/">Stimme</a></nav>
+  <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de" selected>DE</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Sprünge</span>
+  <h1>Ein Akkord sind zwei Sprünge über die Tasten.</h1>
+  <p class="lead">Zähl <b>jede</b> Taste in der Reihe — weiß und schwarz. Dur: Sprung <b class="t4">4</b>, dann <b class="t3">3</b>. Moll umgekehrt: <b class="t4">3</b>, dann <b class="t3">4</b>. Geht von jeder Taste. Nichts zum Auswendiglernen.</p>
+</section>
+<section class="wrap"><div class="types" id="types"><button class="type on" data-t="maj"><div class="f"><span class="t4">4</span>+<span class="t3">3</span></div><div class="n">Dur</div><div class="d">breit, dann eng — klingt hell</div></button><button class="type " data-t="min"><div class="f"><span class="t4">3</span>+<span class="t3">4</span></div><div class="n">Moll</div><div class="d">eng, dann breit — klingt dunkler</div></button><button class="type " data-t="dom7"><div class="f">4+3<span class="t7">+3</span></div><div class="n">Septakkord (7)</div><div class="d">Dur und noch ein Sprung von 3</div></button><button class="type " data-t="dim"><div class="f">3+3</div><div class="n">Vermindert</div><div class="d">zwei enge Sprünge — gespannt</div></button><button class="type " data-t="aug"><div class="f">4+4</div><div class="n">Übermäßig</div><div class="d">zwei breite Sprünge — schwebend, wie im Film</div></button></div></section>
+<section class="wrap"><div class="card">
+  <div class="stage-head">
+    <div>
+      <div class="hint">① Drück eine Taste — das ist der Grundton. ② Sieh zu, wie die Sprünge gezählt werden.</div>
+      <div style="display:flex;align-items:baseline;gap:18px;margin-top:6px"><span class="chord-name-big" id="name">C</span><span class="formula" id="formula">4 + 3</span></div>
+    </div>
+    <div class="actions"><button class="btn green" id="btnAnim">▶ Sprünge zeigen</button><button class="btn" id="btnPlay">♪ Spielen</button><button class="btn" id="btnFlip">⇄ Dur ↔ Moll</button></div>
+  </div>
+  <svg id="kb" aria-label="Piano"></svg>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:6px"><div class="notes-row" id="notes"></div><div class="legend"><span><b style="background:var(--c-r)"></b>Grundton</span><span><b style="background:var(--c-t)"></b>Terz</span><span><b style="background:var(--c-f)"></b>Quinte</span><span><b style="background:var(--c-s)"></b>Septime</span></div></div>
+</div></section>
+<section class="wrap tips"><div class="card tip"><div class="ill">Alles zählen</div><div class="count-demo"><span class="st">0</span><span class="b">1</span><span>2</span><span class="b">3</span><span class="end">4</span></div><p>C → E sind 4 Schritte: schwarze Tasten zählen mit. Ohne sie bricht die Regel.</p></div><div class="card tip"><div class="ill" style="color:var(--c-f)">Rahmen = 7</div><p>Dur und Moll teilen die Außentöne: 4+3 = 3+4 = 7. Der Rahmen bleibt. Nur die Mitte wandert.</p></div><div class="card tip"><div class="ill" style="color:var(--c-t)">↓ 1 Taste</div><p>Aus Dur wird Moll, wenn der <b>Mittelfinger</b> eine Taste nach links rückt. Drück ⇄ und schau zu.</p></div><div class="card tip"><div class="ill">1 · 3 · 5</div><p>Rechte Hand: Daumen, Mitte, kleiner Finger. Die Hand merkt die Form schneller als der Kopf.</p></div></section>
+<footer class="note wrap">Jeder Sprungschritt klingt leise mit seiner eigenen Note.</footer>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/chords-hops.js"></script>
+</body>
+</html>
