@@ -6,6 +6,7 @@ on:
     paths:
       - "api/**"
       - "scripts/cd-deploy-api.sh"
+      - "scripts/integration-notes-api.sh"
       - "deploy/known_hosts"
       - ".github/workflows/deploy-api.yml"
   workflow_dispatch:
@@ -29,3 +30,14 @@ jobs:
           DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
           DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
         run: bash scripts/cd-deploy-api.sh
+
+      - name: Install pytest
+        run: python -m pip install pytest
+
+      - name: Live tone against the deployed API
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+        run: bash scripts/integration-notes-api.sh

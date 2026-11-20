@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import tempfile
 from pathlib import Path
@@ -9,11 +10,13 @@ from pathlib import Path
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.notes import transcribe
+from app.notes import notes_from_recording
+
+log = logging.getLogger(__name__)
 
 MAX_BYTES = 15 * 1024 * 1024
 MAX_NOTES = 4000
-ALLOWED = {".wav", ".mp3", ".m4a", ".ogg", ".flac", ".webm", ".aac"}
+AUDIO_SUFFIXES = {".wav", ".mp3", ".m4a", ".ogg", ".flac", ".webm", ".aac"}
 
 app = FastAPI(title="MusNote audio to piano notes")
 app.add_middleware(
@@ -34,10 +37,10 @@ def health():
     return {"ok": True}
 
 
-@app.post("/v1/notes")
-async def notes(file: UploadFile = File(...)):
+@app.post("/v1/piano-notes")
+async def piano_notes(file: UploadFile = File(...)):
     suffix = Path(file.filename or "").suffix.lower()
-    if suffix not in ALLOWED:
+    if suffix not in AUDIO_SUFFIXES:
         raise HTTPException(400, "Upload wav, mp3, m4a, ogg, flac, webm, or aac")
 
     data = await file.read()
@@ -50,8 +53,9 @@ async def notes(file: UploadFile = File(...)):
     try:
         tmp.write(data)
         tmp.close()
-        found = transcribe(tmp.name)
+        found = notes_from_recording(tmp.name)
     except Exception as exc:
+        log.exception("transcription failed")
         raise HTTPException(422, "Could not read notes from this audio") from exc
     finally:
         os.unlink(tmp.name)

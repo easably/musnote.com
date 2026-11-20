@@ -1,4 +1,4 @@
-"""Turn a recording into note events the keyboard can draw."""
+"""Recording in, piano-note list out. One note is a key the site can light."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ def _model_instance():
     return _model
 
 
-def transcribe(path: str) -> list[dict]:
+def notes_from_recording(path: str) -> list[dict]:
     from basic_pitch.inference import predict
 
     with _lock:

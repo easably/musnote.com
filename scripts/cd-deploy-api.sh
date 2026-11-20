@@ -33,9 +33,11 @@ ssh "${SSH_OPTS[@]}" "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p '$DEPLOY_PATH'"
 rsync -az --delete \
   --exclude __pycache__/ \
   --exclude .venv/ \
+  --exclude tests/ \
   "$ROOT/api/" "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
 
 # Build can take several minutes (audio libraries). Health is checked after compose returns.
+# 8095 is the host port in api/docker-compose.yml.
 ssh "${SSH_OPTS[@]}" "${DEPLOY_USER}@${DEPLOY_HOST}" \
   "DEPLOY_PATH='$DEPLOY_PATH' bash -s" <<'EOF'
 set -euo pipefail
