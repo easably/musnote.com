@@ -1,6 +1,7 @@
 /**
- * Home page — audio to piano notes: file → POST /v1/notes → light keys → play by start time.
- * API: window.MUSNOTE_NOTES_API, else http://127.0.0.1:8095
+ * Home page — audio to piano notes: file → POST /v1/piano-notes → light keys → play by start time.
+ * Same route the live test calls. Override: window.MUSNOTE_NOTES_API.
+ * Local pages use the Docker port. The public site uses https://api.musnote.com.
  */
 (function () {
   const panel = document.getElementById('notes-panel');
@@ -11,7 +12,12 @@
   const svg = document.getElementById('notes-kb');
   if (!panel || !input || !btnGo || !btnPlay || !status || !svg || typeof MN === 'undefined') return;
 
-  const API = (window.MUSNOTE_NOTES_API || 'http://127.0.0.1:8095').replace(/\/$/, '');
+  const host = location.hostname;
+  const local = host === 'localhost' || host === '127.0.0.1';
+  const API = (
+    window.MUSNOTE_NOTES_API ||
+    (local ? 'http://127.0.0.1:8095' : 'https://api.musnote.com')
+  ).replace(/\/$/, '');
   const MAX_BYTES = 15 * 1024 * 1024;
   const msg = (key) => panel.dataset[key] || '';
 
@@ -131,7 +137,7 @@
 
     let res;
     try {
-      res = await fetch(API + '/v1/notes', { method: 'POST', body: form });
+      res = await fetch(API + '/v1/piano-notes', { method: 'POST', body: form });
     } catch (_) {
       setStatus(msg('msgOffline'), 'bad');
       btnGo.disabled = false;

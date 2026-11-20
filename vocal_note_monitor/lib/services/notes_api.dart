@@ -21,8 +21,7 @@ class NotesTranscription {
 /// File in, piano notes out. Same service as the site.
 ///
 /// Override the host with `--dart-define=NOTES_API_BASE=https://…`.
-/// The default is the local Docker port; a phone cannot reach it until a
-/// public address exists.
+/// The public site and the phone call the same notes service.
 class NotesApi {
   NotesApi({http.Client? client, String? baseUrl})
     : _client = client ?? http.Client(),
@@ -30,7 +29,7 @@ class NotesApi {
 
   static const defaultBaseUrl = String.fromEnvironment(
     'NOTES_API_BASE',
-    defaultValue: 'http://127.0.0.1:8095',
+    defaultValue: 'https://api.musnote.com',
   );
 
   static const maxBytes = 15 * 1024 * 1024;
