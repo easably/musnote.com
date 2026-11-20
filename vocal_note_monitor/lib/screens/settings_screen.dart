@@ -6,9 +6,13 @@ import '../models/app_settings.dart';
 import '../models/scale.dart';
 import '../services/pitch_service.dart';
 import '../services/settings_service.dart';
+import '../theme/musnote_theme.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.embedded = false});
+
+  /// True when this screen is a bottom tab, so there is no page to close.
+  final bool embedded;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -35,15 +39,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       data: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: MusnoteColors.green500),
         sliderTheme: const SliderThemeData(
-          activeTrackColor: CupertinoColors.activeBlue,
+          activeTrackColor: MusnoteColors.green500,
           inactiveTrackColor: Color(0xFFE0E0E0),
           thumbColor: Colors.white,
         ),
       ),
       child: CupertinoTheme(
-        data: const CupertinoThemeData(brightness: Brightness.light),
+        data: const CupertinoThemeData(
+          brightness: Brightness.light,
+          primaryColor: MusnoteColors.green700,
+        ),
         child: CupertinoPageScaffold(
           backgroundColor: Colors.white,
           navigationBar: CupertinoNavigationBar(
@@ -55,11 +62,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 color: Colors.black,
               ),
             ),
-            leading: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Done'),
-            ),
+            leading: widget.embedded
+                ? const SizedBox.shrink()
+                : CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Done'),
+                  ),
             trailing: CupertinoButton(
               padding: EdgeInsets.zero,
               onPressed: () {

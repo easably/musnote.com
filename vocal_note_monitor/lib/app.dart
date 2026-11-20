@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/monitor_screen.dart';
+import 'screens/main_tabs.dart';
 import 'services/pitch_service.dart';
 import 'services/settings_service.dart';
+import 'theme/musnote_theme.dart';
 
 class VocalNoteMonitorApp extends StatelessWidget {
   const VocalNoteMonitorApp({super.key});
@@ -26,19 +26,8 @@ class VocalNoteMonitorApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Vocal Note Monitor',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.black,
-          colorScheme: const ColorScheme.dark(
-            primary: CupertinoColors.activeBlue,
-            surface: Colors.black,
-          ),
-          sliderTheme: const SliderThemeData(
-            activeTrackColor: CupertinoColors.activeBlue,
-            thumbColor: Colors.white,
-          ),
-        ),
-        home: const MonitorScreen(),
+        theme: MusnoteTheme.light(),
+        home: const MainTabs(),
       ),
     );
   }

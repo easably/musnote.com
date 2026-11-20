@@ -90,7 +90,6 @@ void showMonitorActionSheet(
   BuildContext context, {
   required VoidCallback onSave,
   required VoidCallback onLoad,
-  required VoidCallback onSettings,
   VoidCallback? onIdeas,
 }) {
   showCupertinoModalPopup<void>(
@@ -110,13 +109,6 @@ void showMonitorActionSheet(
             onLoad();
           },
           child: const Text('Load'),
-        ),
-        CupertinoActionSheetAction(
-          onPressed: () {
-            Navigator.pop(context);
-            onSettings();
-          },
-          child: const Text('Settings'),
         ),
         if (onIdeas != null)
           CupertinoActionSheetAction(

@@ -8,7 +8,6 @@ import '../widgets/control_bar.dart';
 import '../widgets/pitch_graph.dart';
 import '../widgets/tuner_gauge.dart';
 import '../ideas/ideas_hub_screen.dart';
-import 'settings_screen.dart';
 
 class MonitorScreen extends StatelessWidget {
   const MonitorScreen({super.key});
@@ -18,6 +17,7 @@ class MonitorScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             const _HeaderSection(),
@@ -57,11 +57,6 @@ class MonitorScreen extends StatelessWidget {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('Recording loaded')));
-      },
-      onSettings: () {
-        Navigator.of(context).push(
-          CupertinoPageRoute<void>(builder: (_) => const SettingsScreen()),
-        );
       },
       onIdeas: () {
         Navigator.of(context).push(
