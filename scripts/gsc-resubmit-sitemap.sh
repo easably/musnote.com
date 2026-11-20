@@ -18,8 +18,17 @@ REFRESH_TOKEN="$(python3 -c "import json; print(json.load(open('$GSC_JSON'))['re
 
 URLS=(
   "https://musnote.com/"
+  "https://musnote.com/song-to-notes/"
   "https://musnote.com/ru/"
   "https://musnote.com/de/"
+  "https://musnote.com/pl/"
+  "https://musnote.com/es/"
+  "https://musnote.com/pt/"
+  "https://musnote.com/ja/"
+  "https://musnote.com/ko/"
+  "https://musnote.com/zh-tw/"
+  "https://musnote.com/zh-cn/"
+  "https://musnote.com/vi/"
 )
 
 echo "Refreshing OAuth access token..."

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusNote — 扒谱</title>
+<meta name="description" content="自动扒谱：上传短独奏，琴键会亮起，再点播放。屏幕上是琴键上的音，不是五线谱纸面。">
+<link rel="canonical" href="https://musnote.com/zh-cn/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/">
+<link rel="alternate" hreflang="pl" href="https://musnote.com/pl/">
+<link rel="alternate" hreflang="es" href="https://musnote.com/es/">
+<link rel="alternate" hreflang="pt" href="https://musnote.com/pt/">
+<link rel="alternate" hreflang="ja" href="https://musnote.com/ja/">
+<link rel="alternate" hreflang="ko" href="https://musnote.com/ko/">
+<link rel="alternate" hreflang="zh-Hant" href="https://musnote.com/zh-tw/">
+<link rel="alternate" hreflang="zh-Hans" href="https://musnote.com/zh-cn/">
+<link rel="alternate" hreflang="vi" href="https://musnote.com/vi/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+<script src="/assets/js/locale-by-country.js"></script>
+</head>
+<body data-page="home">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/zh-cn/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/zh-cn/">首页</a><a data-page="song" href="/zh-cn/song-to-notes/">音频转谱</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="voice" href="/tools/">语音</a></nav>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de">DE</option><option value="pl">PL</option><option value="es">ES</option><option value="pt">PT</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-tw">ZH-TW</option><option value="zh-cn" selected>ZH-CN</option><option value="vi">VI</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">扒谱</span>
+  <h1>扒谱</h1>
+  <p class="lead">上传一小段独奏——钢琴、吉他或清晰旋律。琴键会亮起。点击播放。这是琴键上的音，不是五线谱纸张。</p>
+  <div
+    class="card notes-panel"
+    id="notes-panel"
+    data-msg-busy="正在读取音符…"
+    data-msg-empty="请先选择音频文件。"
+    data-msg-fail="无法从此音频读取音符。"
+    data-msg-big="文件大于 15 MB。"
+    data-msg-offline="扒谱服务暂时不可用。"
+  >
+    <div class="field">
+      <label for="audio-file">音频文件（wav、mp3、m4a…）</label>
+      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    </div>
+    <div class="notes-actions">
+      <button type="button" class="btn green" id="btn-transcribe">获取音符</button>
+      <button type="button" class="btn primary" id="btn-play" disabled>播放</button>
+    </div>
+    <p class="notes-status" id="notes-status" hidden></p>
+    <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="钢琴键盘"></svg></div>
+  </div>
+</section>
+<section class="wrap notes-practice">
+  <h2>接着练习和弦</h2>
+  <p class="lead">和弦教材为英文——与 EN 站相同的三个练习。</p>
+</section>
+<section class="wrap variants-grid"><a class="card vcard" href="/chords/patterns/">
+    <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><rect x="10" y="10" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><rect x="115" y="10" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="10" y="68" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="115" y="68" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><g font-family="Outfit,sans-serif" font-weight="800" font-size="18" text-anchor="middle"><text x="57" y="42">CFG</text><text x="162" y="42">DEA</text><text x="57" y="100">Cm</text><text x="162" y="100">Dm</text></g></svg></div>
+    <span class="tag">记住</span>
+    <h3>键位图案：CFG 与 iDEA</h3>
+    <p>24 个和弦收成 4 种黑白键图案。</p>
+    <span class="go">打开（EN）→</span>
+  </a>
+<a class="card vcard" href="/chords/hops/">
+    <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#c3d1cb"><rect x="10" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="38" y="60" width="28" height="64" rx="3" fill="#a7f3d0"/><rect x="66" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="94" y="60" width="28" height="64" rx="3" fill="#fde68a"/><rect x="122" y="60" width="28" height="64" rx="3" fill="#fff"/><rect x="150" y="60" width="28" height="64" rx="3" fill="#bfdbfe"/><rect x="178" y="60" width="28" height="64" rx="3" fill="#fff"/></g><path d="M52 56 C52 18, 108 18, 108 56" fill="none" stroke="#f59e0b" stroke-width="3.5"/><path d="M108 56 C108 26, 164 26, 164 56" fill="none" stroke="#3b82f6" stroke-width="3.5"/><circle cx="80" cy="27" r="12" fill="#f59e0b"/><text x="80" y="32" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit,sans-serif">4</text><circle cx="136" cy="33" r="12" fill="#3b82f6"/><text x="136" y="38" fill="#fff" font-weight="800" text-anchor="middle" font-family="Outfit,sans-serif">3</text></svg></div>
+    <span class="tag">理解</span>
+    <h3>跳跃：4+3 与 3+4</h3>
+    <p>和弦是从任一键跳两次。</p>
+    <span class="go">打开（EN）→</span>
+  </a>
+<a class="card vcard" href="/chords/clock/">
+    <div class="thumb"><svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="56" fill="none" stroke="#dfe8e4"/><polygon points="70,14 118.5,98 42,118.5" fill="rgba(16,185,129,.12)" stroke="#0f1f1a" stroke-width="2.5"/><circle cx="70" cy="14" r="9" fill="#10b981"/><circle cx="118.5" cy="98" r="9" fill="#f59e0b"/><circle cx="42" cy="118.5" r="9" fill="#3b82f6"/></svg></div>
+    <span class="tag">看系统</span>
+    <h3>和弦时钟</h3>
+    <p>12 键围成圆。大调是三角形，小调是镜像。</p>
+    <span class="go">打开（EN）→</span>
+  </a></section>
+<p class="hub-note wrap">英文和弦练习： <a href="/chords/patterns/#trainer">打开 Patterns →</a></p>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js"></script>
+</body>
+</html>

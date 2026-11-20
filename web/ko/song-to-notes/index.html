@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusNote — 노래 악보로 변환</title>
+<meta name="description" content="노래 악보로 변환: 곡을 올리고 건반을 보고 재생하세요. 자동 채보에 가깝지만 화면은 건반이며 오선지가 아닙니다.">
+<link rel="canonical" href="https://musnote.com/ko/song-to-notes/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/song-to-notes/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/song-to-notes/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/song-to-notes/">
+<link rel="alternate" hreflang="pl" href="https://musnote.com/pl/song-to-notes/">
+<link rel="alternate" hreflang="es" href="https://musnote.com/es/song-to-notes/">
+<link rel="alternate" hreflang="pt" href="https://musnote.com/pt/song-to-notes/">
+<link rel="alternate" hreflang="ja" href="https://musnote.com/ja/song-to-notes/">
+<link rel="alternate" hreflang="ko" href="https://musnote.com/ko/song-to-notes/">
+<link rel="alternate" hreflang="zh-Hant" href="https://musnote.com/zh-tw/song-to-notes/">
+<link rel="alternate" hreflang="zh-Hans" href="https://musnote.com/zh-cn/song-to-notes/">
+<link rel="alternate" hreflang="vi" href="https://musnote.com/vi/song-to-notes/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/song-to-notes/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+<script src="/assets/js/locale-by-country.js"></script>
+</head>
+<body data-page="song">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/ko/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/ko/">홈</a><a data-page="song" href="/ko/song-to-notes/">노래 악보로 변환</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="voice" href="/tools/">보이스</a></nav>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de">DE</option><option value="pl">PL</option><option value="es">ES</option><option value="pt">PT</option><option value="ja">JA</option><option value="ko" selected>KO</option><option value="zh-tw">ZH-TW</option><option value="zh-cn">ZH-CN</option><option value="vi">VI</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">노래</span>
+  <h1>노래 악보로 변환</h1>
+  <p class="lead">노래나 짧은 멜로디를 업로드하세요. 건반에 음이 나타납니다. 오선지 종이가 아니라 피아노 건반입니다.</p>
+  <div
+    class="card notes-panel"
+    id="notes-panel"
+    data-msg-busy="음표를 읽는 중…"
+    data-msg-empty="먼저 오디오 파일을 선택하세요."
+    data-msg-fail="이 오디오에서 음표를 읽지 못했습니다."
+    data-msg-big="파일이 15 MB보다 큽니다."
+    data-msg-offline="음표 서비스를 지금 사용할 수 없습니다."
+  >
+    <div class="field">
+      <label for="audio-file">오디오 파일 (wav, mp3, m4a…)</label>
+      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    </div>
+    <div class="notes-actions">
+      <button type="button" class="btn green" id="btn-transcribe">음표 가져오기</button>
+      <button type="button" class="btn primary" id="btn-play" disabled>재생</button>
+    </div>
+    <p class="notes-status" id="notes-status" hidden></p>
+    <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="피아노 건반"></svg></div>
+  </div>
+  <p class="hub-note"><a href="/ko/">← 오디오 악보 변환</a></p>
+</section>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js"></script>
+</body>
+</html>

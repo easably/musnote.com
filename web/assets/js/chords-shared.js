@@ -182,7 +182,10 @@ const MN = (() => {
     document.querySelectorAll('.variants a').forEach(a => a.classList.toggle('on', a.dataset.page === page));
     const langSel = document.getElementById('language-selector');
     if (langSel) {
-      const live = (window.MusnoteLocale && window.MusnoteLocale.LIVE) || { en: 1, ru: 1, de: 1 };
+      const live = (window.MusnoteLocale && window.MusnoteLocale.LIVE) || {
+        en: 1, ru: 1, de: 1, pl: 1, es: 1, pt: 1,
+        ja: 1, ko: 1, 'zh-tw': 1, 'zh-cn': 1, vi: 1
+      };
       [...langSel.options].forEach((opt) => {
         if (!live[opt.value]) opt.hidden = true;
       });

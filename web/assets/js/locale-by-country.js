@@ -1,9 +1,14 @@
 /**
  * Pick site language from visitor country (Cloudflare loc=); remember a manual choice.
- * Redirects only to LIVE locales so missing /pl/ etc. never 404.
+ * Redirects only to LIVE locales; DEEP locales keep chord/piano paths.
  */
 (function () {
-  var LIVE = { en: 1, ru: 1, de: 1 };
+  var LIVE = {
+    en: 1, ru: 1, de: 1, pl: 1, es: 1, pt: 1,
+    ja: 1, ko: 1, 'zh-tw': 1, 'zh-cn': 1, vi: 1
+  };
+  /* Full chord textbook only on these; others fall back to locale home. */
+  var DEEP = { en: 1, ru: 1, de: 1 };
   var PREFIX_RE = /^\/(ru|de|pl|es|pt|ja|ko|zh-tw|zh-cn|vi)(?=\/|$)/;
   var STORAGE_KEY = 'mn_lang';
   var GEO_FLAG = 'mn_geo_checked';
@@ -37,6 +42,9 @@
 
   function hrefFor(lang, pathname, search, hash) {
     var rest = stripLocale(pathname);
+    if (!DEEP[lang] && /^\/(chords|piano|app)(\/|$)/.test(rest)) {
+      rest = '/';
+    }
     var path = lang === 'en' ? rest : '/' + lang + (rest === '/' ? '/' : rest);
     return path + (search || '') + (hash || '');
   }
@@ -77,6 +85,7 @@
 
   window.MusnoteLocale = {
     LIVE: LIVE,
+    DEEP: DEEP,
     PREFIX_RE: PREFIX_RE,
     STORAGE_KEY: STORAGE_KEY,
     pathLang: pathLang,

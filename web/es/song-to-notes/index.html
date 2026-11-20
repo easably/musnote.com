@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusNote — canción a notas musicales</title>
+<meta name="description" content="Canción a notas musicales: sube la pista, ve las teclas, reproduce. Canción a notas de piano en el teclado.">
+<link rel="canonical" href="https://musnote.com/es/song-to-notes/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/song-to-notes/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/song-to-notes/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/song-to-notes/">
+<link rel="alternate" hreflang="pl" href="https://musnote.com/pl/song-to-notes/">
+<link rel="alternate" hreflang="es" href="https://musnote.com/es/song-to-notes/">
+<link rel="alternate" hreflang="pt" href="https://musnote.com/pt/song-to-notes/">
+<link rel="alternate" hreflang="ja" href="https://musnote.com/ja/song-to-notes/">
+<link rel="alternate" hreflang="ko" href="https://musnote.com/ko/song-to-notes/">
+<link rel="alternate" hreflang="zh-Hant" href="https://musnote.com/zh-tw/song-to-notes/">
+<link rel="alternate" hreflang="zh-Hans" href="https://musnote.com/zh-cn/song-to-notes/">
+<link rel="alternate" hreflang="vi" href="https://musnote.com/vi/song-to-notes/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/song-to-notes/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+<script src="/assets/js/locale-by-country.js"></script>
+</head>
+<body data-page="song">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/es/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/es/">Inicio</a><a data-page="song" href="/es/song-to-notes/">canción a notas musicales</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="voice" href="/tools/">Voz</a></nav>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de">DE</option><option value="pl">PL</option><option value="es" selected>ES</option><option value="pt">PT</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-tw">ZH-TW</option><option value="zh-cn">ZH-CN</option><option value="vi">VI</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">Canción</span>
+  <h1>canción a notas musicales</h1>
+  <p class="lead">Sube una canción o melodía corta. Las teclas muestran las notas. Es el teclado, no una partitura impresa.</p>
+  <div
+    class="card notes-panel"
+    id="notes-panel"
+    data-msg-busy="Leyendo notas…"
+    data-msg-empty="Elige primero un archivo de audio."
+    data-msg-fail="No se pudieron leer notas de este audio."
+    data-msg-big="El archivo supera 15 MB."
+    data-msg-offline="El servicio de notas no está disponible ahora."
+  >
+    <div class="field">
+      <label for="audio-file">Archivo de audio (wav, mp3, m4a…)</label>
+      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    </div>
+    <div class="notes-actions">
+      <button type="button" class="btn green" id="btn-transcribe">Obtener notas</button>
+      <button type="button" class="btn primary" id="btn-play" disabled>Reproducir</button>
+    </div>
+    <p class="notes-status" id="notes-status" hidden></p>
+    <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="Teclado de piano"></svg></div>
+  </div>
+  <p class="hub-note"><a href="/es/">← Audio a notas de piano</a></p>
+</section>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js"></script>
+</body>
+</html>

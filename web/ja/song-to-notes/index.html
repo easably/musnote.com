@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusNote — 耳コピ</title>
+<meta name="description" content="耳コピ：曲をアップロードして鍵盤で確認・再生。mp3 の楽譜変換に近いですが、画面は鍵盤で五線譜ではありません。">
+<link rel="canonical" href="https://musnote.com/ja/song-to-notes/">
+<link rel="alternate" hreflang="en" href="https://musnote.com/song-to-notes/">
+<link rel="alternate" hreflang="ru" href="https://musnote.com/ru/song-to-notes/">
+<link rel="alternate" hreflang="de" href="https://musnote.com/de/song-to-notes/">
+<link rel="alternate" hreflang="pl" href="https://musnote.com/pl/song-to-notes/">
+<link rel="alternate" hreflang="es" href="https://musnote.com/es/song-to-notes/">
+<link rel="alternate" hreflang="pt" href="https://musnote.com/pt/song-to-notes/">
+<link rel="alternate" hreflang="ja" href="https://musnote.com/ja/song-to-notes/">
+<link rel="alternate" hreflang="ko" href="https://musnote.com/ko/song-to-notes/">
+<link rel="alternate" hreflang="zh-Hant" href="https://musnote.com/zh-tw/song-to-notes/">
+<link rel="alternate" hreflang="zh-Hans" href="https://musnote.com/zh-cn/song-to-notes/">
+<link rel="alternate" hreflang="vi" href="https://musnote.com/vi/song-to-notes/">
+<link rel="alternate" hreflang="x-default" href="https://musnote.com/song-to-notes/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/design-tokens.css">
+<link rel="stylesheet" href="/assets/css/chords.css">
+<script src="/assets/js/locale-by-country.js"></script>
+</head>
+<body data-page="song">
+<header class="topbar"><div class="wrap topbar-in">
+  <a class="brand" href="/ja/">Mus<span>Note</span></a>
+  <nav class="variants"><a data-page="home" href="/ja/">ホーム</a><a data-page="song" href="/ja/song-to-notes/">耳コピ</a><a data-page="patterns" href="/chords/patterns/">Patterns</a><a data-page="voice" href="/tools/">ボイス</a></nav>
+  <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de">DE</option><option value="pl">PL</option><option value="es">ES</option><option value="pt">PT</option><option value="ja" selected>JA</option><option value="ko">KO</option><option value="zh-tw">ZH-TW</option><option value="zh-cn">ZH-CN</option><option value="vi">VI</option></select>
+</div></header>
+<section class="hero wrap">
+  <span class="eyebrow">耳コピ</span>
+  <h1>耳コピ</h1>
+  <p class="lead">曲や短いメロディをアップロード。鍵盤に音が出ます。五線譜の紙ではなく、ピアノの鍵盤です。</p>
+  <div
+    class="card notes-panel"
+    id="notes-panel"
+    data-msg-busy="音符を読み取り中…"
+    data-msg-empty="先に音声ファイルを選んでください。"
+    data-msg-fail="この音声から音符を読めませんでした。"
+    data-msg-big="ファイルが 15 MB を超えています。"
+    data-msg-offline="採譜サービスは現在利用できません。"
+  >
+    <div class="field">
+      <label for="audio-file">音声ファイル（wav、mp3、m4a…）</label>
+      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    </div>
+    <div class="notes-actions">
+      <button type="button" class="btn green" id="btn-transcribe">音符を取得</button>
+      <button type="button" class="btn primary" id="btn-play" disabled>再生</button>
+    </div>
+    <p class="notes-status" id="notes-status" hidden></p>
+    <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="ピアノ鍵盤"></svg></div>
+  </div>
+  <p class="hub-note"><a href="/ja/">← 自動採譜</a></p>
+</section>
+<script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js"></script>
+</body>
+</html>
