@@ -131,6 +131,11 @@ footer.note { padding: 30px 24px 60px; color: var(--mn-muted); font-size: .9rem;
 .hub-note { margin-top: 18px; }
 .lang-select { border: 0; background: #eef3f1; border-radius: 999px; padding: 6px 10px; font: inherit; color: var(--mn-ink); }
 #trainer { scroll-margin-top: 76px; }
+/* Patterns page only: theory and the quiz are two tabs, not one long page. */
+.pattern-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 22px; }
+.pattern-tab { border: 1px solid var(--mn-line); background: #fff; border-radius: 14px; padding: 12px 16px; font: inherit; font-weight: 700; cursor: pointer; color: var(--mn-ink-soft); }
+.pattern-tab.on { background: var(--mn-ink); color: #fff; border-color: var(--mn-ink); }
+[data-pattern-panel][hidden] { display: none !important; }
 
 /* Patterns */
 .words { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; max-width: 760px; }

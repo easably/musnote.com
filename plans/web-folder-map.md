@@ -32,7 +32,7 @@
 | Path | Job |
 |------|-----|
 | `/` | Chord hub (three cards). Voice is a menu item, not the first screen. |
-| `/chords/patterns/` | CFG / iDEA theory, trainer at `#trainer` |
+| `/chords/patterns/` | Two tabs: CFG / iDEA theory, then the pattern trainer (`#trainer`) |
 | `/chords/hops/` | Build a chord as hops 4+3 and 3+4 |
 | `/chords/clock/` | One triangle, twelve chords |
 | `/chords/chart/` | Chord chart: name, keys, play. Old `/chord-tutorial` opens this. |

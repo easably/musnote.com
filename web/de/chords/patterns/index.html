@@ -12,7 +12,7 @@
 <link rel="alternate" hreflang="x-default" href="https://musnote.com/chords/patterns/">
 <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
-<link rel="stylesheet" href="/assets/css/chords.css">
+<link rel="stylesheet" href="/assets/css/chords.css?v=2">
 </head>
 <body data-page="patterns">
 <header class="topbar"><div class="wrap topbar-in">
@@ -21,6 +21,11 @@
   <div class="seg" id="notation"><button data-v="abc" class="on">C D E</button><button data-v="solf">Do Re Mi</button></div>
   <select id="language-selector" class="lang-select" aria-label="Language"><option value="en">EN</option><option value="ru">RU</option><option value="de" selected>DE</option></select>
 </div></header>
+<div class="wrap pattern-tabs" role="tablist" aria-label="Muster">
+  <button type="button" class="pattern-tab on" data-pattern-tab="theory" role="tab" aria-selected="true" aria-controls="pattern-theory">Theorie</button>
+  <button type="button" class="pattern-tab" data-pattern-tab="trainer" role="tab" aria-selected="false" aria-controls="trainer">Trainer</button>
+</div>
+<div data-pattern-panel="theory" id="pattern-theory" role="tabpanel">
 <section class="hero wrap">
   <span class="eyebrow">Tastenmuster</span>
   <h1>Lern nicht 24 Akkorde auswendig.<br>Merk dir zwei Wörter: <span class="hl1">CFG</span> und <span class="hl2">iDEA</span>.</h1>
@@ -69,7 +74,9 @@
     </div>
   </div>
 </section>
-<section class="wrap" id="trainer">
+</div>
+<div data-pattern-panel="trainer" id="trainer" role="tabpanel" hidden>
+<section class="wrap">
   <div class="card">
     <h2>Trainer: welches Muster?</h2>
     <p class="muted" style="margin:0">Du siehst den Namen — du wählst das Muster. Ein paar Minuten am Tag, und du antwortest ohne Nachdenken.</p>
@@ -87,8 +94,9 @@
     <div class="score"><span>Serie: <b id="streak">0</b> · Rekord: <b id="best">0</b></span><button class="btn" id="qNext">Weiter →</button></div>
   </div>
 </section>
+</div>
 <footer class="note wrap">Noten sind üblich geschrieben (Es, nicht Dis, in c-Moll). Der Klang ist ein eingebauter Synth.</footer>
 <script src="/assets/js/chords-shared.js"></script>
-<script src="/assets/js/chords-patterns.js"></script>
+<script src="/assets/js/chords-patterns.js?v=2"></script>
 </body>
 </html>

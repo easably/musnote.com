@@ -1,4 +1,4 @@
-/* Pattern page: CFG / iDEA cheat sheet, then the trainer. */
+/* Patterns page: two tabs. Theory is CFG / iDEA. Trainer is the “which pattern?” quiz. */
 const COPY = {
   en: {
     majMood: 'major — bright sound',
@@ -220,3 +220,25 @@ document.getElementById('qNext').onclick = nextQ;
 nextQ();
 
 document.addEventListener('notation', () => { kb.relabel(); qkb.redraw(); select(cur.root, cur.type, false); });
+
+/* Theory is the default tab. #trainer (the hub footnote) opens the quiz tab. */
+function showPatternTab(name) {
+  document.querySelectorAll('[data-pattern-panel]').forEach(panel => {
+    panel.hidden = panel.dataset.patternPanel !== name;
+  });
+  document.querySelectorAll('.pattern-tab').forEach(button => {
+    const on = button.dataset.patternTab === name;
+    button.classList.toggle('on', on);
+    button.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  if (location.hash === '#trainer' && name !== 'trainer') history.replaceState(null, '', location.pathname + location.search);
+  if (name === 'trainer' && location.hash !== '#trainer') history.replaceState(null, '', '#trainer');
+  window.scrollTo(0, 0);
+}
+document.querySelector('.pattern-tabs')?.addEventListener('click', event => {
+  const button = event.target.closest('.pattern-tab');
+  if (!button) return;
+  showPatternTab(button.dataset.patternTab);
+});
+window.addEventListener('hashchange', () => showPatternTab(location.hash === '#trainer' ? 'trainer' : 'theory'));
+showPatternTab(location.hash === '#trainer' ? 'trainer' : 'theory');
