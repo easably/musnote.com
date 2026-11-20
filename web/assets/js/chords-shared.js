@@ -6,7 +6,16 @@ const MN = (() => {
   const isBlack = m => BLACK.has(((m % 12) + 12) % 12);
   const LET = 'CDEFGAB';
   const LPC = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
-  const LANG = (document.documentElement.lang || 'en').slice(0, 2);
+  const PREFIX_RE = (window.MusnoteLocale && window.MusnoteLocale.PREFIX_RE)
+    || /^\/(ru|de|pl|es|pt|ja|ko|zh-tw|zh-cn|vi)(?=\/|$)/;
+  const LANG = (() => {
+    const m = location.pathname.match(PREFIX_RE);
+    if (m) return m[1];
+    const html = (document.documentElement.lang || 'en').toLowerCase();
+    if (html.startsWith('zh-tw') || html === 'zh-hant') return 'zh-tw';
+    if (html.startsWith('zh')) return 'zh-cn';
+    return html.slice(0, 2);
+  })();
   const SOLF_RU = { C: 'До', D: 'Ре', E: 'Ми', F: 'Фа', G: 'Соль', A: 'Ля', B: 'Си' };
   const SOLF_DO = { C: 'Do', D: 'Re', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
   const SOLF = LANG === 'ru' ? SOLF_RU : SOLF_DO;
@@ -173,10 +182,26 @@ const MN = (() => {
     document.querySelectorAll('.variants a').forEach(a => a.classList.toggle('on', a.dataset.page === page));
     const langSel = document.getElementById('language-selector');
     if (langSel) {
-      langSel.value = LANG;
+      const live = (window.MusnoteLocale && window.MusnoteLocale.LIVE) || { en: 1, ru: 1, de: 1 };
+      [...langSel.options].forEach((opt) => {
+        if (!live[opt.value]) opt.hidden = true;
+      });
+      langSel.value = live[LANG] ? LANG : 'en';
       langSel.addEventListener('change', () => {
         const language = langSel.value;
-        let path = location.pathname.replace(/^\/(ru|de)(?=\/|$)/, '') || '/';
+        if (window.MusnoteLocale && window.MusnoteLocale.remember) {
+          window.MusnoteLocale.remember(language);
+        }
+        if (window.MusnoteLocale && window.MusnoteLocale.hrefFor) {
+          location.href = window.MusnoteLocale.hrefFor(
+            language,
+            location.pathname,
+            location.search,
+            location.hash
+          );
+          return;
+        }
+        let path = location.pathname.replace(PREFIX_RE, '') || '/';
         if (!path.startsWith('/')) path = '/' + path;
         if (language !== 'en') path = '/' + language + (path === '/' ? '/' : path);
         location.href = path;

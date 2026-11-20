@@ -129,6 +129,20 @@ footer.note { padding: 30px 24px 60px; color: var(--mn-muted); font-size: .9rem;
 .vcard .go { margin-top: auto; padding-top: 14px; font-weight: 700; color: var(--mn-green-700); }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
 .hub-note { margin-top: 18px; }
+
+/* Home: audio → piano notes */
+.notes-panel { margin-top: 28px; display: grid; gap: 14px; }
+.notes-panel .field { display: grid; gap: 6px; }
+.notes-panel .field label { font-weight: 600; font-size: .95rem; }
+.notes-panel .field input[type="file"] { font: inherit; max-width: 100%; }
+.notes-panel .notes-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.notes-status { margin: 0; font-weight: 600; color: var(--mn-ink-soft); }
+.notes-status.bad { color: #b91c1c; }
+.notes-kb-wrap { overflow-x: auto; border-radius: 14px; background: var(--mn-surface-2); padding: 10px; }
+.notes-kb-wrap .kb { min-width: 480px; }
+.notes-practice { margin: 36px 0 10px; }
+.notes-practice h2 { margin-bottom: .2em; }
+.notes-practice .lead { font-size: 1.05rem; }
 .lang-select { border: 0; background: #eef3f1; border-radius: 999px; padding: 6px 10px; font: inherit; color: var(--mn-ink); }
 #trainer { scroll-margin-top: 76px; }
 /* Patterns page only: theory and the quiz are two tabs, not one long page. */

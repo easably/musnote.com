@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MusNote — How chords stick</title>
-<meta name="description" content="One rule builds a piano chord. Three pictures: key patterns, hops, and the chord clock. Then a two-minute trainer.">
+<title>MusNote — audio to piano notes</title>
+<meta name="description" content="Audio to piano notes: upload a short solo, see the keys light up, press play. Then practise chords — patterns, hops, and the chord clock.">
 <link rel="canonical" href="https://musnote.com/">
 <link rel="alternate" hreflang="en" href="https://musnote.com/">
 <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
@@ -13,6 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
 <link rel="stylesheet" href="/assets/css/chords.css">
+<script src="/assets/js/locale-by-country.js"></script>
 </head>
 <body data-page="home">
 <header class="topbar"><div class="wrap topbar-in">
@@ -22,10 +23,33 @@
   <select id="language-selector" class="lang-select" aria-label="Language"><option value="en" selected>EN</option><option value="ru">RU</option><option value="de">DE</option></select>
 </div></header>
 <section class="hero wrap">
-  <span class="eyebrow">Chords</span>
-  <h1>How to make chords stick</h1>
-  <p class="lead">One rule builds the chord. One picture makes that rule stick. Three ways in — each with its own hook.</p>
-  <div class="hero-actions"><a class="btn primary" href="/chords/patterns/">Start with patterns</a></div>
+  <span class="eyebrow">Notes</span>
+  <h1>audio to piano notes</h1>
+  <p class="lead">Upload a short solo — piano, guitar, or a clear melody. Keys light up on the keyboard. Hit play. This is notes on keys, not a sheet of paper.</p>
+  <div
+    class="card notes-panel"
+    id="notes-panel"
+    data-msg-busy="Reading notes…"
+    data-msg-empty="Choose an audio file first."
+    data-msg-fail="Could not read notes from this audio."
+    data-msg-big="File is larger than 15 MB."
+    data-msg-offline="Note service is unavailable right now."
+  >
+    <div class="field">
+      <label for="audio-file">Audio file (wav, mp3, m4a…)</label>
+      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    </div>
+    <div class="notes-actions">
+      <button type="button" class="btn green" id="btn-transcribe">Get notes</button>
+      <button type="button" class="btn primary" id="btn-play" disabled>Play</button>
+    </div>
+    <p class="notes-status" id="notes-status" hidden></p>
+    <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="Piano keyboard"></svg></div>
+  </div>
+</section>
+<section class="wrap notes-practice">
+  <h2>Then practise the chords</h2>
+  <p class="lead">One rule builds a chord. Three pictures make it stick — same trainer as before.</p>
 </section>
 <section class="wrap variants-grid"><a class="card vcard" href="/chords/patterns/">
     <div class="thumb"><svg width="220" height="130" viewBox="0 0 220 130" aria-hidden="true"><rect x="10" y="10" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><rect x="115" y="10" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="10" y="68" width="95" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/><rect x="115" y="68" width="95" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/><g font-family="Outfit,sans-serif" font-weight="800" font-size="18" text-anchor="middle"><text x="57" y="42">CFG</text><text x="162" y="42">DEA</text><text x="57" y="100">Cm</text><text x="162" y="100">Dm</text></g></svg></div>
@@ -50,6 +74,7 @@
   </a></section>
 <p class="hub-note wrap">Already know CFG and iDEA? <a href="/chords/patterns/#trainer">Open the pattern trainer →</a></p>
 <script src="/assets/js/chords-shared.js"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js"></script>
 
 </body>
 </html>
