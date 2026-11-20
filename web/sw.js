@@ -1,48 +1,31 @@
-// Simple Service Worker for MusNote
-const CACHE_NAME = 'musnote-v4';
-const urlsToCache = [
-  '/assets/css/main.css',
-  '/assets/css/responsive.css',
-  '/assets/js/main.js',
-  '/assets/js/language.js',
-  '/assets/translations/translations.json',
-  '/assets/images/logo.svg'
-];
+// Network-first SW: site changes often; cache is only an offline fallback.
+const CACHE_NAME = 'musnote-v5';
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE_NAME));
+});
+
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(urlsToCache);
-      })
+    caches.keys().then((names) =>
+      Promise.all(names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
+    ).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  const accept = event.request.headers.get('accept') || '';
-  if (event.request.mode === 'navigate' || accept.includes('text/html')) {
-    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
-    return;
-  }
-  event.respondWith(
-    caches.match(event.request).then((response) => response || fetch(event.request))
-  );
-});
+  if (event.request.method !== 'GET') return;
 
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => {
-      // Force update of all clients
-      return self.clients.claim();
-    })
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        if (response.ok) {
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
