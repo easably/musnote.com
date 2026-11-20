@@ -132,14 +132,109 @@ footer.note { padding: 30px 24px 60px; color: var(--mn-muted); font-size: .9rem;
 
 /* Home: audio → piano notes */
 .notes-panel { margin-top: 28px; display: grid; gap: 14px; }
-.notes-panel .field { display: grid; gap: 6px; }
-.notes-panel .field label { font-weight: 600; font-size: .95rem; }
-.notes-panel .field input[type="file"] { font: inherit; max-width: 100%; }
-.notes-panel .notes-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.notes-track { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.notes-track legend { font-weight: 600; font-size: .95rem; width: 100%; padding: 0; }
+.notes-track label { display: inline-flex; gap: 6px; align-items: center; }
+.notes-solo { width: 100%; }
+.notes-track-warn { margin: 0; color: var(--mn-ink-soft); }
+.notes-file-input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+.notes-drop { border: 2.5px dashed #b9d8cb; border-radius: 20px; padding: 44px 20px; text-align: center; display: grid; gap: 10px; justify-items: center; transition: .2s; }
+.notes-drop-ic { width: 64px; height: 64px; border-radius: 18px; background: var(--mn-green-50); display: grid; place-items: center; font-size: 1.8rem; color: var(--mn-green-600); }
+.notes-drop-title { font-size: 1.35rem; font-weight: 700; }
+.notes-drop-or, .notes-drop-limits { color: var(--mn-muted); font-size: .88rem; }
+.notes-free { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 700; color: var(--mn-green-700); background: var(--mn-green-50); border-radius: 999px; padding: 3px 10px; }
+.notes-panel[data-state="drag"] .notes-drop { border-color: var(--mn-green-500); background: var(--mn-green-50); }
+.notes-file-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.notes-chip { display: inline-flex; align-items: center; gap: 10px; background: var(--mn-surface-2); border: 1px solid var(--mn-line); border-radius: 12px; padding: 8px 12px; font-weight: 600; }
+.notes-chip small { color: var(--mn-muted); font-weight: 500; }
+.notes-another { background: none; border: 0; font: inherit; color: var(--mn-green-700); font-weight: 600; cursor: pointer; padding: 0; }
+.notes-reading { margin: 0; color: var(--mn-muted); }
+.notes-download { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; max-width: 100%; }
+.notes-split { display: inline-flex; position: relative; max-width: 100%; }
+.notes-split-main { border-radius: 12px 0 0 12px; }
+.notes-split-more { border-radius: 0 12px 12px 0; border-left: 1px solid rgba(255,255,255,.25); padding: 10px 12px; flex: none; }
+.notes-menu { position: absolute; top: calc(100% + 8px); left: 0; width: min(330px, calc(100vw - 48px)); background: #fff; border: 1px solid var(--mn-line); border-radius: 16px; box-shadow: 0 18px 50px rgba(15,31,26,.16); padding: 6px; z-index: 5; }
+.notes-menu[hidden] { display: none; }
+.notes-menu button { display: flex; gap: 12px; align-items: flex-start; width: 100%; text-align: left; border: 0; background: none; font: inherit; padding: 10px 12px; border-radius: 10px; cursor: pointer; }
+.notes-menu button:hover { background: var(--mn-surface-2); }
+.notes-menu b { display: block; }
+.notes-menu small { color: var(--mn-muted); }
+.notes-menu hr { border: 0; border-top: 1px solid var(--mn-line); margin: 4px 6px; }
+.notes-midi-hint { margin: 0; color: var(--mn-muted); font-size: .88rem; }
+.notes-panel[data-state="empty"] .notes-file-row,
+.notes-panel[data-state="empty"] .notes-busy,
+.notes-panel[data-state="empty"] .notes-summary,
+.notes-panel[data-state="empty"] .notes-clipped,
+.notes-panel[data-state="empty"] .notes-player,
+.notes-panel[data-state="empty"] .notes-kb-wrap,
+.notes-panel[data-state="empty"] .notes-roll,
+.notes-panel[data-state="empty"] .falling-notes,
+.notes-panel[data-state="empty"] .notes-download,
+.notes-panel[data-state="drag"] .notes-file-row,
+.notes-panel[data-state="drag"] .notes-busy,
+.notes-panel[data-state="drag"] .notes-summary,
+.notes-panel[data-state="drag"] .notes-clipped,
+.notes-panel[data-state="drag"] .notes-player,
+.notes-panel[data-state="drag"] .notes-kb-wrap,
+.notes-panel[data-state="drag"] .notes-roll,
+.notes-panel[data-state="drag"] .falling-notes,
+.notes-panel[data-state="drag"] .notes-download,
+.notes-panel[data-state="loading"] .notes-drop,
+.notes-panel[data-state="loading"] .notes-another,
+.notes-panel[data-state="loading"] .notes-summary,
+.notes-panel[data-state="loading"] .notes-clipped,
+.notes-panel[data-state="loading"] .notes-player,
+.notes-panel[data-state="loading"] .notes-kb-wrap,
+.notes-panel[data-state="loading"] .notes-roll,
+.notes-panel[data-state="loading"] .falling-notes,
+.notes-panel[data-state="loading"] .notes-download,
+.notes-panel[data-state="result"] .notes-drop,
+.notes-panel[data-state="result"] .notes-busy { display: none; }
+@media (max-width: 640px) {
+  .notes-drop { padding: 28px 16px; }
+  .notes-drop-title { font-size: 1.15rem; }
+  .notes-split { display: flex; width: 100%; }
+  .notes-split-main { flex: 1; justify-content: center; min-width: 0; }
+  .notes-menu { width: 100%; }
+}
 .notes-status { margin: 0; font-weight: 600; color: var(--mn-ink-soft); }
 .notes-status.bad { color: #b91c1c; }
+.notes-summary, .notes-clipped { margin: 0; font-weight: 600; }
+.notes-clipped { color: var(--mn-ink-soft); }
+.notes-player { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.notes-player input[type="range"] { flex: 1; min-width: 120px; }
+.notes-time { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.notes-speed { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.notes-speed select { font: inherit; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--mn-line); background: #fff; }
+.notes-busy { display: grid; gap: 8px; }
+.notes-busy-bar { height: 6px; border-radius: 999px; background: var(--mn-green-100); overflow: hidden; position: relative; }
+.notes-busy-bar::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 35%; background: var(--mn-green-500); animation: notes-busy 1s ease-in-out infinite; }
+@keyframes notes-busy { from { transform: translateX(-120%); } to { transform: translateX(320%); } }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
 .notes-kb-wrap { overflow-x: auto; border-radius: 14px; background: var(--mn-surface-2); padding: 10px; }
 .notes-kb-wrap .kb { min-width: 480px; }
+.falling-notes { width: 100%; height: auto; display: block; min-width: 480px; margin-bottom: 6px; }
+.falling-notes[hidden] { display: none; }
+.falling-notes .hit { stroke: var(--c-r); stroke-width: 2; }
+.falling-notes .bar { fill: var(--c-r); opacity: .8; }
+.falling-notes .bar.on { opacity: 1; }
+.falling-notes .bar-label { fill: #fff; font-size: 11px; font-weight: 700; text-anchor: middle; font-family: var(--mn-font-sans, sans-serif); pointer-events: none; }
+.notes-sheet { margin: 8px auto 40px; }
+.notes-sheet-tools { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; margin-bottom: 14px; }
+.notes-sheet-tools label { display: inline-flex; gap: 6px; align-items: center; font-weight: 600; }
+.notes-sheet-body h2 { margin-bottom: .2em; }
+.sheet-meta { margin: 0 0 12px; color: var(--mn-ink-soft); }
+.sheet-line { font-size: 1.35rem; font-weight: 700; margin: 0 0 8px; letter-spacing: .01em; }
+.sheet-kb { display: flex; align-items: flex-start; height: 78px; margin: 8px 0 16px; }
+.sheet-kb i { position: relative; display: block; box-sizing: border-box; }
+.sheet-kb i.w { width: 16px; height: 58px; background: #fff; border: 1px solid #111; }
+.sheet-kb i.b { width: 10px; height: 34px; background: #1b2622; margin: 0 -5px; z-index: 1; border: 0; }
+.sheet-kb b { position: absolute; left: 0; bottom: -16px; font-style: normal; font-size: 10px; font-weight: 700; color: #111; white-space: nowrap; }
+@media print {
+  body.printing-notes > *:not(.notes-sheet) { display: none !important; }
+  body.printing-notes .notes-sheet { display: block !important; margin: 0; }
+  body.printing-notes .notes-sheet-tools { display: none !important; }
+}
 .notes-practice { margin: 36px 0 10px; }
 .notes-practice h2 { margin-bottom: .2em; }
 .notes-practice .lead { font-size: 1.05rem; }

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusNote — Lied in Noten</title>
-<meta name="description" content="Lied in Noten: Track hochladen, Tasten leuchten, Abspielen. Musik in Noten auf der Tastatur — kein Notenblatt.">
+<meta name="description" content="Songausschnitt hochladen, Noten auf den Tasten sehen, MIDI oder Buchstabenblatt speichern. Kostenlos, ohne Anmeldung.">
 <link rel="canonical" href="https://musnote.com/de/song-to-notes/">
 <link rel="alternate" hreflang="en" href="https://musnote.com/song-to-notes/">
 <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/song-to-notes/">
@@ -22,7 +22,7 @@
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
-<link rel="stylesheet" href="/assets/css/chords.css">
+<link rel="stylesheet" href="/assets/css/chords.css?v=20261120k">
 <script src="/assets/js/locale-by-country.js?v=20261120b"></script>
 </head>
 <body data-page="song">
@@ -34,30 +34,90 @@
 <section class="hero wrap">
   <span class="eyebrow">Lied</span>
   <h1>Lied in Noten</h1>
-  <p class="lead">Lade ein Lied oder eine kurze Melodie hoch. Die Tasten leuchten. Tippe auf Abspielen. Noten auf der Tastatur, kein Notenblatt.</p>
+  <p class="lead">Lade einen Songausschnitt hoch. Die Noten leuchten auf den Tasten — und du kannst sie mitnehmen: eine MIDI-Datei für GarageBand, MuseScore oder Synthesia, oder ein Notenblatt mit Buchstaben zum Drucken. Kostenlos, ohne Anmeldung. Am besten Solo-Klavier oder eine klare Melodie.</p>
   <div
     class="card notes-panel"
     id="notes-panel"
+    data-state="empty"
     data-msg-busy="Noten werden gelesen…"
     data-msg-empty="Zuerst eine Audiodatei wählen."
     data-msg-fail="Aus dieser Datei konnten keine Noten gelesen werden."
-    data-msg-big="Datei ist größer als 15 MB."
     data-msg-offline="Der Noten-Dienst ist gerade nicht erreichbar."
+    data-warn-mix="Wir trennen Stimme und Instrumente noch nicht. Hat die Datei mehrere Stimmen, kommen die Noten aus der ganzen Aufnahme: Gesang, Klavier, Gitarre und Rauschen."
+    data-warn-solo="Mehrere Stimmen trennen wir nicht. Ein Klaviersolo oder eine Melodie wird so gelesen, wie sie ist."
+    data-msg-big="Datei ist größer als 100 MB."
+    data-msg-play="Abspielen"
+    data-msg-pause="Pause"
+    data-msg-found="{n} Noten · {time} · von {lo} bis {hi}"
+    data-msg-clipped="Die ersten 4000 Noten. Die MIDI-Datei ist ebenfalls gekürzt."
+    data-msg-copied="Kopiert"
+    data-msg-bad-type="Bitte mp3, wav, m4a, ogg, flac, webm oder aac."
+    data-msg-sheet-octave="Mit Oktavzahl"
+    data-msg-sheet-letters="Buchstaben"
+    data-msg-sheet-solfege="Do–Re–Mi"
+    data-msg-mb="MB"
+    data-msg-kb="KB"
+    data-msg-print="Drucken"
   >
-    <div class="field">
-      <label for="audio-file">Audiodatei (wav, mp3, m4a…)</label>
-      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    <fieldset class="notes-track">
+      <legend>Womit anfangen</legend>
+      <label><input type="radio" name="track-intent" value="whole" checked> Ganze Aufnahme</label>
+      <label><input type="radio" name="track-intent" value="piano"> Klavier</label>
+      <label><input type="radio" name="track-intent" value="voice"> Stimme</label>
+      <label class="notes-solo"><input type="checkbox" id="track-solo"> In der Datei ist ein Instrument</label>
+    </fieldset>
+    <p class="notes-track-warn" id="notes-track-warn"></p>
+    <div class="notes-drop" id="notes-drop">
+      <div class="notes-drop-ic" aria-hidden="true">♫</div>
+      <div class="notes-drop-title">Audio hierher ziehen</div>
+      <div class="notes-drop-or">oder</div>
+      <button type="button" class="btn primary" id="btn-pick">Datei wählen</button>
+      <input id="audio-file" class="notes-file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac" tabindex="-1">
+      <div class="notes-drop-limits">mp3, wav, m4a, flac · bis 100 MB · <span class="notes-free">✓ Kostenlos, ohne Anmeldung</span></div>
     </div>
-    <div class="notes-actions">
-      <button type="button" class="btn green" id="btn-transcribe">Noten holen</button>
+    <div class="notes-file-row" id="notes-file-row">
+      <span class="notes-chip">🎵 <span id="notes-file-name"></span> <small id="notes-file-size"></small></span>
+      <button type="button" class="notes-another" id="btn-another">Andere Datei</button>
+    </div>
+    <div class="notes-busy" id="notes-busy"><div class="notes-busy-bar"></div><p class="notes-reading">Noten werden gelesen…</p></div>
+    <p class="notes-summary" id="notes-summary" hidden></p>
+    <p class="notes-clipped" id="notes-clipped" hidden></p>
+    <div class="notes-player">
       <button type="button" class="btn primary" id="btn-play" disabled>Abspielen</button>
+      <button type="button" class="btn" id="btn-stop" disabled>Stopp</button>
+      <input type="range" id="notes-seek" min="0" max="0" value="0" step="1" disabled aria-label="Position">
+      <span class="notes-time" id="notes-time">0:00 / 0:00</span>
+      <label class="notes-speed">Tempo
+        <select id="notes-speed" disabled aria-label="Tempo">
+          <option value="0.5">0.5×</option>
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+        </select>
+      </label>
     </div>
     <p class="notes-status" id="notes-status" hidden></p>
     <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="Klaviertastatur"></svg></div>
+    <div class="notes-download" id="notes-download">
+      <div class="notes-split">
+        <button type="button" class="btn green notes-split-main" id="btn-midi" disabled>⬇ MIDI laden</button>
+        <button type="button" class="btn green notes-split-more" id="btn-download-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Andere Formate" disabled>▾</button>
+        <div class="notes-menu" id="notes-menu" role="menu" hidden>
+          <button type="button" role="menuitem" id="btn-midi-menu"><span><b>MIDI-Datei (.mid)</b><small>GarageBand, MuseScore, Synthesia</small></span></button>
+          <button type="button" role="menuitem" id="btn-sheet"><span><b>Notenblatt mit Buchstaben</b><small>Drucken oder als PDF</small></span></button>
+          <button type="button" role="menuitem" id="btn-txt"><span><b>Noten als Text</b><small>Eine Zeile pro Phrase</small></span></button>
+          <hr>
+          <button type="button" role="menuitem" id="btn-copy"><span><b>Noten kopieren</b><small>Derselbe Text in die Zwischenablage</small></span></button>
+        </div>
+      </div>
+      <p class="notes-midi-hint">MIDI öffnet sich in GarageBand, MuseScore und Synthesia</p>
+    </div>
+
   </div>
   <p class="hub-note"><a href="/de/">← Audio in Noten</a></p>
 </section>
-<script src="/assets/js/chords-shared.js?v=20261120b"></script>
-<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120c"></script>
+<script src="/assets/js/chords-shared.js?v=20261120e"></script>
+<script src="/assets/js/notes-export.js?v=20261120e"></script>
+<script src="/assets/js/falling-notes.js?v=20261120g"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120j"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusNote — песня в ноты</title>
-<meta name="description" content="Песня в ноты: загрузите трек, клавиши загорятся, нажмите «сыграть». Музыка в ноты на клавиатуре, не нотный лист.">
+<meta name="description" content="Загрузите отрывок песни: ноты на клавишах, MIDI или лист с буквами нот. Бесплатно, без регистрации.">
 <link rel="canonical" href="https://musnote.com/ru/song-to-notes/">
 <link rel="alternate" hreflang="en" href="https://musnote.com/song-to-notes/">
 <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/song-to-notes/">
@@ -22,7 +22,7 @@
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
-<link rel="stylesheet" href="/assets/css/chords.css">
+<link rel="stylesheet" href="/assets/css/chords.css?v=20261120k">
 <script src="/assets/js/locale-by-country.js?v=20261120b"></script>
 </head>
 <body data-page="song">
@@ -34,30 +34,90 @@
 <section class="hero wrap">
   <span class="eyebrow">Песня</span>
   <h1>песня в ноты</h1>
-  <p class="lead">Загрузите песню или короткую мелодию. Клавиши загорятся. Нажмите «сыграть». Это ноты на клавиатуре, не нотный лист.</p>
+  <p class="lead">Загрузите отрывок песни. Ноты загорятся на клавишах — и их можно забрать: MIDI-файл для GarageBand, MuseScore или Synthesia или лист с буквами нот для печати. Бесплатно, без регистрации. Лучше всего — соло фортепиано или чистая мелодия.</p>
   <div
     class="card notes-panel"
     id="notes-panel"
+    data-state="empty"
     data-msg-busy="Читаем ноты…"
     data-msg-empty="Сначала выберите аудиофайл."
     data-msg-fail="Не удалось прочитать ноты из этого файла."
-    data-msg-big="Файл больше 15 МБ."
     data-msg-offline="Сервис нот сейчас недоступен."
+    data-warn-mix="Мы пока не отделяем голос и инструменты. Если в файле несколько партий, ноты будут из всей записи сразу: и пение, и пианино, и гитара, и шум."
+    data-warn-solo="Несколько партий мы не разделяем. Соло пианино или одна мелодия считаются как есть."
+    data-msg-big="Файл больше 100 МБ."
+    data-msg-play="Сыграть"
+    data-msg-pause="Пауза"
+    data-msg-found="Найдено {n} нот · {time} · от {lo} до {hi}"
+    data-msg-clipped="Показаны первые 4000 нот. MIDI тоже обрезан."
+    data-msg-copied="Скопировано"
+    data-msg-bad-type="Нужен файл mp3, wav, m4a, ogg, flac, webm или aac."
+    data-msg-sheet-octave="С номером октавы"
+    data-msg-sheet-letters="Буквы"
+    data-msg-sheet-solfege="До–Ре–Ми"
+    data-msg-mb="МБ"
+    data-msg-kb="КБ"
+    data-msg-print="Печать"
   >
-    <div class="field">
-      <label for="audio-file">Аудиофайл (wav, mp3, m4a…)</label>
-      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    <fieldset class="notes-track">
+      <legend>С какой партии начать</legend>
+      <label><input type="radio" name="track-intent" value="whole" checked> Вся запись</label>
+      <label><input type="radio" name="track-intent" value="piano"> Пианино</label>
+      <label><input type="radio" name="track-intent" value="voice"> Голос</label>
+      <label class="notes-solo"><input type="checkbox" id="track-solo"> В файле один инструмент</label>
+    </fieldset>
+    <p class="notes-track-warn" id="notes-track-warn"></p>
+    <div class="notes-drop" id="notes-drop">
+      <div class="notes-drop-ic" aria-hidden="true">♫</div>
+      <div class="notes-drop-title">Перетащите аудио сюда</div>
+      <div class="notes-drop-or">или</div>
+      <button type="button" class="btn primary" id="btn-pick">Выбрать файл</button>
+      <input id="audio-file" class="notes-file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac" tabindex="-1">
+      <div class="notes-drop-limits">mp3, wav, m4a, flac · до 100 МБ · <span class="notes-free">✓ Бесплатно, без регистрации</span></div>
     </div>
-    <div class="notes-actions">
-      <button type="button" class="btn green" id="btn-transcribe">Получить ноты</button>
+    <div class="notes-file-row" id="notes-file-row">
+      <span class="notes-chip">🎵 <span id="notes-file-name"></span> <small id="notes-file-size"></small></span>
+      <button type="button" class="notes-another" id="btn-another">Другой файл</button>
+    </div>
+    <div class="notes-busy" id="notes-busy"><div class="notes-busy-bar"></div><p class="notes-reading">Читаем ноты…</p></div>
+    <p class="notes-summary" id="notes-summary" hidden></p>
+    <p class="notes-clipped" id="notes-clipped" hidden></p>
+    <div class="notes-player">
       <button type="button" class="btn primary" id="btn-play" disabled>Сыграть</button>
+      <button type="button" class="btn" id="btn-stop" disabled>Стоп</button>
+      <input type="range" id="notes-seek" min="0" max="0" value="0" step="1" disabled aria-label="Позиция">
+      <span class="notes-time" id="notes-time">0:00 / 0:00</span>
+      <label class="notes-speed">Скорость
+        <select id="notes-speed" disabled aria-label="Скорость">
+          <option value="0.5">0.5×</option>
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+        </select>
+      </label>
     </div>
     <p class="notes-status" id="notes-status" hidden></p>
     <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="Клавиатура пианино"></svg></div>
+    <div class="notes-download" id="notes-download">
+      <div class="notes-split">
+        <button type="button" class="btn green notes-split-main" id="btn-midi" disabled>⬇ Скачать MIDI</button>
+        <button type="button" class="btn green notes-split-more" id="btn-download-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Другие форматы" disabled>▾</button>
+        <div class="notes-menu" id="notes-menu" role="menu" hidden>
+          <button type="button" role="menuitem" id="btn-midi-menu"><span><b>MIDI-файл (.mid)</b><small>GarageBand, MuseScore, Synthesia</small></span></button>
+          <button type="button" role="menuitem" id="btn-sheet"><span><b>Лист с буквами нот</b><small>Печать или PDF</small></span></button>
+          <button type="button" role="menuitem" id="btn-txt"><span><b>Ноты текстом</b><small>По фразам, по строке</small></span></button>
+          <hr>
+          <button type="button" role="menuitem" id="btn-copy"><span><b>Скопировать ноты</b><small>Тот же текст в буфер</small></span></button>
+        </div>
+      </div>
+      <p class="notes-midi-hint">MIDI откроется в GarageBand, MuseScore и Synthesia</p>
+    </div>
+
   </div>
   <p class="hub-note"><a href="/ru/">← Аудио в ноты</a></p>
 </section>
-<script src="/assets/js/chords-shared.js?v=20261120b"></script>
-<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120c"></script>
+<script src="/assets/js/chords-shared.js?v=20261120e"></script>
+<script src="/assets/js/notes-export.js?v=20261120e"></script>
+<script src="/assets/js/falling-notes.js?v=20261120g"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120j"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusNote — 오디오 악보 변환</title>
-<meta name="description" content="오디오 악보 변환: 짧은 솔로를 올리면 건반이 빛나고 재생할 수 있습니다. 화면은 건반 위의 음이며, 오선지 악보가 아닙니다. mp3 악보 변환과 비슷한 경험입니다.">
+<meta name="description" content="곡 일부를 올리고 건반의 음을 본 뒤 MIDI나 음이름 시트를 받으세요. 무료, 가입 없음.">
 <link rel="canonical" href="https://musnote.com/ko/">
 <link rel="alternate" hreflang="en" href="https://musnote.com/">
 <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
@@ -22,7 +22,7 @@
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
-<link rel="stylesheet" href="/assets/css/chords.css">
+<link rel="stylesheet" href="/assets/css/chords.css?v=20261120k">
 <script src="/assets/js/locale-by-country.js?v=20261120b"></script>
 </head>
 <body data-page="home">
@@ -34,26 +34,84 @@
 <section class="hero wrap">
   <span class="eyebrow">음표</span>
   <h1>오디오 악보 변환</h1>
-  <p class="lead">짧은 솔로를 업로드하세요 — 피아노, 기타 또는 또렷한 멜로디. 건반이 빛납니다. 재생을 누르세요. 화면은 건반의 음이지, 오선지 종이가 아닙니다.</p>
+  <p class="lead">곡의 일부를 올리세요. 건반에 음이 켜지고, 가져갈 수 있습니다. GarageBand, MuseScore, Synthesia용 MIDI 또는 인쇄할 음이름 시트. 무료, 가입 없음. 피아노 솔로나 또렷한 멜로디에 가장 잘 맞습니다.</p>
   <div
     class="card notes-panel"
     id="notes-panel"
+    data-state="empty"
     data-msg-busy="음표를 읽는 중…"
     data-msg-empty="먼저 오디오 파일을 선택하세요."
     data-msg-fail="이 오디오에서 음표를 읽지 못했습니다."
-    data-msg-big="파일이 15 MB보다 큽니다."
     data-msg-offline="음표 서비스를 지금 사용할 수 없습니다."
+    data-warn-mix="아직 목소리와 악기를 나누지 않습니다. 파트가 여러 개면 음표는 녹음 전체에서 나옵니다. 노래, 피아노, 기타, 잡음이 함께입니다."
+    data-warn-solo="여러 파트는 나누지 않습니다. 피아노 독주나 하나의 선율은 있는 그대로 읽습니다."
+    data-msg-big="파일이 100 MB보다 큽니다."
+    data-msg-play="재생"
+    data-msg-pause="일시정지"
+    data-msg-found="음표 {n}개 · {time} · {lo}–{hi}"
+    data-msg-clipped="처음 4000개 음표만 표시합니다. MIDI도 잘려 있습니다."
+    data-msg-copied="복사됨"
+    data-msg-bad-type="mp3, wav, m4a, ogg, flac, webm, aac 파일을 사용하세요."
+    data-msg-sheet-octave="옥타브 번호 포함"
+    data-msg-sheet-letters="알파벳"
+    data-msg-sheet-solfege="도레미"
+    data-msg-mb="MB"
+    data-msg-kb="KB"
+    data-msg-print="인쇄"
   >
-    <div class="field">
-      <label for="audio-file">오디오 파일 (wav, mp3, m4a…)</label>
-      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    <fieldset class="notes-track">
+      <legend>어느 파트부터</legend>
+      <label><input type="radio" name="track-intent" value="whole" checked> 녹음 전체</label>
+      <label><input type="radio" name="track-intent" value="piano"> 피아노</label>
+      <label><input type="radio" name="track-intent" value="voice"> 목소리</label>
+      <label class="notes-solo"><input type="checkbox" id="track-solo"> 파일에 악기가 하나</label>
+    </fieldset>
+    <p class="notes-track-warn" id="notes-track-warn"></p>
+    <div class="notes-drop" id="notes-drop">
+      <div class="notes-drop-ic" aria-hidden="true">♫</div>
+      <div class="notes-drop-title">오디오를 여기에 놓으세요</div>
+      <div class="notes-drop-or">또는</div>
+      <button type="button" class="btn primary" id="btn-pick">파일 선택</button>
+      <input id="audio-file" class="notes-file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac" tabindex="-1">
+      <div class="notes-drop-limits">mp3, wav, m4a, flac · 100 MB까지 · <span class="notes-free">✓ 무료, 가입 없음</span></div>
     </div>
-    <div class="notes-actions">
-      <button type="button" class="btn green" id="btn-transcribe">음표 가져오기</button>
+    <div class="notes-file-row" id="notes-file-row">
+      <span class="notes-chip">🎵 <span id="notes-file-name"></span> <small id="notes-file-size"></small></span>
+      <button type="button" class="notes-another" id="btn-another">다른 파일</button>
+    </div>
+    <div class="notes-busy" id="notes-busy"><div class="notes-busy-bar"></div><p class="notes-reading">음표를 읽는 중…</p></div>
+    <p class="notes-summary" id="notes-summary" hidden></p>
+    <p class="notes-clipped" id="notes-clipped" hidden></p>
+    <div class="notes-player">
       <button type="button" class="btn primary" id="btn-play" disabled>재생</button>
+      <button type="button" class="btn" id="btn-stop" disabled>정지</button>
+      <input type="range" id="notes-seek" min="0" max="0" value="0" step="1" disabled aria-label="위치">
+      <span class="notes-time" id="notes-time">0:00 / 0:00</span>
+      <label class="notes-speed">속도
+        <select id="notes-speed" disabled aria-label="속도">
+          <option value="0.5">0.5×</option>
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+        </select>
+      </label>
     </div>
     <p class="notes-status" id="notes-status" hidden></p>
     <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="피아노 건반"></svg></div>
+    <div class="notes-download" id="notes-download">
+      <div class="notes-split">
+        <button type="button" class="btn green notes-split-main" id="btn-midi" disabled>⬇ MIDI 받기</button>
+        <button type="button" class="btn green notes-split-more" id="btn-download-menu" aria-haspopup="menu" aria-expanded="false" aria-label="다른 형식" disabled>▾</button>
+        <div class="notes-menu" id="notes-menu" role="menu" hidden>
+          <button type="button" role="menuitem" id="btn-midi-menu"><span><b>MIDI 파일 (.mid)</b><small>GarageBand, MuseScore, Synthesia</small></span></button>
+          <button type="button" role="menuitem" id="btn-sheet"><span><b>음이름 시트</b><small>인쇄 또는 PDF</small></span></button>
+          <button type="button" role="menuitem" id="btn-txt"><span><b>텍스트 음표</b><small>프레이즈마다 한 줄</small></span></button>
+          <hr>
+          <button type="button" role="menuitem" id="btn-copy"><span><b>음표 복사</b><small>같은 글을 클립보드에</small></span></button>
+        </div>
+      </div>
+      <p class="notes-midi-hint">MIDI는 GarageBand, MuseScore, Synthesia에서 열립니다</p>
+    </div>
+
   </div>
 </section>
 <section class="wrap notes-practice">
@@ -82,7 +140,9 @@
     <span class="go">열기 (EN) →</span>
   </a></section>
 <p class="hub-note wrap">영어 코드 연습: <a href="/chords/patterns/#trainer">Patterns 열기 →</a></p>
-<script src="/assets/js/chords-shared.js?v=20261120b"></script>
-<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120c"></script>
+<script src="/assets/js/chords-shared.js?v=20261120e"></script>
+<script src="/assets/js/notes-export.js?v=20261120e"></script>
+<script src="/assets/js/falling-notes.js?v=20261120g"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120j"></script>
 </body>
 </html>

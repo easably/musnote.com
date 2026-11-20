@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusNote — 音频转谱</title>
-<meta name="description" content="音频转谱：上传歌曲，看琴键，再播放。接近音频转 midi 的体验，但屏幕是键盘不是五线谱。">
+<meta name="description" content="上传歌曲片段，在琴键上看音符，再下载 MIDI 或音名纸页。免费，无需注册。">
 <link rel="canonical" href="https://musnote.com/zh-cn/song-to-notes/">
 <link rel="alternate" hreflang="en" href="https://musnote.com/song-to-notes/">
 <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/song-to-notes/">
@@ -22,7 +22,7 @@
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
-<link rel="stylesheet" href="/assets/css/chords.css">
+<link rel="stylesheet" href="/assets/css/chords.css?v=20261120k">
 <script src="/assets/js/locale-by-country.js?v=20261120b"></script>
 </head>
 <body data-page="song">
@@ -34,30 +34,90 @@
 <section class="hero wrap">
   <span class="eyebrow">转谱</span>
   <h1>音频转谱</h1>
-  <p class="lead">上传歌曲或短旋律。琴键会显示音符。这是钢琴键盘，不是纸面五线谱。</p>
+  <p class="lead">上传一段歌曲。音符会在琴键上亮起，也可以带走：用于 GarageBand、MuseScore 或 Synthesia 的 MIDI，或可打印的音名纸页。免费，无需注册。独奏钢琴或清晰旋律效果最好。</p>
   <div
     class="card notes-panel"
     id="notes-panel"
+    data-state="empty"
     data-msg-busy="正在读取音符…"
     data-msg-empty="请先选择音频文件。"
     data-msg-fail="无法从此音频读取音符。"
-    data-msg-big="文件大于 15 MB。"
     data-msg-offline="扒谱服务暂时不可用。"
+    data-warn-mix="我们还不能把人声和乐器分开。文件里有好几条时，音符来自整段录音：演唱、钢琴、吉他和噪声都在里面。"
+    data-warn-solo="我们不分多条音轨。钢琴独奏或一条旋律按原样读取。"
+    data-msg-big="文件大于 100 MB。"
+    data-msg-play="播放"
+    data-msg-pause="暂停"
+    data-msg-found="找到 {n} 个音 · {time} · {lo} 到 {hi}"
+    data-msg-clipped="只显示前 4000 个音。MIDI 也同样被截断。"
+    data-msg-copied="已复制"
+    data-msg-bad-type="请使用 mp3、wav、m4a、ogg、flac、webm 或 aac。"
+    data-msg-sheet-octave="带八度数字"
+    data-msg-sheet-letters="字母"
+    data-msg-sheet-solfege="Do–Re–Mi"
+    data-msg-mb="MB"
+    data-msg-kb="KB"
+    data-msg-print="打印"
   >
-    <div class="field">
-      <label for="audio-file">音频文件（wav、mp3、m4a…）</label>
-      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    <fieldset class="notes-track">
+      <legend>从哪一条开始</legend>
+      <label><input type="radio" name="track-intent" value="whole" checked> 整段录音</label>
+      <label><input type="radio" name="track-intent" value="piano"> 钢琴</label>
+      <label><input type="radio" name="track-intent" value="voice"> 人声</label>
+      <label class="notes-solo"><input type="checkbox" id="track-solo"> 文件里只有一件乐器</label>
+    </fieldset>
+    <p class="notes-track-warn" id="notes-track-warn"></p>
+    <div class="notes-drop" id="notes-drop">
+      <div class="notes-drop-ic" aria-hidden="true">♫</div>
+      <div class="notes-drop-title">把音频拖到这里</div>
+      <div class="notes-drop-or">或</div>
+      <button type="button" class="btn primary" id="btn-pick">选择文件</button>
+      <input id="audio-file" class="notes-file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac" tabindex="-1">
+      <div class="notes-drop-limits">mp3, wav, m4a, flac · 最大 100 MB · <span class="notes-free">✓ 免费，无需注册</span></div>
     </div>
-    <div class="notes-actions">
-      <button type="button" class="btn green" id="btn-transcribe">获取音符</button>
+    <div class="notes-file-row" id="notes-file-row">
+      <span class="notes-chip">🎵 <span id="notes-file-name"></span> <small id="notes-file-size"></small></span>
+      <button type="button" class="notes-another" id="btn-another">换一个文件</button>
+    </div>
+    <div class="notes-busy" id="notes-busy"><div class="notes-busy-bar"></div><p class="notes-reading">正在读取音符…</p></div>
+    <p class="notes-summary" id="notes-summary" hidden></p>
+    <p class="notes-clipped" id="notes-clipped" hidden></p>
+    <div class="notes-player">
       <button type="button" class="btn primary" id="btn-play" disabled>播放</button>
+      <button type="button" class="btn" id="btn-stop" disabled>停止</button>
+      <input type="range" id="notes-seek" min="0" max="0" value="0" step="1" disabled aria-label="位置">
+      <span class="notes-time" id="notes-time">0:00 / 0:00</span>
+      <label class="notes-speed">速度
+        <select id="notes-speed" disabled aria-label="速度">
+          <option value="0.5">0.5×</option>
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+        </select>
+      </label>
     </div>
     <p class="notes-status" id="notes-status" hidden></p>
     <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="钢琴键盘"></svg></div>
+    <div class="notes-download" id="notes-download">
+      <div class="notes-split">
+        <button type="button" class="btn green notes-split-main" id="btn-midi" disabled>⬇ 下载 MIDI</button>
+        <button type="button" class="btn green notes-split-more" id="btn-download-menu" aria-haspopup="menu" aria-expanded="false" aria-label="其他格式" disabled>▾</button>
+        <div class="notes-menu" id="notes-menu" role="menu" hidden>
+          <button type="button" role="menuitem" id="btn-midi-menu"><span><b>MIDI 文件 (.mid)</b><small>GarageBand、MuseScore、Synthesia</small></span></button>
+          <button type="button" role="menuitem" id="btn-sheet"><span><b>音名纸页</b><small>打印或存成 PDF</small></span></button>
+          <button type="button" role="menuitem" id="btn-txt"><span><b>文本音符</b><small>每句一行</small></span></button>
+          <hr>
+          <button type="button" role="menuitem" id="btn-copy"><span><b>复制音符</b><small>同样的文字复制到剪贴板</small></span></button>
+        </div>
+      </div>
+      <p class="notes-midi-hint">MIDI 可在 GarageBand、MuseScore 和 Synthesia 中打开</p>
+    </div>
+
   </div>
   <p class="hub-note"><a href="/zh-cn/">← 扒谱</a></p>
 </section>
-<script src="/assets/js/chords-shared.js?v=20261120b"></script>
-<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120c"></script>
+<script src="/assets/js/chords-shared.js?v=20261120e"></script>
+<script src="/assets/js/notes-export.js?v=20261120e"></script>
+<script src="/assets/js/falling-notes.js?v=20261120g"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120j"></script>
 </body>
 </html>

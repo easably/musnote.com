@@ -14,7 +14,7 @@ from app.notes import notes_from_recording
 
 log = logging.getLogger(__name__)
 
-MAX_BYTES = 15 * 1024 * 1024
+MAX_BYTES = 100 * 1024 * 1024
 MAX_NOTES = 4000
 AUDIO_SUFFIXES = {".wav", ".mp3", ".m4a", ".ogg", ".flac", ".webm", ".aac"}
 
@@ -47,7 +47,7 @@ async def piano_notes(file: UploadFile = File(...)):
     if not data:
         raise HTTPException(400, "Empty file")
     if len(data) > MAX_BYTES:
-        raise HTTPException(413, "File is larger than 15 MB")
+        raise HTTPException(413, "File is larger than 100 MB")
 
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
     try:

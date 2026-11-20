@@ -157,7 +157,34 @@ const MN = (() => {
     g.gain.linearRampToValueAtTime(vol, t + 0.012);
     g.gain.exponentialRampToValueAtTime(0.0008, t + d);
     o.start(t); o2.start(t); o.stop(t + d + 0.05); o2.stop(t + d + 0.05);
+    let stopped = false;
+    return {
+      stop() {
+        if (stopped) return;
+        stopped = true;
+        try {
+          const now = a.currentTime;
+          g.gain.cancelScheduledValues(now);
+          if (now < t) {
+            g.gain.setValueAtTime(0, now);
+            o.stop(t);
+            o2.stop(t);
+            return;
+          }
+          const level = Math.max(g.gain.value, 0.0008);
+          g.gain.setValueAtTime(level, now);
+          g.gain.exponentialRampToValueAtTime(0.0008, now + 0.02);
+          o.stop(now + 0.03);
+          o2.stop(now + 0.03);
+        } catch (e) { /* already stopped */ }
+      },
+    };
   }
+  function note(m, { when, duration = 1.6, volume = 0.1 } = {}) {
+    const t = when == null ? ctx().currentTime + 0.03 : when;
+    return voice(m, t, Math.max(0.02, duration), volume);
+  }
+  function now() { return ctx().currentTime; }
   function play(midis, { arp = true, gap = 0.16 } = {}) {
     try {
       const t = ctx().currentTime + 0.03;
@@ -214,6 +241,6 @@ const MN = (() => {
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  return { el, isBlack, chord, rootFor, pretty, noteLabel, letterLabel, dots, keyboard, play, tick, sleep, TYPES, SOLF, LET, ACC, LANG,
+  return { el, isBlack, chord, rootFor, pretty, noteLabel, letterLabel, dots, keyboard, play, note, now, tick, sleep, TYPES, SOLF, LET, ACC, LANG,
     get notation() { return notation; } };
 })();

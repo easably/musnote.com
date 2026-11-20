@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusNote — 自動採譜</title>
-<meta name="description" content="自動採譜：短いソロをアップロードすると鍵盤が光り、再生できます。画面は鍵盤上の音で、五線譜の楽譜ではありません。音源の楽譜化に近い体験です。">
+<meta name="description" content="曲の一部を上げて鍵盤で音を見て、MIDI か音名シートを保存。無料、登録不要。">
 <link rel="canonical" href="https://musnote.com/ja/">
 <link rel="alternate" hreflang="en" href="https://musnote.com/">
 <link rel="alternate" hreflang="ru" href="https://musnote.com/ru/">
@@ -22,7 +22,7 @@
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/design-tokens.css">
-<link rel="stylesheet" href="/assets/css/chords.css">
+<link rel="stylesheet" href="/assets/css/chords.css?v=20261120k">
 <script src="/assets/js/locale-by-country.js?v=20261120b"></script>
 </head>
 <body data-page="home">
@@ -34,26 +34,84 @@
 <section class="hero wrap">
   <span class="eyebrow">採譜</span>
   <h1>自動採譜</h1>
-  <p class="lead">短いソロをアップロード — ピアノ、ギター、はっきりしたメロディ。鍵盤が光ります。再生を押してください。画面は鍵盤の音で、五線譜の紙ではありません。</p>
+  <p class="lead">曲の一部をアップロード。鍵盤の音が光り、持ち帰れます。GarageBand、MuseScore、Synthesia 用の MIDI、または印刷できる音名シート。無料、登録不要。ピアノソロか、はっきりしたメロディに向いています。</p>
   <div
     class="card notes-panel"
     id="notes-panel"
+    data-state="empty"
     data-msg-busy="音符を読み取り中…"
     data-msg-empty="先に音声ファイルを選んでください。"
     data-msg-fail="この音声から音符を読めませんでした。"
-    data-msg-big="ファイルが 15 MB を超えています。"
     data-msg-offline="採譜サービスは現在利用できません。"
+    data-warn-mix="まだ声と楽器を分けていません。いくつかのパートがあると、音符は録音全体からです。歌、ピアノ、ギター、雑音も入ります。"
+    data-warn-solo="複数のパートは分けません。ピアノソロや一つの旋律はそのまま読みます。"
+    data-msg-big="ファイルが 100 MB を超えています。"
+    data-msg-play="再生"
+    data-msg-pause="一時停止"
+    data-msg-found="{n} 音 · {time} · {lo} から {hi}"
+    data-msg-clipped="最初の 4000 音を表示しています。MIDI も途中までです。"
+    data-msg-copied="コピーしました"
+    data-msg-bad-type="mp3、wav、m4a、ogg、flac、webm、aac を使ってください。"
+    data-msg-sheet-octave="オクターブ番号あり"
+    data-msg-sheet-letters="字母"
+    data-msg-sheet-solfege="ドレミ"
+    data-msg-mb="MB"
+    data-msg-kb="KB"
+    data-msg-print="印刷"
   >
-    <div class="field">
-      <label for="audio-file">音声ファイル（wav、mp3、m4a…）</label>
-      <input id="audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac">
+    <fieldset class="notes-track">
+      <legend>どのパートから始める</legend>
+      <label><input type="radio" name="track-intent" value="whole" checked> 録音全体</label>
+      <label><input type="radio" name="track-intent" value="piano"> ピアノ</label>
+      <label><input type="radio" name="track-intent" value="voice"> 声</label>
+      <label class="notes-solo"><input type="checkbox" id="track-solo"> ファイルは一つの楽器</label>
+    </fieldset>
+    <p class="notes-track-warn" id="notes-track-warn"></p>
+    <div class="notes-drop" id="notes-drop">
+      <div class="notes-drop-ic" aria-hidden="true">♫</div>
+      <div class="notes-drop-title">音声をここにドロップ</div>
+      <div class="notes-drop-or">または</div>
+      <button type="button" class="btn primary" id="btn-pick">ファイルを選ぶ</button>
+      <input id="audio-file" class="notes-file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac,.webm,.aac" tabindex="-1">
+      <div class="notes-drop-limits">mp3, wav, m4a, flac · 100 MBまで · <span class="notes-free">✓ 無料、登録なし</span></div>
     </div>
-    <div class="notes-actions">
-      <button type="button" class="btn green" id="btn-transcribe">音符を取得</button>
+    <div class="notes-file-row" id="notes-file-row">
+      <span class="notes-chip">🎵 <span id="notes-file-name"></span> <small id="notes-file-size"></small></span>
+      <button type="button" class="notes-another" id="btn-another">別のファイル</button>
+    </div>
+    <div class="notes-busy" id="notes-busy"><div class="notes-busy-bar"></div><p class="notes-reading">音符を読み取り中…</p></div>
+    <p class="notes-summary" id="notes-summary" hidden></p>
+    <p class="notes-clipped" id="notes-clipped" hidden></p>
+    <div class="notes-player">
       <button type="button" class="btn primary" id="btn-play" disabled>再生</button>
+      <button type="button" class="btn" id="btn-stop" disabled>停止</button>
+      <input type="range" id="notes-seek" min="0" max="0" value="0" step="1" disabled aria-label="位置">
+      <span class="notes-time" id="notes-time">0:00 / 0:00</span>
+      <label class="notes-speed">速さ
+        <select id="notes-speed" disabled aria-label="速さ">
+          <option value="0.5">0.5×</option>
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+        </select>
+      </label>
     </div>
     <p class="notes-status" id="notes-status" hidden></p>
     <div class="notes-kb-wrap"><svg id="notes-kb" aria-label="ピアノ鍵盤"></svg></div>
+    <div class="notes-download" id="notes-download">
+      <div class="notes-split">
+        <button type="button" class="btn green notes-split-main" id="btn-midi" disabled>⬇ MIDI を保存</button>
+        <button type="button" class="btn green notes-split-more" id="btn-download-menu" aria-haspopup="menu" aria-expanded="false" aria-label="他の形式" disabled>▾</button>
+        <div class="notes-menu" id="notes-menu" role="menu" hidden>
+          <button type="button" role="menuitem" id="btn-midi-menu"><span><b>MIDIファイル (.mid)</b><small>GarageBand、MuseScore、Synthesia</small></span></button>
+          <button type="button" role="menuitem" id="btn-sheet"><span><b>音名のシート</b><small>印刷またはPDF</small></span></button>
+          <button type="button" role="menuitem" id="btn-txt"><span><b>テキストの音符</b><small>フレーズごとに1行</small></span></button>
+          <hr>
+          <button type="button" role="menuitem" id="btn-copy"><span><b>音符をコピー</b><small>同じテキストをコピー</small></span></button>
+        </div>
+      </div>
+      <p class="notes-midi-hint">MIDIはGarageBand、MuseScore、Synthesiaで開きます</p>
+    </div>
+
   </div>
 </section>
 <section class="wrap notes-practice">
@@ -82,7 +140,9 @@
     <span class="go">開く（EN）→</span>
   </a></section>
 <p class="hub-note wrap">英語のコード練習： <a href="/chords/patterns/#trainer">Patterns を開く →</a></p>
-<script src="/assets/js/chords-shared.js?v=20261120b"></script>
-<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120c"></script>
+<script src="/assets/js/chords-shared.js?v=20261120e"></script>
+<script src="/assets/js/notes-export.js?v=20261120e"></script>
+<script src="/assets/js/falling-notes.js?v=20261120g"></script>
+<script src="/assets/js/page-audio-to-piano-notes.js?v=20261120j"></script>
 </body>
 </html>
