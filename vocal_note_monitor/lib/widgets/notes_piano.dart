@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/piano_note.dart';
+import '../models/falling_notes.dart';
 import '../theme/musnote_theme.dart';
 
 /// White keys wide enough to show the notes, plus a key or two on each side.
@@ -12,28 +13,11 @@ class PianoKeyboardRange {
   final List<int> whiteMidis;
 
   factory PianoKeyboardRange.forMidis(Iterable<int> midis) {
-    var lo = 48;
-    var hi = 72;
-    final list = midis.toList();
-    if (list.isNotEmpty) {
-      lo = (list.reduce(min) - 2).clamp(21, 108);
-      hi = (list.reduce(max) + 2).clamp(21, 108);
-      if (hi < lo) hi = lo;
-    }
-    var start = lo;
-    while (midiIsBlack(start) && start > 0) {
-      start--;
-    }
-    final whites = <int>[];
-    var midi = start;
-    while (midi <= hi && whites.length < 24) {
-      if (!midiIsBlack(midi)) whites.add(midi);
-      midi++;
-    }
-    while (whites.length < 8 && midi < 128) {
-      if (!midiIsBlack(midi)) whites.add(midi);
-      midi++;
-    }
+    final range = FallingNotes.rangeForMidis(midis);
+    final whites = FallingNotes.keyLayout(range.start, range.whites)
+        .where((slot) => !slot.black)
+        .map((slot) => slot.midi)
+        .toList();
     return PianoKeyboardRange(whiteMidis: whites);
   }
 }
