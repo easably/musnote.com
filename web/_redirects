@@ -1,0 +1,4 @@
+# Apex is canonical. Keep one host for Google.
+https://www.musnote.com/*  https://musnote.com/:splat  301
+http://www.musnote.com/*   https://musnote.com/:splat  301
+http://musnote.com/*       https://musnote.com/:splat  301

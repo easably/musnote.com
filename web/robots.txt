@@ -2,11 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://musnote.com/sitemap.xml
-
-Allow: /tools/
-Allow: /assets/
-Allow: /ru/
-Allow: /de/
-Allow: /piano
-Allow: /chords/
-Allow: /chord-tutorial
