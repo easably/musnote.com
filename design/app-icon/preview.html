@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Иконка приложения — варианты · MusNote</title>
+<link rel="stylesheet" href="../chord-tutorial/shared.css">
+<style>
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .big { width: 100%; aspect-ratio: 1; border-radius: 22.37%; display: block; box-shadow: 0 18px 40px rgba(15,31,26,.18); }
+  .sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; margin: 18px 0 6px; }
+  .sizes img { border-radius: 22.37%; box-shadow: 0 2px 6px rgba(0,0,0,.15); }
+  .sizes img.round { border-radius: 50%; }
+  .sizes span { font-size: .75rem; color: var(--mn-muted); display: block; text-align: center; margin-top: 4px; }
+  .card h3 { margin-top: 16px; }
+  .card p { margin: 4px 0; color: var(--mn-ink-soft); font-size: .95rem; }
+  .tag { font-size: .78rem; font-weight: 700; color: var(--mn-green-700); text-transform: uppercase; letter-spacing: .06em; }
+  .phones { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .phone { border-radius: 34px; padding: 34px 26px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px 14px; justify-items: center; }
+  .phone.light { background: linear-gradient(160deg, #dfe9f5, #f3e9df); }
+  .phone.dark { background: linear-gradient(160deg, #1c2333, #0d1018); }
+  .app { width: 64px; text-align: center; font-size: 11px; }
+  .phone.dark .app { color: #fff; }
+  .app img, .app i { width: 64px; height: 64px; border-radius: 22.37%; display: block; margin-bottom: 5px; }
+  .app i { background: rgba(255,255,255,.55); }
+  .phone.dark .app i { background: rgba(255,255,255,.12); }
+  @media (max-width: 860px) { .grid, .phones { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<section class="hero wrap">
+  <span class="eyebrow">Иконка мобильного приложения</span>
+  <h1>Audio to Piano Notes — три варианта</h1>
+  <p class="lead">Тема — запись превращается в ноты на клавиатуре. Нотного стана нет: в приложении результат показывается на клавишах. Цвета сайта: изумрудный, тёмно-зелёный «ink», оранжевый, синий. Текста в иконках нет.</p>
+</section>
+
+<section class="wrap grid" id="grid"></section>
+
+<section class="wrap">
+  <h2>На домашнем экране</h2>
+  <div class="phones">
+    <div class="phone light" id="ph1"></div>
+    <div class="phone dark" id="ph2"></div>
+  </div>
+</section>
+
+<footer class="note wrap">Файлы: <code>icon-*.svg</code> — исходник, <code>icon-*-1024.png</code> — для App Store / Google Play (квадрат без скруглений, без прозрачности; маску накладывает система).</footer>
+
+<script>
+const ICONS = [
+  { f: 'icon-a-eq-keys', tag: 'A · Клавиши-эквалайзер', name: 'Звук, ставший клавишами', text: 'Белые клавиши разной высоты — это одновременно полосы звуковой волны и клавиатура. Две найденные ноты подсвечены. Один образ, читается с 40 px.' },
+  { f: 'icon-b-piano-roll', tag: 'B · Падающие ноты', name: 'Ноты падают на клавиши', text: 'Цветные полоски нот опускаются на клавиатуру, клавиши под ними подсвечены — как в приложении, где ноты видно на клавишах. Тёмный фон.' },
+  { f: 'icon-c-wave-to-keys', tag: 'C · Волна → клавиши', name: 'Из записи — в ноты', text: 'Сверху аудиоволна, снизу клавиатура. Цветные полосы волны и точки на клавишах одного цвета: «вот этот звук — вот эта клавиша».' },
+];
+document.getElementById('grid').innerHTML = ICONS.map(i => `
+  <div class="card">
+    <img class="big" src="${i.f}-1024.png" alt="${i.name}">
+    <h3>${i.name}</h3><span class="tag">${i.tag}</span>
+    <p>${i.text}</p>
+    <div class="sizes">
+      ${[120, 80, 58, 40].map(s => `<div><img src="${i.f}-1024.png" width="${s}" height="${s}"><span>${s}px</span></div>`).join('')}
+      <div><img class="round" src="${i.f}-1024.png" width="58" height="58"><span>Android</span></div>
+    </div>
+  </div>`).join('');
+const others = ['Камера', 'Фото', 'Карты', 'Погода', 'Заметки', 'Музыка', 'Почта', 'Часы', 'Календарь'];
+const slots = (n) => { let k = 0; return Array.from({ length: 12 }, (_, j) => j % 4 === 1 && k < 3 ? (k++, `<div class="app"><img src="${ICONS[k - 1].f}-1024.png">Piano Notes</div>`) : `<div class="app"><i></i>${others[(j + n) % others.length]}</div>`).join(''); };
+document.getElementById('ph1').innerHTML = slots(0);
+document.getElementById('ph2').innerHTML = slots(3);
+</script>
+</body>
+</html>
