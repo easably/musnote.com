@@ -91,9 +91,15 @@ karaoke (entertainment), party, song quiz, play-along hits
 - **Subtitle ideas:** `Intonation practice, live` / `Shadow speech with pitch`  
 - **Keywords seed:** voice,speaking,intonation,pronunciation,accent,shadowing,pitch,confidence,speech,training,english,monitor  
 
+## Public beta on the site
+
+**2026-11-20:** landing pages `/app/`, `/ru/app/`, `/de/app/` explain the iOS pitch mirror and hold the public TestFlight CTA.  
+Paste the public link once into `web/assets/js/musnote-app-install.js` → `testflightUrl`. Until then the button stays “beta soon” and points people to `/tools/`.  
+Hub `/tools/` links to the app page. Full store listing is not required for public TestFlight testing.
+
 ## Site implication
 
-**2026-11-20:** the first screen is the chord hub (`plans/chord-site-pages.md`). Voice tools stay in the menu at `/tools/`. `/piano` stays a pitch helper inside that voice section, not a chord-menu item.
+**2026-11-20:** the first screen is the chord hub (`plans/chord-site-pages.md`). Voice tools stay in the menu at `/tools/`. `/piano` stays a pitch helper inside that voice section, not a chord-menu item. Mobile app story lives at `/app/`.
 
 ## Site tools (shipped)
 

@@ -1,0 +1,172 @@
+/* /app/ landing + tools hub promo strip for iOS beta */
+
+.app-hero {
+  min-height: min(88vh, 42rem);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+  background:
+    radial-gradient(1200px 520px at 12% 0%, rgba(47, 211, 154, 0.22), transparent 55%),
+    linear-gradient(165deg, #0a5c42 0%, #0e9f6e 42%, #e8f6f0 42%, var(--mn-surface-2) 100%);
+  color: var(--mn-ink);
+  border-bottom: 1px solid var(--mn-line);
+}
+
+.app-hero .brand-mark {
+  font-family: var(--mn-font-display);
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: var(--mn-lh-tight);
+  color: #fff;
+  margin: 0 0 1rem;
+  text-shadow: 0 1px 0 rgba(10, 92, 66, 0.25);
+}
+
+.app-hero h1 {
+  font-family: var(--mn-font-sans);
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  max-width: 28rem;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 0.75rem;
+  line-height: var(--mn-lh-snug);
+}
+
+.app-hero .lead {
+  max-width: 28rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: var(--mn-fs-md);
+  margin: 0 0 1.5rem;
+}
+
+.app-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.app-hero .btn-tool.is-waiting,
+a.btn-tool.is-waiting {
+  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  pointer-events: auto;
+}
+
+.app-hero .btn-tool-secondary {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.app-hero .btn-tool-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.app-section {
+  padding: 2.75rem 0 4rem;
+  background: var(--mn-surface-2);
+}
+
+.app-section h2 {
+  font-family: var(--mn-font-display);
+  font-size: clamp(1.45rem, 3vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  color: var(--mn-ink);
+}
+
+.app-section .section-lead {
+  color: var(--mn-muted);
+  max-width: 36rem;
+  margin: 0 0 1.5rem;
+  font-size: var(--mn-fs-md);
+}
+
+.app-feature-list {
+  list-style: none;
+  max-width: 36rem;
+  margin: 0;
+  padding: 0;
+}
+
+.app-feature-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--mn-line);
+  color: var(--mn-ink-soft);
+  font-size: var(--mn-fs-md);
+}
+
+.app-feature-list strong {
+  color: var(--mn-ink);
+  font-weight: 600;
+}
+
+.app-beta-note {
+  margin-top: 1.75rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--mn-green-100);
+  background: var(--mn-green-50);
+  border-radius: var(--mn-radius-md);
+  color: var(--mn-green-800);
+  font-size: var(--mn-fs-sm);
+  max-width: 36rem;
+}
+
+.app-beta-note a {
+  color: var(--mn-green-700);
+  font-weight: 600;
+}
+
+.app-promo {
+  margin: 2rem 0 0;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--mn-green-200);
+  border-radius: var(--mn-radius-md);
+  background:
+    linear-gradient(120deg, var(--mn-green-50), var(--mn-surface));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-promo h2 {
+  font-family: var(--mn-font-display);
+  font-size: 1.35rem;
+  margin: 0 0 0.35rem;
+  color: var(--mn-ink);
+}
+
+.app-promo p {
+  margin: 0;
+  color: var(--mn-muted);
+  font-size: var(--mn-fs-sm);
+  max-width: 28rem;
+}
+
+@media (max-width: 640px) {
+  .app-hero {
+    align-items: center;
+    min-height: auto;
+    background:
+      radial-gradient(800px 360px at 80% -10%, rgba(47, 211, 154, 0.28), transparent 50%),
+      linear-gradient(180deg, #0a5c42 0%, #0e9f6e 55%, var(--mn-surface-2) 55%);
+  }
+
+  .app-hero .brand-mark,
+  .app-hero h1,
+  .app-hero .lead {
+    color: #fff;
+  }
+
+  .app-hero .lead {
+    color: rgba(255, 255, 255, 0.82);
+  }
+}

@@ -10,6 +10,7 @@
 | `assets/css/home.css` | Barrel: tokens + chrome + home + responsive |
 | `assets/css/main.css` | Barrel for non-home pages: tokens + chrome |
 | `assets/css/tools.css` | Tool page panels / forms / status |
+| `assets/css/app-landing.css` | `/app/` hero + tools hub iOS promo |
 | `assets/css/responsive.css` | Breakpoints for chrome + home |
 | `assets/css/chords.css` | Chord hub and the four chord pages |
 | `assets/css/piano.css` / `chord-tutorial.css` | Legacy piano page. Old chord lesson now redirects. |
@@ -21,6 +22,7 @@
 | `assets/js/site-chrome.js` | Mobile nav + smooth anchors (prefer this) |
 | `assets/js/main.js` | Same as `site-chrome.js` (legacy filename) |
 | `assets/js/musnote-voice-api.js` | STT/TTS client → FreeDubbing (`MusnoteVoiceCloud`) |
+| `assets/js/musnote-app-install.js` | TestFlight / Play URLs (`MUSNOTE_APP`) for `/app/` CTAs |
 | `assets/js/live-pitch-helpers.js` | Mic pitch + buffer range + pitched playback |
 | `assets/js/page-*.js` | One script per tool page |
 | `assets/js/language.js` | EN/RU/DE path switcher + `data-translate` |
@@ -36,11 +38,12 @@
 | `/chords/hops/` | Build a chord as hops 4+3 and 3+4 |
 | `/chords/clock/` | One triangle, twelve chords |
 | `/chords/chart/` | Chord chart: name, keys, play. Old `/chord-tutorial` opens this. |
-| `/tools/` | Voice tool hub |
+| `/tools/` | Voice tool hub (+ promo to iOS app) |
 | `/tools/audio-to-text` | Song/speech → transcript |
 | `/tools/slow-pronunciation` | Text → slow TTS |
 | `/tools/find-my-octave` | Range + transpose preview |
 | `/tools/shadow-phrase` | Language shadowing + live pitch |
+| `/app/` | Mobile app landing + public TestFlight CTA (EN). RU/DE: `/ru/app/`, `/de/app/` |
 | `/piano` | Ear helper, linked from voice tools, not from the chord menu |
 
 ## Intentional leftovers / ask product

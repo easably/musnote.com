@@ -14,8 +14,39 @@
   </url>
 
   <url>
+    <loc>https://musnote.com/app/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/app/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/app/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/app/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://musnote.com/app/"/>
+  </url>
+
+  <url>
+    <loc>https://musnote.com/ru/app/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/app/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/app/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/app/"/>
+  </url>
+
+  <url>
+    <loc>https://musnote.com/de/app/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://musnote.com/app/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://musnote.com/ru/app/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://musnote.com/de/app/"/>
+  </url>
+
+  <url>
     <loc>https://musnote.com/tools/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>

@@ -19,6 +19,9 @@
 .DS_Store
 .tmp/
 *.pem
+ios-testflight-run.log
+*-testflight-run.log
+*-testflight*.log
 
 # debug
 npm-debug.log*

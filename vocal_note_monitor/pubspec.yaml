@@ -1,8 +1,7 @@
 name: vocal_note_monitor
 description: Real-time vocal pitch monitor and tuner.
 publish_to: 'none'
-version: 1.0.0+1
-
+version: 1.0.0+3
 environment:
   sdk: ^3.8.1
 

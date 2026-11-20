@@ -18,11 +18,14 @@ Xcode при этом обычно:
 - регистрирует устройство (если debug на девайсе).
 
 **Но App Store Connect app (карточка приложения) сама не всегда появляется.**  
-Её лучше создать вручную один раз:
+Её нужно создать вручную один раз (текущий ASC API key умеет GET/UPDATE apps, но **не CREATE**):
 
 1. [App Store Connect](https://appstoreconnect.apple.com) → My Apps → **+** → New App.
-2. Bundle ID выбрать `com.musnote.vocalNoteMonitor` (уже зарегистрированный).
-3. Имя, язык, SKU — любые для TestFlight.
+2. Platforms: **iOS**. Bundle ID: `com.musnote.vocalNoteMonitor` (уже есть как XC App ID).
+3. Name: `Vocal Note Monitor` (или MusNote Voice). Primary language: English (U.S.).
+4. SKU: `musnote-vocal-note-monitor`.
+
+После этого: `./scripts/ios-testflight.sh --upload-only`
 
 Порядок, который вы описали, рабочий:
 
@@ -38,6 +41,12 @@ Xcode при этом обычно:
 Нужны: Mac, Xcode, аккаунт **Apple Developer Program** ($99/год).
 
 ```bash
+# Preferred: build IPA + upload to TestFlight (uses global ASC_CONFIG)
+./scripts/ios-testflight.sh
+./scripts/ios-testflight.sh --build-only   # IPA only
+./scripts/ios-testflight.sh --upload-only  # latest IPA
+
+# Manual:
 cd vocal_note_monitor
 flutter pub get
 flutter build ipa
