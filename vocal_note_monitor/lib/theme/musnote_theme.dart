@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
-/// Colors from the site (`web/assets/css/design-tokens.css` and `chords.css`).
+import 'musnote_tokens.g.dart';
+
+/// Names screens already use. The numbers live in [MusnoteTokens].
 abstract final class MusnoteColors {
-  static const green50 = Color(0xFFEEFBF6);
-  static const green100 = Color(0xFFD5F5E9);
-  static const green500 = Color(0xFF15C39A);
-  static const green600 = Color(0xFF0E9F6E);
-  static const green700 = Color(0xFF0B7A56);
-  static const ink = Color(0xFF0F1F1A);
-  static const inkSoft = Color(0xFF3D4F48);
-  static const muted = Color(0xFF6B7C75);
-  static const line = Color(0xFFDCE6E1);
-  static const surface = Color(0xFFFFFFFF);
-  static const surface2 = Color(0xFFF6FAF8);
-  static const danger = Color(0xFFC23B3B);
-  static const keyBlack = Color(0xFF1B2622);
-  static const keyLit = Color(0xFFA7F3D0);
-  static const keyLitBlack = Color(0xFF10B981);
-  static const keyLine = Color(0xFFC3D1CB);
+  static const green50 = MusnoteTokens.green50;
+  static const green100 = MusnoteTokens.green100;
+  static const green500 = MusnoteTokens.green500;
+  static const green600 = MusnoteTokens.green600;
+  static const green700 = MusnoteTokens.green700;
+  static const ink = MusnoteTokens.ink;
+  static const inkSoft = MusnoteTokens.inkSoft;
+  static const muted = MusnoteTokens.muted;
+  static const line = MusnoteTokens.line;
+  static const surface = MusnoteTokens.surface;
+  static const surface2 = MusnoteTokens.surface2;
+  static const danger = MusnoteTokens.danger;
+  static const keyBlack = MusnoteTokens.keyBlack;
+  static const keyLit = MusnoteTokens.keyLit;
+  static const keyLitBlack = MusnoteTokens.keyLitBlack;
+  static const keyLine = MusnoteTokens.keyLine;
 }
 
 abstract final class MusnoteTheme {

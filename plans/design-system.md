@@ -5,7 +5,14 @@
 
 ## Tokens
 
-File: `web/assets/css/design-tokens.css`
+Source: `design/tokens/musnote.tokens.json` (W3C design tokens: `$type`, `$value`).
+
+`node scripts/build-tokens.js` writes the two copies. `node scripts/build-tokens.js --check` fails if either copy drifted.
+
+| Generated file | Role |
+|---|---|
+| `web/assets/css/design-tokens.css` | `--mn-*` and `--c-*`. Do not edit by hand. |
+| `vocal_note_monitor/lib/theme/musnote_tokens.g.dart` | `MusnoteTokens`. Sizes are `double`. A font is the first name plus a fallback list. A shadow is `List<BoxShadow>`. A `clamp` size becomes min and max. `container` and the header height stay on the web. `MusnoteColors` only forwards the names screens already use. |
 
 | Token family | Role |
 |---|---|

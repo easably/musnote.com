@@ -1,9 +1,8 @@
-/**
- * MusNote design system — Grammarly-inspired calm product UI
- * Tokens only. Import before main.css / tools.css.
+/*
+ * Сгенерировано из design/tokens/musnote.tokens.json. Не править руками.
+ * node scripts/build-tokens.js
  */
 :root {
-  /* Brand — soft emerald (Grammarly-adjacent, not purple) */
   --mn-green-50: #eefbf6;
   --mn-green-100: #d5f5e9;
   --mn-green-200: #a8e9d0;
@@ -12,8 +11,6 @@
   --mn-green-600: #0e9f6e;
   --mn-green-700: #0b7a56;
   --mn-green-800: #0a5c42;
-
-  /* Neutrals */
   --mn-ink: #0f1f1a;
   --mn-ink-soft: #3d4f48;
   --mn-muted: #6b7c75;
@@ -21,14 +18,10 @@
   --mn-surface: #ffffff;
   --mn-surface-2: #f6faf8;
   --mn-wash: #e8f6f0;
-
-  /* Semantic */
   --mn-focus: #15c39a;
   --mn-danger: #c23b3b;
   --mn-ok: #0e9f6e;
-
-  /* Type */
-  --mn-font-sans: "Outfit", "Segoe UI", sans-serif;
+  --mn-font-sans: Outfit, "Segoe UI", sans-serif;
   --mn-font-display: "Source Serif 4", Georgia, serif;
   --mn-fs-xs: 0.8125rem;
   --mn-fs-sm: 0.9375rem;
@@ -39,8 +32,6 @@
   --mn-lh-tight: 1.08;
   --mn-lh-snug: 1.25;
   --mn-lh-body: 1.65;
-
-  /* Space */
   --mn-space-1: 0.25rem;
   --mn-space-2: 0.5rem;
   --mn-space-3: 0.75rem;
@@ -50,21 +41,30 @@
   --mn-space-7: 3rem;
   --mn-space-8: 4.5rem;
   --mn-space-9: 6.5rem;
-
-  /* Radius / elevation — restrained */
   --mn-radius-sm: 0.5rem;
   --mn-radius-md: 0.75rem;
   --mn-radius-lg: 1.25rem;
-  --mn-shadow-soft: 0 12px 40px rgba(15, 31, 26, 0.06);
-  --mn-shadow-lift: 0 18px 50px rgba(14, 159, 110, 0.12);
-
-  /* Layout */
+  --mn-shadow-soft: 0px 12px 40px rgba(15, 31, 26, 0.06);
+  --mn-shadow-lift: 0px 18px 50px rgba(14, 159, 110, 0.12);
   --mn-container: 1120px;
   --mn-header-h: 4.25rem;
-
-  /* Motion */
   --mn-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --mn-dur: 420ms;
+  --mn-key-white: #ffffff;
+  --mn-key-black: #1b2622;
+  --mn-key-lit: #a7f3d0;
+  --mn-key-lit-black: #10b981;
+  --mn-key-line: #c3d1cb;
+  --c-r: #10b981;
+  --c-r-soft: #a7f3d0;
+  --c-t: #f59e0b;
+  --c-t-soft: #fde68a;
+  --c-f: #3b82f6;
+  --c-f-soft: #bfdbfe;
+  --c-s: #a855f7;
+  --c-s-soft: #e9d5ff;
+  --animation-loading-cycle: 4000ms;
+  --animation-loading-height: 48px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анимация ожидания · Lottie-кандидат · MusNote</title>
+<link rel="stylesheet" href="../../chord-tutorial/shared.css">
+<style>
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .panel { background: #fff; border: 1px solid var(--mn-line); border-radius: 24px; padding: 24px; box-shadow: var(--mn-shadow-soft); }
+  .panel.dark { background: #0f1f1a; border-color: #1d3a30; color: #e8f6f0; }
+  .chip { display: inline-flex; gap: 8px; align-items: center; background: var(--mn-surface-2); border: 1px solid var(--mn-line); border-radius: 12px; padding: 8px 12px; font-weight: 600; }
+  .dark .chip { background: #173a2f; border-color: #1d4a3c; }
+  .chip small { color: var(--mn-muted); font-weight: 500; }
+  .anim { width: 100%; aspect-ratio: 400 / 160; margin: 14px 0 6px; }
+  .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .cap b { font-size: 1.05rem; transition: opacity .3s; }
+  .cap .t { font-variant-numeric: tabular-nums; color: var(--mn-muted); }
+  .hint { color: var(--mn-muted); font-size: .9rem; min-height: 1.3em; }
+  .phone { width: 375px; max-width: 100%; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0 22px; }
+  table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+  td, th { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--mn-line); vertical-align: top; }
+  code { background: #eef3f1; padding: 1px 6px; border-radius: 6px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<section class="hero wrap">
+  <span class="eyebrow">Анимация ожидания · кандидат Lottie</span>
+  <h1>Волна превращается в ноты</h1>
+  <p class="lead">Пока API читает запись: волна бежит, её гребни отрываются нотами и падают на клавиши (ля — до — ми). Цикл 3 с, бесконечный. Один файл <code>musnote-loading.json</code> играет и на сайте (lottie-web), и во Flutter (пакет <code>lottie</code>). Подписи — не в анимации, а в HTML / Flutter, чтобы переводились на 11 языков.</p>
+  <div class="row">
+    <div class="seg" id="speed"><button data-v="0.5">0,5×</button><button data-v="1" class="on">1×</button><button data-v="1.5">1,5×</button></div>
+    <button class="btn" id="still">Без движения (reduced motion)</button>
+    <a class="btn" href="musnote-loading.json" download>⬇ musnote-loading.json</a>
+  </div>
+</section>
+
+<section class="wrap grid">
+  <div class="panel" data-panel>
+    <span class="chip">🎵 song.mp3 <small>42,7 МБ</small></span>
+    <div class="anim"></div>
+    <div class="cap"><b data-cap>Слушаем запись…</b><span class="t" data-time>0:00</span></div>
+    <div class="hint" data-hint></div>
+  </div>
+  <div class="panel dark" data-panel>
+    <span class="chip">🎵 song.mp3 <small>42,7 МБ</small></span>
+    <div class="anim"></div>
+    <div class="cap"><b data-cap>Слушаем запись…</b><span class="t" data-time>0:00</span></div>
+    <div class="hint" data-hint></div>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:28px">
+  <h2>Телефон, 375 px</h2>
+  <div class="panel phone" data-panel>
+    <span class="chip">🎵 voice-memo.m4a <small>3,1 МБ</small></span>
+    <div class="anim"></div>
+    <div class="cap"><b data-cap>Слушаем запись…</b><span class="t" data-time>0:00</span></div>
+    <div class="hint" data-hint></div>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:28px">
+  <h2>Как использовать</h2>
+  <table>
+    <tr><th>Сайт</th><td><code>lottie_light.min.js</code> (SVG-плеер без выражений, ~165 КБ, ~45 КБ gzip) + <code>lottie.loadAnimation({container, renderer:'svg', loop:true, path:'/assets/anim/musnote-loading.json'})</code>. JSON ~80 КБ (~9 КБ gzip). Грузить плеер лениво — только когда пошёл запрос к API.</td></tr>
+    <tr><th>Flutter</th><td>Пакет <code>lottie</code> (pub.dev) → <code>Lottie.asset('assets/anim/musnote-loading.json', repeat: true)</code>. Подписи и таймер — обычные <code>Text</code>, строки из локализации.</td></tr>
+    <tr><th>Правка</th><td>Источник — <code>build_lottie.py</code>. Цвета он читает из <code>design/tokens/musnote.tokens.json</code>. <code>python3 build_lottie.py</code> пересобирает JSON.</td></tr>
+    <tr><th>Reduced motion</th><td>Веб: <code>prefers-reduced-motion</code> → <code>goToAndStop(110, true)</code> (кадр с подсвеченной клавишей). Flutter: <code>MediaQuery.disableAnimations</code> → <code>animate: false</code>.</td></tr>
+    <tr><th>Минус</th><td>Сторонний плеер на вебе (+~45 КБ gzip) против своей реализации на canvas без зависимостей (план, часть 2). Зато один файл на обе платформы и правка без кода.</td></tr>
+  </table>
+</section>
+
+<footer class="note wrap">Подписи: «Слушаем запись…» → «Ищем ноты…» → «Раскладываем по клавишам…» раз в 3 с; через 20 с — «Длинная запись — ещё немного»; через 90 с — «Это дольше обычного». Время — сколько прошло, без процентов.</footer>
+
+<script src="musnote-loading.preview.js"></script>
+<script src="lottie_light.min.js"></script>
+<script src="musnote-loading.preview.js"></script>
+<script>
+const CAPS = ['Слушаем запись…', 'Ищем ноты…', 'Раскладываем по клавишам…'];
+const anims = [];
+let still = false;
+(window.MUSNOTE_LOADING ? Promise.resolve(window.MUSNOTE_LOADING) : fetch('musnote-loading.json').then(r => r.json()).catch(() => null)).then(data => {
+  document.querySelectorAll('[data-panel]').forEach((p, i) => {
+    const opts = { container: p.querySelector('.anim'), renderer: 'svg', loop: true, autoplay: true };
+    if (data) opts.animationData = JSON.parse(JSON.stringify(data)); else opts.path = 'musnote-loading.json';
+    anims.push(lottie.loadAnimation(opts));
+  });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) toggleStill();
+});
+const t0 = performance.now();
+setInterval(() => {
+  const s = (performance.now() - t0) / 1000;
+  document.querySelectorAll('[data-panel]').forEach(p => {
+    p.querySelector('[data-time]').textContent = `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    const cap = p.querySelector('[data-cap]'), next = CAPS[Math.floor(s / 3) % CAPS.length];
+    if (cap.textContent !== next) { cap.style.opacity = 0; setTimeout(() => { cap.textContent = next; cap.style.opacity = 1; }, 200); }
+    p.querySelector('[data-hint]').textContent = s > 90 ? 'Это дольше обычного.' : s > 20 ? 'Длинная запись — ещё немного.' : '';
+  });
+}, 250);
+function toggleStill() {
+  still = !still;
+  anims.forEach(a => (still ? a.goToAndStop(Math.round(a.totalFrames * 110 / 180), true) : a.play()));
+  document.getElementById('still').classList.toggle('primary', still);
+}
+document.getElementById('still').onclick = toggleStill;
+document.getElementById('speed').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  anims.forEach(a => a.setSpeed(+b.dataset.v));
+  e.currentTarget.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+};
+</script>
+</body>
+</html>

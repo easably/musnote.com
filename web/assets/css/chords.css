@@ -1,28 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap");
 
-:root {
-  --mn-green-50: #eefbf6;
-  --mn-green-100: #d5f5e9;
-  --mn-green-500: #15c39a;
-  --mn-green-600: #0e9f6e;
-  --mn-green-700: #0b7a56;
-  --mn-ink: #0f1f1a;
-  --mn-ink-soft: #3d4f48;
-  --mn-muted: #6b7c75;
-  --mn-line: #dce6e1;
-  --mn-surface: #ffffff;
-  --mn-surface-2: #f6faf8;
-  --mn-font-sans: "Outfit", "Segoe UI", sans-serif;
-  --mn-font-display: "Source Serif 4", Georgia, serif;
-  --mn-shadow-soft: 0 12px 40px rgba(15, 31, 26, 0.06);
-  --mn-ease: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* Chord roles — same colours in every variant */
-  --c-r: #10b981;  --c-r-soft: #a7f3d0;   /* root / тоника */
-  --c-t: #f59e0b;  --c-t-soft: #fde68a;   /* third / терция — «настроение» */
-  --c-f: #3b82f6;  --c-f-soft: #bfdbfe;   /* fifth / квинта — «рамка» */
-  --c-s: #a855f7;  --c-s-soft: #e9d5ff;   /* seventh */
-}
+/* Colors live in design-tokens.css. This file expects that sheet first. */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -206,8 +184,12 @@ footer.note { padding: 30px 24px 60px; color: var(--mn-muted); font-size: .9rem;
 .notes-time { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
 .notes-speed { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
 .notes-speed select { font: inherit; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--mn-line); background: #fff; }
-.notes-busy { display: grid; gap: 8px; }
-.notes-busy-bar { height: 6px; border-radius: 999px; background: var(--mn-green-100); overflow: hidden; position: relative; }
+.notes-busy { display: flex; align-items: center; gap: 10px; }
+.notes-lottie { width: calc(var(--animation-loading-height) * 400 / 160); height: var(--animation-loading-height); flex: none; overflow: hidden; }
+.notes-lottie[hidden] { display: none; }
+.notes-lottie svg { width: 100%; height: 100%; display: block; }
+.notes-busy.is-lottie .notes-busy-bar { display: none; }
+.notes-busy-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--mn-green-100); overflow: hidden; position: relative; }
 .notes-busy-bar::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 35%; background: var(--mn-green-500); animation: notes-busy 1s ease-in-out infinite; }
 @keyframes notes-busy { from { transform: translateX(-120%); } to { transform: translateX(320%); } }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
