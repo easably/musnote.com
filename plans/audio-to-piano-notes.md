@@ -15,7 +15,7 @@
 
 Главная фраза США: **audio to piano notes**.
 
-Рядом: audio to notes, song to piano notes, song to notes converter.
+Рядом: audio to notes, song to piano notes, song to notes converter, audio to midi, song to midi, piano letter notes.
 
 **Sheet music** (нотный лист, стан, PDF) не пишем, пока на экране только клавиатура.
 

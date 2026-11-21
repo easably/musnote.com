@@ -196,6 +196,16 @@
     btnPlay.setAttribute('aria-pressed', playing ? 'true' : 'false');
   }
 
+  function noteUnit(n) {
+    const lang = document.documentElement.lang || 'en';
+    let category = 'other';
+    try {
+      category = new Intl.PluralRules(lang).select(n);
+    } catch (_) {}
+    const key = 'msgNote' + category.charAt(0).toUpperCase() + category.slice(1);
+    return msg(key) || msg('msgNoteOther') || '';
+  }
+
   function showSummary(isClipped) {
     if (!notes.length) {
       if (summary) summary.hidden = true;
@@ -204,9 +214,15 @@
     }
     const lo = pitchLabel(Math.min(...notes.map((n) => n.midi)));
     const hi = pitchLabel(Math.max(...notes.map((n) => n.midi)));
-    const template = msg('msgFound') || 'Found {n} notes · {time} · {lo} to {hi}';
-    const map = { n: String(notes.length), time: formatClock(duration), lo, hi };
-    const text = template.replace(/\{(n|time|lo|hi)\}/g, (_, key) => map[key]);
+    const template = msg('msgFound') || 'Found {n} {unit} · {time} · {lo} to {hi}';
+    const map = {
+      n: String(notes.length),
+      unit: noteUnit(notes.length),
+      time: formatClock(duration),
+      lo,
+      hi,
+    };
+    const text = template.replace(/\{(n|unit|time|lo|hi)\}/g, (_, key) => map[key]);
     if (summary) {
       summary.hidden = false;
       summary.textContent = text;
