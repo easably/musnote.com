@@ -1,0 +1,7 @@
+setuptools==75.8.0
+fastapi==0.115.6
+uvicorn==0.34.0
+python-multipart==0.0.20
+# Same pin as api/: basic-pitch 0.4.0 breaks on NumPy 2.
+numpy>=1.26.4,<2
+basic-pitch==0.4.0

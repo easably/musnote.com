@@ -1,0 +1,15 @@
+name: musnote-separate
+
+services:
+  separate:
+    build: .
+    image: musnote-separate:probe
+    restart: unless-stopped
+    gpus: all
+    ports:
+      - "127.0.0.1:8096:8096"
+    environment:
+      DEMUCS_BIN: demucs
+      TORCH_HOME: /var/cache/torch
+    volumes:
+      - /home/admin2/.cache/torch:/var/cache/torch
