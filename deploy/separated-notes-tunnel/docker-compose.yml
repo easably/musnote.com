@@ -1,0 +1,44 @@
+# server8 only forwards MusNote traffic. The notes and stem containers run on server7.
+# Caddy on server1 still sends :8095 and :8096 to 192.168.1.164.
+# The private key stays on server8 (./ssh), never in git.
+name: musnote-separate-tunnel
+
+services:
+  tunnel:
+    build: .
+    image: musnote-separate-tunnel:local
+    restart: unless-stopped
+    network_mode: host
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    user: "0:0"
+    volumes:
+      - ./ssh:/ssh:ro
+    command:
+      - "-N"
+      - "-F"
+      - "/dev/null"
+      - "-o"
+      - "BatchMode=yes"
+      - "-o"
+      - "ExitOnForwardFailure=yes"
+      - "-o"
+      - "ServerAliveInterval=30"
+      - "-o"
+      - "ServerAliveCountMax=3"
+      - "-o"
+      - "StrictHostKeyChecking=yes"
+      - "-o"
+      - "UserKnownHostsFile=/ssh/known_hosts"
+      - "-i"
+      - "/ssh/id_ed25519"
+      - "-p"
+      - "1003"
+      - "-L"
+      - "192.168.1.164:8096:127.0.0.1:8096"
+      - "-L"
+      - "192.168.1.164:8095:127.0.0.1:8095"
+      - "admin2@185.152.136.209"

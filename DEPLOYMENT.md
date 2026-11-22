@@ -1,5 +1,7 @@
 # Deployment — Cloudflare Pages
 
+The notes container and the stem container run on server7 (`127.0.0.1:8095` and `127.0.0.1:8096`). server8 only forwards those two ports. Caddy on server1 still sends `api.musnote.com` to `192.168.1.164`. GitHub Actions deploys `api/` with `DEPLOY_HOST` and `DEPLOY_PORT`, which point at server7.
+
 Static site in `web/` is deployed to [Cloudflare Pages](https://pages.cloudflare.com/).
 
 ## One-time Cloudflare setup

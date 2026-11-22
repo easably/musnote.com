@@ -17,7 +17,7 @@ Static files from `web/` deploy via GitHub Actions → Cloudflare Pages.
 **Secret (only one):** `CLOUDFLARE_API_TOKEN`  
 **Variables:** `CLOUDFLARE_ACCOUNT_ID`, optional `CLOUDFLARE_PAGES_PROJECT` (default `musnote`)
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md).
+See [DEPLOYMENT.md](./DEPLOYMENT.md). The notes API runs on server7. server8 only forwards ports 8095 and 8096.
 
 Local preview:
 

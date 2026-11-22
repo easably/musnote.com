@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Call the notes API on server8 through an SSH tunnel and check a known tone.
+# Call the notes API on the deploy host through an SSH tunnel and check a known tone.
 # Same host variables as scripts/cd-deploy-api.sh. Port 8095 is not public.
 set -euo pipefail
 

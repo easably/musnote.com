@@ -1,0 +1,31 @@
+# Live copy of the api.musnote.com site on server1
+# (/home/server/deploy/caddy-proxy/Caddyfile). Not loaded by itself.
+# Piano notes stay on server8. Stem notes are forwarded through the
+# tunnel in deploy/separated-notes-tunnel/ to server7.
+api.musnote.com {
+	encode gzip
+	handle /v1/separated-notes* {
+		reverse_proxy 192.168.1.164:8096 {
+			transport http {
+				read_timeout 180s
+				write_timeout 180s
+			}
+		}
+	}
+	handle /v1/jobs* {
+		reverse_proxy 192.168.1.164:8096 {
+			transport http {
+				read_timeout 180s
+				write_timeout 180s
+			}
+		}
+	}
+	handle {
+		reverse_proxy 192.168.1.164:8095 {
+			transport http {
+				read_timeout 180s
+				write_timeout 180s
+			}
+		}
+	}
+}
