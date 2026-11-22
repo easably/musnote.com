@@ -1,3 +1,9 @@
+(function () {
+  if (new URLSearchParams(location.search).get('app') === '1') {
+    document.documentElement.classList.add('app-embed');
+  }
+})();
+
 /* MusNote chord design prototypes — shared helpers
  * keyboard renderer, chord speller (correct ♯/♭ spelling), tiny synth, notation toggle */
 const MN = (() => {

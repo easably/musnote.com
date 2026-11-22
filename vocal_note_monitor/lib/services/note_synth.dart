@@ -1,58 +1,75 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
 import '../models/piano_note.dart';
 
-/// Short triangle-plus-sine tones, timed like the site keyboard.
+/// Short triangle-plus-sine tones, timed like the recording.
 class NoteSynth {
   static const sampleRate = 22050;
-  static const maxSeconds = 90.0;
 
-  /// True when the piece is longer than [maxSeconds], so playback stops early.
-  static bool longerThanPlayback(List<PianoNote> notes) {
-    if (notes.length < 2) return false;
-    return notes.last.start - notes.first.start > maxSeconds;
+  static Uint8List wav(List<PianoNote> notes) => _wav(_mix(notes));
+
+  static void writeFile(List<PianoNote> notes, String path) {
+    File(path).writeAsBytesSync(wav(notes), flush: true);
   }
 
-  static Uint8List wav(List<PianoNote> notes) {
-    if (notes.isEmpty) return Uint8List(0);
-    final t0 = notes.first.start;
-    final samples = Float64List((maxSeconds * sampleRate).ceil() + sampleRate);
-    var used = 0;
-
-    for (final note in notes) {
-      final startAt = note.start - t0;
-      if (startAt < 0 || startAt >= maxSeconds) continue;
-      final freq = 440 * pow(2, (note.midi - 69) / 12);
-      final startSample = (startAt * sampleRate).round();
-      final length = (1.6 * sampleRate).round();
-      var phase = 0.0;
-      final step = freq / sampleRate;
-      for (var i = 0; i < length; i++) {
-        final index = startSample + i;
-        if (index >= samples.length) break;
-        final env = _env(i, length);
-        final tri = _tri(phase);
-        final sine = sin(2 * pi * phase);
-        samples[index] += (tri * 0.7 + sine * 0.3) * env * 0.12;
-        phase += step;
-        if (phase >= 1) phase -= phase.floor();
-        if (index + 1 > used) used = index + 1;
+  static Int16List _mix(List<PianoNote> notes) {
+    if (notes.isEmpty) return Int16List(sampleRate ~/ 10);
+    final sorted = [...notes]..sort((a, b) => a.start.compareTo(b.start));
+    var endAt = 0.1;
+    for (final note in sorted) {
+      final stop = note.start + _lengthSec(note);
+      if (stop > endAt) endAt = stop;
+    }
+    final total = (endAt * sampleRate).ceil();
+    final pcm = Int16List(total);
+    const chunk = 22050;
+    var next = 0;
+    final active = <int>[];
+    for (var start = 0; start < total; start += chunk) {
+      final stop = min(start + chunk, total);
+      final t0 = start / sampleRate;
+      final t1 = stop / sampleRate;
+      while (next < sorted.length && sorted[next].start < t1) {
+        active.add(next);
+        next++;
+      }
+      active.removeWhere((index) {
+        final note = sorted[index];
+        return note.start + _lengthSec(note) <= t0;
+      });
+      for (final index in active) {
+        final note = sorted[index];
+        final lengthSec = _lengthSec(note);
+        final length = (lengthSec * sampleRate).round();
+        final startSample = (note.start * sampleRate).round();
+        if (startSample >= stop) continue;
+        final freq = 440 * pow(2, (note.midi - 69) / 12);
+        final step = freq / sampleRate;
+        var phase = ((start - startSample).clamp(0, 1 << 30)) * step;
+        phase = phase - phase.floor();
+        final from = max(start, startSample);
+        final to = min(stop, startSample + length);
+        for (var sample = from; sample < to; sample++) {
+          final i = sample - startSample;
+          final env = _env(i, length);
+          final tri = _tri(phase);
+          final sine = sin(2 * pi * phase);
+          final mixed = pcm[sample] / 32767 + (tri * 0.7 + sine * 0.3) * env * 0.1;
+          pcm[sample] = (mixed.clamp(-1.0, 1.0) * 32767).round();
+          phase += step;
+          if (phase >= 1) phase -= phase.floor();
+        }
       }
     }
+    return pcm;
+  }
 
-    if (used < sampleRate ~/ 10) used = sampleRate ~/ 10;
-    var peak = 0.0;
-    for (var i = 0; i < used; i++) {
-      final amp = samples[i].abs();
-      if (amp > peak) peak = amp;
-    }
-    final gain = peak > 0.9 ? 0.9 / peak : 1.0;
-    final pcm = Int16List(used);
-    for (var i = 0; i < used; i++) {
-      pcm[i] = (samples[i] * gain * 32767).round().clamp(-32767, 32767);
-    }
-    return _wav(pcm);
+  static double _lengthSec(PianoNote note) {
+    final held = note.end - note.start;
+    if (held.isNaN || held < 0.08) return 0.08;
+    return held;
   }
 
   static double _tri(double phase) {
@@ -64,9 +81,12 @@ class NoteSynth {
     const attack = 0.012;
     final t = i / sampleRate;
     if (t < attack) return t / attack;
-    final rest = max(0.05, length / sampleRate - attack);
-    final x = ((t - attack) / rest).clamp(0.0, 1.0);
-    return pow(0.001, x).toDouble();
+    final total = max(attack + 0.02, length / sampleRate);
+    final release = min(0.05, total * 0.25);
+    final sustain = total - release;
+    if (t < sustain) return 1;
+    final x = ((t - sustain) / release).clamp(0.0, 1.0);
+    return 1 - x;
   }
 
   static Uint8List _wav(Int16List pcm) {
@@ -102,4 +122,13 @@ class NoteSynth {
     bytes.add(pcm.buffer.asUint8List(pcm.offsetInBytes, pcm.lengthInBytes));
     return bytes.toBytes();
   }
+}
+
+/// Notes plus the wav path. An isolate can take this record.
+typedef SynthWavJob = ({List<PianoNote> notes, String path});
+
+/// Isolate entry. Writes a wav and returns its path.
+String synthWavFile(SynthWavJob job) {
+  NoteSynth.writeFile(job.notes, job.path);
+  return job.path;
 }

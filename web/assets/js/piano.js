@@ -1,3 +1,9 @@
+(function () {
+  if (new URLSearchParams(location.search).get('app') === '1') {
+    document.documentElement.classList.add('app-embed');
+  }
+})();
+
 // Piano functionality
 class PianoApp {
     constructor() {

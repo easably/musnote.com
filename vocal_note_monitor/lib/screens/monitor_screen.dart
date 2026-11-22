@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../l10n/ui_text.dart';
 import 'package:provider/provider.dart';
 
 import '../services/pitch_service.dart';
@@ -9,8 +10,19 @@ import '../widgets/pitch_graph.dart';
 import '../widgets/tuner_gauge.dart';
 import '../ideas/ideas_hub_screen.dart';
 
-class MonitorScreen extends StatelessWidget {
+class MonitorScreen extends StatefulWidget {
   const MonitorScreen({super.key});
+
+  @override
+  State<MonitorScreen> createState() => _MonitorScreenState();
+}
+
+class _MonitorScreenState extends State<MonitorScreen> {
+  @override
+  void deactivate() {
+    context.read<PitchService>().stop();
+    super.deactivate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +60,6 @@ class MonitorScreen extends StatelessWidget {
   void _showMenu(BuildContext context) {
     showMonitorActionSheet(
       context,
-      onSave: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Recording saved')));
-      },
-      onLoad: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Recording loaded')));
-      },
       onIdeas: () {
         Navigator.of(context).push(
           CupertinoPageRoute<void>(builder: (_) => const IdeasHubScreen()),
@@ -82,6 +84,20 @@ class _HeaderSection extends StatelessWidget {
         children: [
           Row(
             children: [
+              IconButton(
+                tooltip: t(context).cancel,
+                onPressed: () {
+                  context.read<PitchService>().stop();
+                  Navigator.of(context).pop();
+                },
+                style: IconButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(44, 44),
+                  fixedSize: const Size(44, 44),
+                ),
+                icon: const Icon(Icons.close),
+              ),
+              const SizedBox(width: 8),
               Text(
                 settings.scale.displayName,
                 style: const TextStyle(color: Colors.white70, fontSize: 15),

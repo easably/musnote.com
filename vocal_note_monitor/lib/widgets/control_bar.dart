@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../l10n/ui_text.dart';
 import '../services/pitch_service.dart';
 
 class ControlBar extends StatelessWidget {
@@ -88,41 +89,25 @@ class _CircleButton extends StatelessWidget {
 
 void showMonitorActionSheet(
   BuildContext context, {
-  required VoidCallback onSave,
-  required VoidCallback onLoad,
   VoidCallback? onIdeas,
 }) {
   showCupertinoModalPopup<void>(
     context: context,
     builder: (context) => CupertinoActionSheet(
       actions: [
-        CupertinoActionSheetAction(
-          onPressed: () {
-            Navigator.pop(context);
-            onSave();
-          },
-          child: const Text('Save'),
-        ),
-        CupertinoActionSheetAction(
-          onPressed: () {
-            Navigator.pop(context);
-            onLoad();
-          },
-          child: const Text('Load'),
-        ),
         if (onIdeas != null)
           CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context);
               onIdeas();
             },
-            child: const Text('Ideas (preview)'),
+            child: Text(t(context).monitorIdeas),
           ),
       ],
       cancelButton: CupertinoActionSheetAction(
         isDefaultAction: true,
         onPressed: () => Navigator.pop(context),
-        child: const Text('Cancel'),
+        child: Text(t(context).cancel),
       ),
     ),
   );

@@ -1,13 +1,16 @@
 name: vocal_note_monitor
 description: Real-time vocal pitch monitor and tuner.
 publish_to: 'none'
-version: 1.0.0+7
+version: 1.0.0+10
 environment:
   sdk: ^3.8.1
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   cupertino_icons: ^1.0.8
   provider: ^6.1.2
   shared_preferences: ^2.3.4
@@ -17,6 +20,15 @@ dependencies:
   file_picker: ^8.1.7
   audioplayers: ^6.1.0
   url_launcher: ^6.3.1
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  lottie: ^3.3.1
+  share_plus: ^10.1.4
+  on_audio_query: ^2.9.0
+  package_info_plus: ^8.1.2
+  webview_flutter: ^4.14.1
+  webview_flutter_android: ^4.14.1
+  webview_flutter_wkwebview: ^3.27.2
 
 dev_dependencies:
   flutter_test:
@@ -24,4 +36,26 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+  generate: true
   uses-material-design: true
+  assets:
+    - assets/lottie/musnote-loading.json
+  fonts:
+    - family: Outfit
+      fonts:
+        - asset: assets/fonts/Outfit-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Outfit-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Outfit-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Outfit-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Outfit-ExtraBold.ttf
+          weight: 800
+    - family: Source Serif 4
+      fonts:
+        - asset: assets/fonts/SourceSerif4-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/SourceSerif4-Bold.ttf
+          weight: 700

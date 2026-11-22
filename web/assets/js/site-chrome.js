@@ -1,3 +1,9 @@
+(function () {
+  if (new URLSearchParams(location.search).get('app') === '1') {
+    document.documentElement.classList.add('app-embed');
+  }
+})();
+
 /**
  * Site chrome behaviors shared by every MusNote page:
  * - mobile nav open/close
