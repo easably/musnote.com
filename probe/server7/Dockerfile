@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir \
         --extra-index-url https://download.pytorch.org/whl/cu128 \
     && python -c "import torch; assert 'cu128' in torch.__version__, torch.__version__"
 
-COPY app.py notes.py stems.py ./
+COPY app.py audio_in.py jobs.py notes.py stems.py ./
 
 ENV DEMUCS_BIN=demucs \
     TORCH_HOME=/var/cache/torch

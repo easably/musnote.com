@@ -11,5 +11,17 @@ services:
     environment:
       DEMUCS_BIN: demucs
       TORCH_HOME: /var/cache/torch
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      JOB_ROOT: /var/lib/musnote-jobs
     volumes:
       - /home/admin2/.cache/torch:/var/cache/torch
+      - musnote-jobs:/var/lib/musnote-jobs
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  musnote-jobs:
