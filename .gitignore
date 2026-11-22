@@ -31,6 +31,9 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+
+# tunnel key stays on the server
+deploy/separated-notes-tunnel/ssh/
 __pycache__/
 .venv/
 
