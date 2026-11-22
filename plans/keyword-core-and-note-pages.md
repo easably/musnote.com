@@ -2,7 +2,7 @@
 
 К исполнению. Языки и фразы — в [tz-keyword-core-locales.md](tz-keyword-core-locales.md): 11 языков (EN RU DE PL ES PT JA KO ZH-TW ZH-CN VI), не ~20. Заголовки не переводятся с английского. Схема продукта: [audio-to-piano-notes.md](audio-to-piano-notes.md). Сервис уже в `api/`: `POST /v1/notes`. Этот план меняет, по каким фразам нас ищут, и добавляет страницы, которые этот сервис вызывают.
 
-Контейнер API уже на server8, порт 8095 снаружи не открыт. Страницы зовут `window.MUSNOTE_NOTES_API`, иначе `http://127.0.0.1:8095` (локально или туннель). На Cloudflare Pages сервис не выкладывать.
+Контейнер API на server7, порт 8095 слушает только localhost. Снаружи его отдаёт туннель на server8. Страницы зовут `window.MUSNOTE_NOTES_API`, иначе `http://127.0.0.1:8095` (локально или туннель). На Cloudflare Pages сервис не выкладывать.
 
 ## Схема для человека
 

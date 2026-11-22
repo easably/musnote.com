@@ -365,18 +365,25 @@
 
     <div class="vgroup"><h3>Онбординг <code>V6</code></h3><small>Первый запуск: показать «звук → ноты → клавиши»</small>
       <div class="opts" data-v="onb">
-        <button class="opt" data-o="a"><b>A · Три экрана</b><span>Звук · Ноты и дорожки · Играть и делиться</span></button>
+        <button class="opt" data-o="a"><b>A · Четыре экрана</b><span>Обещание · Звук · Дорожки · Играть и забрать</span></button>
         <button class="opt" data-o="b"><b>B · Один экран</b><span>Ролик + строка «Звук → Ноты → Клавиши» и «Начать»</span></button>
       </div></div>
 
     <div class="vgroup"><h3>Перейти к экрану</h3>
       <div class="jump">
-        <button data-go="onb">Онбординг</button><button data-go="home">Список</button><button data-go="add">Диалог «+»</button><button data-go="rec">Запись</button>
+        <button data-go="onb">Онбординг</button><button data-go="process">Разбор</button><button data-go="home">Список</button><button data-go="add">Диалог «+»</button><button data-go="rec">Запись</button>
         <button data-go="detail-new">Запись: обработать</button><button data-go="detail-ready">Запись: ноты готовы</button>
         <button data-go="trainer">Тренажёр</button><button data-go="tools">Инструменты</button><button data-go="settings">Настройки</button>
         <button data-go="empty">Пустой список</button>
       </div>
       <div class="pick" id="pick"></div>
+      <div class="jump" id="procPhases" hidden>
+        <button type="button" data-phase="upload">Загрузка</button>
+        <button type="button" data-phase="queue">Очередь</button>
+        <button type="button" data-phase="separate">Разделение</button>
+        <button type="button" data-phase="notes">Ноты</button>
+        <button type="button" data-phase="done">Готово</button>
+      </div>
     </div>
   </aside>
 
@@ -390,15 +397,31 @@
         <button class="onb-skip onb-a" id="onbSkip" type="button">Пропустить</button>
         <button class="lang-chip" id="langChip" type="button">Русский ▾</button>
         <div class="slides onb-a">
-          <div class="slide on" data-s="0"><div class="visual"><canvas id="onbWave"></canvas></div><h2>Запишите мелодию<br>или выберите файл</h2><p>Пианино, голос, песня целиком — mp3, wav, m4a до 100 МБ.</p></div>
-          <div class="slide" data-s="1"><div class="visual"><div class="lotbig" id="onbLot" style="margin-top:-46px"></div><div class="stemchips" id="onbChips"></div></div><h2>Мы находим ноты<br>и делим на дорожки</h2><p>Голос, пианино, бас — у каждой дорожки свои ноты. Бесплатно, на сервере MusNote.</p></div>
-          <div class="slide" data-s="2"><div class="visual"><canvas id="onbFall"></canvas></div><h2>Играйте вместе<br>и забирайте ноты</h2><p>Ноты падают на клавиши. Поделитесь MIDI, листом с буквами или текстом.</p></div>
+          <div class="slide on" data-s="0"><div class="visual"><div class="lotbig" id="onbLot0"></div></div><h2>Из звука — в ноты<br>на клавишах</h2><div class="flow3"><span>🎙 Звук</span>→<span>♪ Ноты</span>→<span>🎹 Клавиши</span></div><p>Запишите звук или возьмите файл. Мы прочитаем ноты, и их можно сыграть на клавишах.</p></div>
+          <div class="slide" data-s="1"><div class="visual"><canvas id="onbWave"></canvas></div><h2>Запишите мелодию<br>или выберите файл</h2><p>Пианино, голос, песня целиком — mp3, wav, m4a до 100 МБ.</p></div>
+          <div class="slide" data-s="2"><div class="visual"><div class="lotbig" id="onbLot" style="margin-top:-46px"></div><div class="stemchips" id="onbChips"></div></div><h2>Мы находим ноты<br>и делим на дорожки</h2><p>Голос, пианино, бас — у каждой дорожки свои ноты. Бесплатно, на сервере MusNote.</p></div>
+          <div class="slide" data-s="3"><div class="visual"><canvas id="onbFall"></canvas></div><h2>Играйте вместе<br>и забирайте ноты</h2><p>Ноты падают на клавиши. Поделитесь MIDI, листом с буквами или текстом.</p></div>
         </div>
         <div class="slides onb-b"><div class="slide on"><div class="visual" style="width:320px"><div class="lotbig" id="onbLotB"></div></div><h2>Из звука — в ноты<br>на клавишах</h2><div class="flow3"><span>🎙 Звук</span>→<span>♪ Ноты</span>→<span>🎹 Клавиши</span></div><p>Запишите или выберите аудио. Мы найдём ноты, разделим дорожки и покажем, как это сыграть.</p></div></div>
         <div class="onb-foot">
-          <div class="dots onb-a" id="onbDots"><i class="on"></i><i></i><i></i></div>
+          <div class="dots onb-a" id="onbDots"><i class="on"></i><i></i><i></i><i></i></div>
           <button class="btn green block onb-a" id="onbNext" style="padding:15px;font-size:1.05rem">Далее</button>
           <button class="btn green block onb-b" id="onbStartB" type="button" style="padding:15px;font-size:1.05rem">Начать</button>
+        </div>
+      </section>
+
+      <!-- PROCESSING (prototype of the wait screen) -->
+      <section class="scr" data-scr="process">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar">
+          <button class="ib" data-go="home" title="Закрыть">×</button>
+          <h2>Читаем запись</h2>
+        </div>
+        <div class="body" style="display:grid;align-content:center;justify-items:center;gap:18px;padding:28px 24px;text-align:center">
+          <div class="lotbig" id="procLot" style="width:240px;height:96px"></div>
+          <p id="procLine" style="margin:0;font-weight:700">Отправляем файл · 42 %</p>
+          <ol id="procSteps" style="list-style:none;padding:0;margin:0;display:grid;gap:10px;justify-items:start"></ol>
+          <p id="procTime" style="margin:0;color:var(--mn-muted)">0:47</p>
         </div>
       </section>
 
@@ -873,17 +896,17 @@ let onbStep = 0, onbRaf = null, onbLots = [];
 function startOnb() {
   onbStep = 0; setSlide(0);
   onbLots.forEach(a => a.destroy()); onbLots = [];
-  if (window.lottie && window.MUSNOTE_LOADING) ['#onbLot', '#onbLotB'].forEach(id => onbLots.push(lottie.loadAnimation({ container: $(id), renderer: 'svg', loop: true, autoplay: true, animationData: JSON.parse(JSON.stringify(window.MUSNOTE_LOADING)) })));
+  if (window.lottie && window.MUSNOTE_LOADING) ['#onbLot0', '#onbLot', '#onbLotB'].forEach(id => onbLots.push(lottie.loadAnimation({ container: $(id), renderer: 'svg', loop: true, autoplay: true, animationData: JSON.parse(JSON.stringify(window.MUSNOTE_LOADING)) })));
   const wave = $('#onbWave'), fall = $('#onbFall'); [wave, fall].forEach(c => { const r = c.getBoundingClientRect(); c.width = (r.width || 300) * 2; c.height = (r.height || 220) * 2; });
   const notes = sampleNotes(0), range = FallingNotes.rangeForMidis(notes.map(n => n.midi), { minWhites: 10, maxWhites: 12 });
   const lay = { ...range, keys: FallingNotes.keyLayout(range.start, range.whites) };
   const t0 = performance.now(); cancelAnimationFrame(onbRaf);
   const loop = now => {
     const t = (now - t0) / 1000;
-    if (onbStep === 0) { const g = wave.getContext('2d'), W = wave.width, H = wave.height; g.clearRect(0, 0, W, H);
+    if (onbStep === 1) { const g = wave.getContext('2d'), W = wave.width, H = wave.height; g.clearRect(0, 0, W, H);
       for (let k = 0; k < 3; k++) { g.beginPath(); g.lineWidth = k ? 4 : 8; g.strokeStyle = ['#15c39a', '#a8e9d0', '#d5f5e9'][k];
         for (let x = 0; x <= W; x += 6) { const u = x / W, env = Math.sin(Math.PI * u); const y = H / 2 - env * (60 - k * 14) * Math.sin(u * 14 - t * (4 + k) + k) * (0.6 + 0.4 * Math.sin(t * 1.7)); x ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); } }
-    if (onbStep === 2) { const r = fall.getBoundingClientRect(); if (fall.width < 10 && r.width) { fall.width = r.width * 2; fall.height = r.height * 2; } drawFall(fall, notes, (t % 9) - .3, lay, 2); }
+    if (onbStep === 3) { const r = fall.getBoundingClientRect(); if (fall.width < 10 && r.width) { fall.width = r.width * 2; fall.height = r.height * 2; } drawFall(fall, notes, (t % 9) - .3, lay, 2); }
     onbRaf = requestAnimationFrame(loop);
   };
   onbRaf = requestAnimationFrame(loop);
@@ -891,14 +914,45 @@ function startOnb() {
 function setSlide(i) {
   onbStep = i; $$('.slides.onb-a .slide').forEach(s => s.classList.toggle('on', +s.dataset.s === i));
   $$('#onbDots i').forEach((d, k) => d.classList.toggle('on', k === i));
-  $('#onbNext').textContent = i === 2 ? 'Начать' : 'Далее';
-  if (i === 1) $('#onbChips').innerHTML = ['🎤 Голос', '🎹 Пианино', '〰 Бас', '✳ Другое'].map((c, k) => `<span style="animation-delay:${.3 + k * .25}s">${c}</span>`).join('');
+  $('#onbNext').textContent = i === 3 ? 'Начать' : 'Далее';
+  if (i === 2) $('#onbChips').innerHTML = ['🎤 Голос', '🎹 Пианино', '〰 Бас', '✳ Другое'].map((c, k) => `<span style="animation-delay:${.3 + k * .25}s">${c}</span>`).join('');
 }
-$('#onbNext').onclick = () => { if (onbStep < 2) setSlide(onbStep + 1); else go(onbReturn); };
+$('#onbNext').onclick = () => { if (onbStep < 3) setSlide(onbStep + 1); else go(onbReturn); };
+let swipeX = 0;
+$('.slides.onb-a').addEventListener('pointerdown', e => { swipeX = e.clientX; });
+$('.slides.onb-a').addEventListener('pointerup', e => {
+  const dx = e.clientX - swipeX;
+  if (dx < -48 && onbStep < 3) setSlide(onbStep + 1);
+  if (dx > 48 && onbStep > 0) setSlide(onbStep - 1);
+});
 $('#onbSkip').onclick = () => go(onbReturn);
 $('#onbStartB').onclick = () => go(onbReturn);
 const _show = show;
-show = function (name) { if (name !== 'onb') cancelAnimationFrame(onbRaf); _show(name); if (name === 'onb') startOnb(); };
+const PROC = [
+  ['upload', 'Отправляем файл · 42 %'],
+  ['queue', 'В очереди на сервере'],
+  ['separate', 'Разделяем на дорожки'],
+  ['notes', 'Ищем ноты · дорожка 3 из 6'],
+  ['done', 'Готово: 4 дорожки с нотами'],
+];
+const PROC_NAMES = ['Загрузка', 'Очередь', 'Разделение', 'Поиск нот', 'Готово'];
+function setProc(id) {
+  const idx = Math.max(0, PROC.findIndex(row => row[0] === id));
+  $('#procLine').textContent = PROC[idx][1];
+  $('#procSteps').innerHTML = PROC_NAMES.map((name, i) => {
+    const mark = i < idx ? '✓' : i === idx ? '●' : '○';
+    const color = i < idx ? 'var(--mn-green-600)' : i === idx ? 'var(--mn-ink)' : 'var(--mn-muted)';
+    return `<li style="color:${color};font-weight:${i === idx ? 700 : 500}">${mark}  ${name}</li>`;
+  }).join('');
+}
+setProc('upload');
+$('#procPhases').onclick = e => { const b = e.target.closest('[data-phase]'); if (!b) return; setProc(b.dataset.phase); go('process'); };
+show = function (name) {
+  if (name !== 'onb') cancelAnimationFrame(onbRaf);
+  $('#procPhases').hidden = name !== 'process';
+  _show(name);
+  if (name === 'onb' || name === 'process') startOnb();
+};
 
 /* init */
 ['onb', 'list', 'add', 'train', 'trainer', 'tools'].forEach(k => setVariant(k, 'a'));

@@ -1,6 +1,6 @@
 # Audio → piano notes
 
-Выбор: 2026-11-20. Свой расчёт в папке `api/` этого репозитория, свой Docker. Платный сервис не берём. Выкладка: push в `main` → GitHub Actions → server8, каталог из `DEPLOY_PATH` (сейчас `/home/admin2/deploy/musnote`). Сайт по-прежнему уезжает на Cloudflare Pages отдельным workflow.
+Выбор: 2026-11-20. Свой расчёт в папке `api/` этого репозитория, свой Docker. Платный сервис не берём. Выкладка: push в `main` → GitHub Actions → server7, каталог из `DEPLOY_PATH` (сейчас `/home/admin2/deploy/musnote`). server8 только пересылает порты 8095 и 8096. Сайт по-прежнему уезжает на Cloudflare Pages отдельным workflow.
 
 ## Схема для человека
 

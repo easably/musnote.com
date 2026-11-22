@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Панель «аудио → ноты» — варианты · MusNote</title>
+<link rel="stylesheet" href="../chord-tutorial/shared.css">
+<style>
+  .variant { margin-bottom: 56px; }
+  .vhead { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .vhead p { margin: 4px 0 0; color: var(--mn-ink-soft); max-width: 640px; }
+  .states { display: flex; gap: 6px; flex-wrap: wrap; }
+  .states button { font: inherit; font-size: .85rem; border: 1px solid var(--mn-line); background: #fff; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .states button.on { background: var(--mn-ink); color: #fff; border-color: var(--mn-ink); }
+
+  .panel { background: #fff; border: 1px solid var(--mn-line); border-radius: 24px; padding: 24px; box-shadow: var(--mn-shadow-soft); position: relative; }
+  .panel[data-state="empty"] [data-show]:not([data-show~="empty"]),
+  .panel[data-state="drag"] [data-show]:not([data-show~="drag"]),
+  .panel[data-state="loading"] [data-show]:not([data-show~="loading"]),
+  .panel[data-state="result"] [data-show]:not([data-show~="result"]) { display: none !important; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .gridgap { display: grid; gap: 14px; }
+
+  .free { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 700; color: var(--mn-green-700); background: var(--mn-green-50); border-radius: 999px; padding: 3px 10px; }
+  .hint { color: var(--mn-muted); font-size: .88rem; }
+  .linkbtn { background: none; border: 0; font: inherit; color: var(--mn-green-700); font-weight: 600; cursor: pointer; padding: 0; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; background: var(--mn-surface-2); border: 1px solid var(--mn-line); border-radius: 12px; padding: 8px 12px; font-weight: 600; }
+  .chip small { color: var(--mn-muted); font-weight: 500; }
+  .summary { color: var(--mn-ink-soft); font-size: .95rem; }
+  .bar { height: 6px; border-radius: 99px; background: var(--mn-green-50); overflow: hidden; position: relative; }
+  .bar::after { content: ""; position: absolute; inset: 0; width: 35%; background: var(--mn-green-500); border-radius: 99px; animation: run 1.2s ease-in-out infinite; }
+  @keyframes run { from { left: -35%; } to { left: 100%; } }
+
+  /* player */
+  .player { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pbtn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--mn-ink); color: #fff; font-size: 1rem; cursor: pointer; display: grid; place-items: center; flex: none; }
+  .pbtn.ghost { background: #eef3f1; color: var(--mn-ink); width: 38px; height: 38px; font-size: .85rem; }
+  .player input[type=range] { flex: 1; min-width: 140px; accent-color: var(--mn-green-500); }
+  .time { font-variant-numeric: tabular-nums; color: var(--mn-ink-soft); font-size: .9rem; min-width: 84px; }
+  .speed { display: inline-flex; background: #eef3f1; border-radius: 999px; padding: 3px; }
+  .speed button { border: 0; background: transparent; font: inherit; font-size: .8rem; padding: 5px 9px; border-radius: 999px; cursor: pointer; color: var(--mn-ink-soft); }
+  .speed button.on { background: #fff; color: var(--mn-ink); font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+  .kbwrap { background: var(--mn-surface-2); border-radius: 16px; padding: 12px; position: relative; }
+  .key-w.live { fill: var(--c-r) !important; } .key-b.live { fill: var(--c-r) !important; }
+
+  /* download: split button + menu (A) */
+  .split { display: inline-flex; position: relative; }
+  .split .main { border-radius: 12px 0 0 12px; }
+  .split .caret { border-radius: 0 12px 12px 0; border-left: 1px solid rgba(255,255,255,.25); padding: 10px 12px; }
+  .menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 330px; background: #fff; border: 1px solid var(--mn-line); border-radius: 16px; box-shadow: 0 18px 50px rgba(15,31,26,.16); padding: 6px; z-index: 5; display: none; }
+  .menu.open { display: block; }
+  .menu button { display: flex; gap: 12px; align-items: flex-start; width: 100%; text-align: left; border: 0; background: none; font: inherit; padding: 10px 12px; border-radius: 10px; cursor: pointer; }
+  .menu button:hover { background: var(--mn-surface-2); }
+  .menu .ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; font-size: .75rem; font-weight: 800; flex: none; }
+  .menu b { display: block; }
+  .menu small { color: var(--mn-muted); }
+  .menu hr { border: 0; border-top: 1px solid var(--mn-line); margin: 4px 6px; }
+  .ic.midi { background: #dcfce7; color: var(--mn-green-700); } .ic.sheet { background: #fef3c7; color: #b45309; } .ic.txt { background: #dbeafe; color: #1d4ed8; } .ic.copy { background: #f1f5f9; color: var(--mn-ink-soft); }
+  .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px); background: var(--mn-ink); color: #fff; padding: 10px 18px; border-radius: 12px; opacity: 0; transition: .25s; pointer-events: none; z-index: 50; }
+  .toast.show { opacity: 1; transform: translateX(-50%); }
+
+  /* ---------- A ---------- */
+  .pa .drop { border: 2.5px dashed #b9d8cb; border-radius: 20px; padding: 44px 20px; text-align: center; transition: .2s; display: grid; gap: 10px; justify-items: center; }
+  .pa[data-state="drag"] .drop { border-color: var(--mn-green-500); background: var(--mn-green-50); transform: scale(1.01); }
+  .pa .drop .big { font-size: 1.35rem; font-weight: 700; }
+  .pa .note-ic { width: 64px; height: 64px; border-radius: 18px; background: var(--mn-green-50); display: grid; place-items: center; font-size: 1.8rem; color: var(--mn-green-600); }
+  .pa .stack { display: grid; gap: 16px; }
+
+  /* ---------- B ---------- */
+  .pb .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; min-height: 44px; }
+  .pb .over { position: absolute; inset: 0; border-radius: 16px; display: grid; place-items: center; text-align: center; background: rgba(246,250,248,.86); backdrop-filter: blur(2px); border: 2.5px dashed #b9d8cb; transition: .2s; }
+  .pb[data-state="drag"] .over { background: rgba(213,245,233,.92); border-color: var(--mn-green-500); }
+  .pb .over .big { font-size: 1.3rem; font-weight: 700; }
+  .pb .tools { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 14px; }
+  .pb .dlchips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .pb .dlchips .lbl { color: var(--mn-muted); font-size: .88rem; margin-right: 2px; }
+  .dchip { border: 1.5px solid var(--mn-line); background: #fff; border-radius: 999px; padding: 8px 14px; font: inherit; font-weight: 700; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+  .dchip:hover { border-color: var(--mn-ink); }
+  .dchip.primary { background: var(--mn-green-500); border-color: var(--mn-green-500); color: #fff; }
+
+  /* ---------- C ---------- */
+  .pc .steps { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .pc .step { display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border-radius: 999px; background: var(--mn-surface-2); color: var(--mn-muted); font-weight: 600; font-size: .92rem; }
+  .pc .step i { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: #dfe8e4; font-style: normal; font-size: .8rem; }
+  .pc .step.on { background: var(--mn-ink); color: #fff; } .pc .step.on i { background: var(--mn-green-500); color: #fff; }
+  .pc .step.done i { background: var(--mn-green-500); color: #fff; }
+  .pc .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .pc .drop { border: 2.5px dashed #b9d8cb; border-radius: 20px; padding: 28px; display: grid; gap: 8px; align-content: center; justify-items: start; min-height: 210px; transition: .2s; }
+  .pc[data-state="drag"] .drop { border-color: var(--mn-green-500); background: var(--mn-green-50); }
+  .pc .drop .big { font-size: 1.25rem; font-weight: 700; }
+  .pc .what { background: var(--mn-surface-2); border-radius: 20px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+  .pc .what div { display: flex; gap: 10px; align-items: center; font-size: .95rem; }
+  .pc .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+  .dcard { border: 1.5px solid var(--mn-line); border-radius: 18px; padding: 16px; background: #fff; cursor: pointer; text-align: left; font: inherit; display: grid; gap: 8px; transition: .15s; }
+  .dcard:hover { border-color: var(--mn-ink); transform: translateY(-2px); }
+  .dcard.rec { border-color: var(--mn-green-500); box-shadow: 0 0 0 3px var(--mn-green-50); }
+  .dcard .thumb { height: 74px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; font-size: 1.3rem; }
+  .dcard small { color: var(--mn-muted); }
+  .dcard .tag { font-size: .72rem; font-weight: 800; color: var(--mn-green-700); text-transform: uppercase; letter-spacing: .05em; }
+
+  /* letter sheet modal */
+  .modal { position: fixed; inset: 0; background: rgba(15,31,26,.45); display: none; place-items: center; z-index: 40; padding: 20px; }
+  .modal.open { display: grid; }
+  .sheet { background: #fff; width: min(760px, 100%); max-height: 90vh; overflow: auto; border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.3); }
+  .sheet-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--mn-line); position: sticky; top: 0; background: #fff; flex-wrap: wrap; }
+  .page { padding: 34px 44px 44px; }
+  .page header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--mn-ink); padding-bottom: 8px; margin-bottom: 18px; }
+  .page header h3 { font-family: var(--mn-font-display); font-size: 1.5rem; margin: 0; }
+  .page header span { color: var(--mn-muted); font-size: .85rem; }
+  .legend-kb { max-width: 420px; margin-bottom: 22px; }
+  .phrase { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-bottom: 18px; align-items: center; }
+  .phrase .n { font-size: 1.6rem; font-weight: 800; min-width: 34px; text-align: center; padding: 4px 8px; border-radius: 10px; border: 1.5px solid #dfe8e4; }
+  .phrase .n sub { font-size: .7rem; color: var(--mn-muted); font-weight: 600; }
+  .phrase .n.chord { border-color: var(--mn-ink); }
+  .phrase .num { color: var(--mn-muted); font-size: .8rem; width: 22px; }
+
+  @media print { body > *:not(#modal) { display: none !important; } .modal { position: static; background: none; display: block; padding: 0; } .sheet { box-shadow: none; max-height: none; width: 100%; } .sheet-bar { display: none; } }
+  @media (max-width: 820px) { .pc .two, .pc .cards { grid-template-columns: 1fr; } .menu { min-width: 280px; } }
+</style>
+</head>
+<body>
+<section class="hero wrap">
+  <span class="eyebrow">Дизайн · audio to piano notes</span>
+  <h1>Панель нот: три варианта</h1>
+  <p class="lead">Куда перетащить файл и как забрать результат. Всё кликается: переключайте состояния, перетащите любой файл на панель, откройте «Скачать». MIDI скачивается по-настоящему (пример — «Ода к радости»), лист с буквами открывается как предпросмотр печати.</p>
+</section>
+
+<!-- ================= A ================= -->
+<section class="wrap variant">
+  <div class="vhead">
+    <div><h2>A · Большая зона + кнопка с меню</h2><p>Привычно, как у конкурентов. Пустая панель — одна крупная зона. После загрузки она сжимается в строку с файлом. Скачать — одна кнопка «MIDI», остальное в выпадающем меню.</p></div>
+    <div class="states" data-for="pa"></div>
+  </div>
+  <div class="panel pa" id="pa" data-state="empty">
+    <div class="drop" data-show="empty drag">
+      <div class="note-ic">♫</div>
+      <div class="big">Перетащите аудио сюда</div>
+      <div class="hint">или</div>
+      <button class="btn primary" data-pick>Выбрать файл</button>
+      <div class="hint">mp3, wav, m4a, flac · до 100 МБ · <span class="free">✓ Бесплатно, без регистрации</span></div>
+    </div>
+    <div class="stack" data-show="loading">
+      <div><span class="chip">🎵 <span class="fname">ode-to-joy.mp3</span> <small>2,1 МБ</small></span></div>
+      <div class="bar"></div>
+      <div class="hint">Читаем ноты… Длинная запись может занять минуту.</div>
+    </div>
+    <div class="stack" data-show="result">
+      <div class="row" data-show="result">
+        <span class="chip">🎵 <span class="fname">ode-to-joy.mp3</span> <small>2,1 МБ</small></span>
+        <button class="linkbtn" data-pick>Другой файл</button>
+      </div>
+      <div class="summary" data-summary></div>
+      <div class="player" data-player></div>
+      <div class="kbwrap"><svg data-kb></svg></div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div class="split">
+          <button class="btn green main" data-dl="midi">⬇ Скачать MIDI</button>
+          <button class="btn green caret" data-menu aria-label="Другие форматы">▾</button>
+          <div class="menu" data-menu-list></div>
+        </div>
+        <span class="hint">MIDI откроется в GarageBand, MuseScore и Synthesia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= B ================= -->
+<section class="wrap variant">
+  <div class="vhead">
+    <div><h2>B · Файл кидают прямо на клавиши</h2><p>Клавиатура всегда на месте — сразу видно, что получится. Зона перетаскивания — сама клавиатура. Форматы — три кнопки в одну строку, без меню: всё видно сразу.</p></div>
+    <div class="states" data-for="pb"></div>
+  </div>
+  <div class="panel pb" id="pb" data-state="empty">
+    <div class="top">
+      <div data-show="empty drag" class="hint">Ноты появятся на клавишах</div>
+      <span class="chip" data-show="loading result">🎵 <span class="fname">ode-to-joy.mp3</span> <small>2,1 МБ</small></span>
+      <div data-show="result" class="summary" data-summary></div>
+      <span class="free">✓ Бесплатно · до 100 МБ</span>
+    </div>
+    <div class="kbwrap">
+      <svg data-kb></svg>
+      <div class="over" data-show="empty drag"><div style="display:grid;gap:10px;justify-items:center">
+        <div class="big">Перетащите аудио на клавиши</div>
+        <button class="btn primary" data-pick>или выберите файл</button>
+        <div class="hint">mp3, wav, m4a, flac</div>
+      </div></div>
+      <div class="over" data-show="loading" style="border-style:solid;border-color:transparent"><div style="display:grid;gap:12px;justify-items:center;width:60%"><b>Читаем ноты…</b><div class="bar" style="width:100%"></div></div></div>
+    </div>
+    <div class="tools" data-show="result">
+      <div class="player" data-player style="flex:1"></div>
+      <div class="dlchips">
+        <span class="lbl">Скачать:</span>
+        <button class="dchip primary" data-dl="midi">⬇ MIDI</button>
+        <button class="dchip" data-dl="sheet">🖨 Лист с буквами</button>
+        <button class="dchip" data-dl="txt">TXT</button>
+        <button class="dchip" data-dl="copy" title="Скопировать ноты">⧉</button>
+      </div>
+    </div>
+    <div style="margin-top:10px" data-show="result"><button class="linkbtn" data-pick>Другой файл</button></div>
+  </div>
+</section>
+
+<!-- ================= C ================= -->
+<section class="wrap variant">
+  <div class="vhead">
+    <div><h2>C · Три шага: загрузить → послушать → забрать</h2><p>Шаги объясняют новичку, что будет дальше. Рядом с зоной — что он получит (это и есть обещание «бесплатно»). Результат — три карточки форматов с подсказкой, кому что нужно.</p></div>
+    <div class="states" data-for="pc"></div>
+  </div>
+  <div class="panel pc" id="pc" data-state="empty">
+    <div class="steps"><div class="step" data-step="1"><i>1</i>Загрузить</div><div class="step" data-step="2"><i>2</i>Послушать ноты</div><div class="step" data-step="3"><i>3</i>Забрать</div></div>
+    <div class="two" data-show="empty drag">
+      <div class="drop">
+        <div class="big">Перетащите песню или мелодию</div>
+        <div class="hint">mp3, wav, m4a, flac · до 100 МБ</div>
+        <button class="btn primary" data-pick style="margin-top:6px">Выбрать файл</button>
+      </div>
+      <div class="what">
+        <span class="free" style="justify-self:start">✓ Бесплатно, без регистрации</span>
+        <div>🎹 Ноты загорятся на клавишах</div>
+        <div>⬇ MIDI для GarageBand, MuseScore, Synthesia</div>
+        <div>🖨 Лист с буквами нот для печати</div>
+        <div class="hint">Лучше всего — соло фортепиано или чистая мелодия.</div>
+      </div>
+    </div>
+    <div data-show="loading" class="gridgap">
+      <span class="chip" style="justify-self:start">🎵 <span class="fname">ode-to-joy.mp3</span> <small>2,1 МБ</small></span>
+      <div class="bar"></div><div class="hint">Читаем ноты…</div>
+    </div>
+    <div data-show="result">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px"><div class="summary" data-summary></div><button class="linkbtn" data-pick>Другой файл</button></div>
+      <div class="player" data-player style="margin-bottom:12px"></div>
+      <div class="kbwrap"><svg data-kb></svg></div>
+      <div class="cards">
+        <button class="dcard rec" data-dl="midi"><span class="tag">Рекомендуем</span><div class="thumb" style="background:#dcfce7;color:var(--mn-green-700)">.MID</div><b>MIDI-файл</b><small>Откроется в GarageBand, MuseScore (там сразу нотный лист) и Synthesia</small></button>
+        <button class="dcard" data-dl="sheet"><span class="tag" style="color:#b45309">Для новичков</span><div class="thumb" style="background:#fef3c7;color:#b45309">E E F G</div><b>Лист с буквами нот</b><small>Печать или PDF. Ноты по фразам, аккорды в скобках</small></button>
+        <button class="dcard" data-dl="txt"><span class="tag" style="color:#1d4ed8">Текст</span><div class="thumb" style="background:#dbeafe;color:#1d4ed8">.TXT</div><b>Ноты текстом</b><small>Скачать .txt или <span class="linkbtn" data-dl="copy">скопировать</span></small></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="note wrap">Прототип для выбора. Звук — встроенный синтезатор, пример мелодии — «Ода к радости» (Бетховен, общественное достояние). В реальной панели вместо примера — ноты из API.</footer>
+
+<input type="file" id="picker" accept="audio/*" hidden>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="sheet">
+  <div class="sheet-bar"><b>Лист с буквами нот — предпросмотр печати</b>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <div class="seg" id="octSeg"><button data-v="0" class="on">C</button><button data-v="1">C4</button></div>
+      <div class="seg" id="nameSeg"><button data-v="abc" class="on">C D E</button><button data-v="solf">До Ре Ми</button></div>
+      <button class="btn primary" onclick="window.print()">🖨 Печать / PDF</button>
+      <button class="btn" id="closeModal">✕</button>
+    </div>
+  </div>
+  <div class="page" id="page"></div>
+</div></div>
+
+<script src="../chord-tutorial/shared.js"></script>
+<script>
+/* sample: Ode to Joy (public domain) + closing C major chord */
+const MEL = [64,64,65,67,67,65,64,62,60,60,62,64,64,62,62, 64,64,65,67,67,65,64,62,60,60,62,64,62,60,60];
+const DUR = [1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,2, 1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,2];
+const NOTES = []; { let t = 0; const q = .42; MEL.forEach((m, i) => { NOTES.push({ midi: m, start: +t.toFixed(3), end: +(t + DUR[i] * q * .95).toFixed(3), velocity: .8 }); t += DUR[i] * q; if (i === 14) t += .5; }); [48, 52, 55].forEach(m => NOTES.push({ midi: m, start: +t.toFixed(3), end: +(t + 1.6).toFixed(3), velocity: .7 })); }
+const LEN = Math.max(...NOTES.map(n => n.end));
+const NAMES = ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
+const SOLF = ['До','До♯','Ре','Ми♭','Ми','Фа','Фа♯','Соль','Ля♭','Ля','Си♭','Си'];
+const nm = (m, oct, solf) => (solf ? SOLF : NAMES)[m % 12] + (oct ? (Math.floor(m / 12) - 1) : '');
+const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+const lo = Math.min(...NOTES.map(n => n.midi)), hi = Math.max(...NOTES.map(n => n.midi));
+const SUMMARY = `Найдено ${NOTES.length} нот · ${fmt(LEN)} · от ${nm(lo, 1)} до ${nm(hi, 1)}`;
+
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('show'); clearTimeout(toast.h); toast.h = setTimeout(() => el.classList.remove('show'), 1800); }
+
+/* ---- player (same engine for all variants) ---- */
+function makePlayer(host, kb) {
+  host.innerHTML = `<button class="pbtn" data-pp title="Играть / пауза (пробел)">▶</button><button class="pbtn ghost" data-stop title="Стоп">■</button>
+    <input type="range" min="0" max="${LEN}" step="0.01" value="0"><span class="time">0:00 / ${fmt(LEN)}</span>
+    <div class="speed">${[.5, .75, 1].map(s => `<button data-s="${s}" class="${s === 1 ? 'on' : ''}">${({0.5:'0,5',0.75:'0,75',1:'1'})[s]}×</button>`).join('')}</div>`;
+  const pp = host.querySelector('[data-pp]'), range = host.querySelector('input'), time = host.querySelector('.time');
+  let pos = 0, speed = 1, timer = null, last = 0;
+  const lit = () => { Object.values(kb.keys).forEach(k => k.rect.classList.remove('live')); NOTES.forEach(n => { if (n.start <= pos && pos < n.end && kb.keys[n.midi]) kb.keys[n.midi].rect.classList.add('live'); }); };
+  const ui = () => { range.value = pos; time.textContent = `${fmt(pos)} / ${fmt(LEN)}`; lit(); };
+  const tick = () => { const now = performance.now(); const prev = pos; pos += (now - last) / 1000 * speed; last = now;
+    const hit = NOTES.filter(n => n.start >= prev && n.start < pos).map(n => n.midi); if (hit.length) MN.play(hit, { arp: false });
+    if (pos >= LEN) { stop(); return; } ui(); };
+  const play = () => { if (timer) return; last = performance.now(); timer = setInterval(tick, 25); pp.textContent = '❚❚'; };
+  const pause = () => { clearInterval(timer); timer = null; pp.textContent = '▶'; };
+  const stop = () => { pause(); pos = 0; ui(); Object.values(kb.keys).forEach(k => k.rect.classList.remove('live')); };
+  pp.onclick = () => (timer ? pause() : play());
+  host.querySelector('[data-stop]').onclick = stop;
+  range.oninput = () => { pos = +range.value; ui(); };
+  host.querySelector('.speed').onclick = e => { const b = e.target.closest('button'); if (!b) return; speed = +b.dataset.s; host.querySelectorAll('.speed button').forEach(x => x.classList.toggle('on', x === b)); };
+  return { pause, toggle: () => (timer ? pause() : play()) };
+}
+
+/* ---- downloads ---- */
+function midiBytes(notes) {
+  const ev = [];
+  notes.forEach(n => { const v = Math.max(1, Math.min(127, Math.round(n.velocity * 127)));
+    ev.push([Math.round(n.start * 960), 0x90, n.midi, v], [Math.round(n.end * 960), 0x80, n.midi, 0]); });
+  ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const vlq = x => { const o = [x & 0x7f]; while ((x >>= 7)) o.unshift((x & 0x7f) | 0x80); return o; };
+  const trk = [0, 0xff, 0x51, 3, 0x07, 0xa1, 0x20, 0, 0xc0, 0]; // tempo 120 bpm, program 0 (piano)
+  let t = 0; ev.forEach(([at, st, m, v]) => { trk.push(...vlq(at - t), st, m, v); t = at; });
+  trk.push(0, 0xff, 0x2f, 0);
+  const u32 = x => [x >>> 24, (x >>> 16) & 255, (x >>> 8) & 255, x & 255];
+  return new Uint8Array([0x4d, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0, 0, 0, 1, 1, 0xe0, 0x4d, 0x54, 0x72, 0x6b, ...u32(trk.length), ...trk]);
+}
+function save(bytes, name, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([bytes], { type })); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); }
+function phrases(oct = false, solf = false) {
+  const groups = []; NOTES.slice().sort((a, b) => a.start - b.start).forEach(n => { const g = groups.at(-1); if (g && n.start - g.start < .04) g.n.push(n); else groups.push({ start: n.start, end: n.end, n: [n] }); });
+  const out = [[]]; groups.forEach((g, i) => { if (i && g.start - groups[i - 1].end > .3) out.push([]); out.at(-1).push(g); });
+  return out.map(ph => ph.map(g => g.n.length > 1 ? '[' + g.n.map(x => nm(x.midi, oct, solf)).join(' ') + ']' : nm(g.n[0].midi, oct, solf)));
+}
+const TXT = () => phrases(true).map(p => p.join(' ')).join('\n');
+let sheetOct = false, sheetSolf = false, legendKb;
+function renderSheet() {
+  const page = document.getElementById('page');
+  page.innerHTML = `<header><h3>ode-to-joy.mp3</h3><span>${new Date().toLocaleDateString('ru-RU')} · musnote.com</span></header><svg class="legend-kb" id="legend"></svg>` +
+    phrases(sheetOct, sheetSolf).map((p, i) => `<div class="phrase"><span class="num">${i + 1}</span>${p.map(t => `<span class="n${t[0] === '[' ? ' chord' : ''}">${t}</span>`).join('')}</div>`).join('');
+  legendKb = MN.keyboard(document.getElementById('legend'), { start: 48, whites: 15, W: 28, H: 90 });
+  legendKb.show(Object.values(NOTES.reduce((a, n) => (a[n.midi] = { midi: n.midi, role: n.midi < 60 ? 'f' : 'r', letter: '', acc: 0, name: nm(n.midi, sheetOct, sheetSolf) }, a), {})));
+}
+function download(kind) {
+  if (kind === 'midi') { save(midiBytes(NOTES), 'ode-to-joy-musnote.mid', 'audio/midi'); toast('MIDI скачан: ode-to-joy-musnote.mid'); }
+  if (kind === 'txt') { save(new TextEncoder().encode(TXT()), 'ode-to-joy-notes.txt', 'text/plain'); toast('Скачан ode-to-joy-notes.txt'); }
+  if (kind === 'copy') { navigator.clipboard?.writeText(TXT()).then(() => toast('Ноты скопированы'), () => toast('Ноты скопированы')); }
+  if (kind === 'sheet') { renderSheet(); document.getElementById('modal').classList.add('open'); }
+}
+document.getElementById('closeModal').onclick = () => document.getElementById('modal').classList.remove('open');
+document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') e.target.classList.remove('open'); };
+document.getElementById('octSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; sheetOct = b.dataset.v === '1'; e.currentTarget.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); renderSheet(); };
+document.getElementById('nameSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; sheetSolf = b.dataset.v === 'solf'; e.currentTarget.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); renderSheet(); };
+
+/* ---- wire each variant ---- */
+const MENU = `<button data-dl="midi"><span class="ic midi">MID</span><span><b>MIDI-файл (.mid)</b><small>GarageBand, MuseScore, Synthesia</small></span></button>
+  <button data-dl="sheet"><span class="ic sheet">ABC</span><span><b>Лист с буквами нот</b><small>Печать или сохранить как PDF</small></span></button>
+  <button data-dl="txt"><span class="ic txt">TXT</span><span><b>Ноты текстом (.txt)</b><small>C4 E4 G4 … по фразам</small></span></button><hr>
+  <button data-dl="copy"><span class="ic copy">⧉</span><span><b>Скопировать ноты</b><small>В буфер обмена</small></span></button>`;
+const STATE_NAMES = { empty: 'Пусто', drag: 'Файл над зоной', loading: 'Читаем ноты', result: 'Результат' };
+let current = null;
+const players = {};
+['pa', 'pb', 'pc'].forEach(id => {
+  const p = document.getElementById(id);
+  const kb = MN.keyboard(p.querySelector('[data-kb]'), { start: 48, whites: 15, H: 140 });
+  players[id] = makePlayer(p.querySelector('[data-player]'), kb);
+  p.querySelectorAll('[data-summary]').forEach(s => (s.textContent = SUMMARY));
+  const ml = p.querySelector('[data-menu-list]'); if (ml) ml.innerHTML = MENU;
+  const states = document.querySelector(`.states[data-for="${id}"]`);
+  states.innerHTML = Object.entries(STATE_NAMES).map(([k, v]) => `<button data-st="${k}">${v}</button>`).join('');
+  const set = st => {
+    p.dataset.state = st;
+    states.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.st === st));
+    if (st !== 'result') players[id].pause();
+    if (st === 'result') kb.show(NOTES.filter((n, i, a) => a.findIndex(x => x.midi === n.midi) === i).map(n => ({ midi: n.midi, role: 'r', letter: '', acc: 0, name: nm(n.midi) })));
+    else kb.clear();
+    p.querySelectorAll('.step').forEach(s => { const n = +s.dataset.step, cur = { empty: 1, drag: 1, loading: 1, result: 2 }[st]; s.classList.toggle('on', n === cur); s.classList.toggle('done', n < cur); });
+    if (st === 'result') p.querySelectorAll('.step')[2]?.classList.add('on');
+  };
+  p.set = set;
+  states.onclick = e => { const b = e.target.closest('button'); if (b) set(b.dataset.st); };
+  set('empty');
+  const load = name => { p.querySelectorAll('.fname').forEach(f => (f.textContent = name || 'ode-to-joy.mp3')); set('loading'); setTimeout(() => set('result'), 1600); };
+  p.querySelectorAll('[data-pick]').forEach(b => (b.onclick = () => { current = { load }; document.getElementById('picker').click(); }));
+  let depth = 0;
+  p.addEventListener('dragenter', e => { e.preventDefault(); if (p.dataset.state === 'empty' || p.dataset.state === 'result') { depth++; p._prev = p._prev || p.dataset.state; set('drag'); } });
+  p.addEventListener('dragover', e => e.preventDefault());
+  p.addEventListener('dragleave', () => { if (--depth <= 0 && p.dataset.state === 'drag') { depth = 0; set(p._prev || 'empty'); p._prev = null; } });
+  p.addEventListener('drop', e => { e.preventDefault(); depth = 0; p._prev = null; load(e.dataTransfer.files[0]?.name); });
+  p.addEventListener('click', e => {
+    const d = e.target.closest('[data-dl]'); if (d) { e.stopPropagation(); download(d.dataset.dl); p.querySelector('.menu')?.classList.remove('open'); return; }
+    if (e.target.closest('[data-menu]')) p.querySelector('.menu').classList.toggle('open');
+    else p.querySelector('.menu')?.classList.remove('open');
+  });
+});
+document.getElementById('picker').onchange = e => { if (current && e.target.files[0]) current.load(e.target.files[0].name); e.target.value = ''; };
+document.addEventListener('keydown', e => { if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); const p = [...document.querySelectorAll('.panel')].find(x => x.dataset.state === 'result' && x.getBoundingClientRect().top < innerHeight && x.getBoundingClientRect().bottom > 0); if (p) players[p.id].toggle(); } });
+</script>
+</body>
+</html>
