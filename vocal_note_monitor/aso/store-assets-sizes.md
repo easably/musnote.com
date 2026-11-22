@@ -27,7 +27,7 @@
 | Формат | PNG или JPEG, без прозрачности |
 | Где | Иконка приложения в Xcode / ASC |
 
-На иконке не писать длинный slogan. Имя уже в metadata: `Audio to Piano Notes`.
+На иконке не писать длинный slogan. Имя в metadata: `Audio to Piano Notes - MusNote`.
 
 ---
 

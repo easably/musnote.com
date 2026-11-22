@@ -2,8 +2,8 @@
   "locale": "ko",
   "seoHead": "오디오 악보 변환",
   "appInfo": {
-    "name": "오디오 악보 변환",
+    "name": "오디오 악보 변환 - MusNote",
     "subtitle": "노래 멜로디 추출",
-    "keywords": "mp3,midi,자동채보,피아노,변환기,녹음,솔로,채보,AI"
+    "keywords": "mp3,midi,자동채보,피아노,변환기,녹음,솔로,채보,AI,wav,m4a,기타,허밍,건반,음원,변환앱"
   }
 }

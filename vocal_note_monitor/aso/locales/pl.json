@@ -2,8 +2,8 @@
   "locale": "pl",
   "seoHead": "audio na nuty",
   "appInfo": {
-    "name": "audio na nuty",
+    "name": "audio na nuty - MusNote",
     "subtitle": "piosenka z nagrania",
-    "keywords": "mp3,midi,melodia,pianino,konwerter,transkrypcja,solo,klawiatura,muzyka"
+    "keywords": "mp3,midi,melodia,pianino,konwerter,transkrypcja,solo,klawiatura,muzyka,wav,m4a,gitara,akord,mikrofon"
   }
 }
