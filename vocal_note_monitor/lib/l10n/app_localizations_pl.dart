@@ -167,7 +167,26 @@ class AppLocalizationsPl extends AppLocalizations {
   String get tabFiles => 'Pliki';
 
   @override
-  String get tabLibrary => 'Biblioteka';
+  String get tabFromShare => 'Udostępnij';
+
+  @override
+  String get fromShareTitle => 'Z Dyktafonu';
+
+  @override
+  String get fromShareBody =>
+      'Te nagrania zostają w Dyktafonie. Jedno można wysłać tutaj przez Udostępnij. Plik jest w m4a, MusNote już go otwiera.';
+
+  @override
+  String get fromShareStep1 => 'Otwórz nagranie w Dyktafonie.';
+
+  @override
+  String get fromShareStep2 =>
+      'Stuknij Udostępnij, a potem Zachowaj w Plikach.';
+
+  @override
+  String get fromShareStep3 => 'Na karcie Pliki wybierz to nagranie.';
+
+
 
   @override
   String get needSource => 'Potrzebne inne źródło?';
@@ -194,21 +213,10 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get openingAudio => 'Otwieranie audio na telefonie…';
 
-  @override
-  String get appleHint =>
-      'Utwory z Apple Music są chronione i się nie otwierają. Własne pliki i niechronione zakupy są w porządku.';
 
-  @override
-  String get noAudioAccess => 'Brak dostępu do audio na telefonie.';
 
-  @override
-  String get libraryEmpty => 'Brak utworów w bibliotece.';
 
-  @override
-  String get libraryDenied => 'Dostęp do biblioteki jest wyłączony.';
 
-  @override
-  String get openSettings => 'Otwórz ustawienia';
 
   @override
   String mailSubject(String chip) {
@@ -463,8 +471,6 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get sourceFile => 'Plik';
 
-  @override
-  String get sourceLibrary => 'Biblioteka';
 
   @override
   String get monitorSaved => 'Nagranie zapisane';

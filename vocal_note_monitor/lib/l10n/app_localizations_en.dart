@@ -166,7 +166,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabFiles => 'Files';
 
   @override
-  String get tabLibrary => 'Library';
+  String get tabFromShare => 'Share';
+
+  @override
+  String get fromShareTitle => 'From Voice Memos';
+
+  @override
+  String get fromShareBody =>
+      'Those recordings stay in Voice Memos. Send one here with Share. The file is m4a, and MusNote already opens it.';
+
+  @override
+  String get fromShareStep1 => 'Open the recording in Voice Memos.';
+
+  @override
+  String get fromShareStep2 => 'Tap Share, then Save to Files.';
+
+  @override
+  String get fromShareStep3 =>
+      'Open the Files tab here and choose that recording.';
+
+
 
   @override
   String get needSource => 'Need another source?';
@@ -193,21 +212,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get openingAudio => 'Opening audio on this phone…';
 
-  @override
-  String get appleHint =>
-      'Apple Music songs are protected and will not open. Your own audio files and unprotected purchases will.';
 
-  @override
-  String get noAudioAccess => 'No access to audio on this phone.';
 
-  @override
-  String get libraryEmpty => 'No songs in the media library.';
 
-  @override
-  String get libraryDenied => 'Media library access is off.';
 
-  @override
-  String get openSettings => 'Open settings';
 
   @override
   String mailSubject(String chip) {
@@ -455,8 +463,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get sourceFile => 'File';
 
-  @override
-  String get sourceLibrary => 'Library';
 
   @override
   String get monitorSaved => 'Recording saved';

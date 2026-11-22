@@ -24,7 +24,6 @@ dependencies:
   path: ^1.9.1
   lottie: ^3.3.1
   share_plus: ^10.1.4
-  on_audio_query: ^2.9.0
   package_info_plus: ^8.1.2
   webview_flutter: ^4.14.1
   webview_flutter_android: ^4.14.1

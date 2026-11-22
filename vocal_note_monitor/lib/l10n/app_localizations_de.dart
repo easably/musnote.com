@@ -167,7 +167,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tabFiles => 'Dateien';
 
   @override
-  String get tabLibrary => 'Mediathek';
+  String get tabFromShare => 'Teilen';
+
+  @override
+  String get fromShareTitle => 'Aus Sprachmemos';
+
+  @override
+  String get fromShareBody =>
+      'Diese Aufnahmen bleiben in Sprachmemos. Eine schicken Sie mit Teilen hierher. Die Datei ist m4a, MusNote öffnet sie schon.';
+
+  @override
+  String get fromShareStep1 => 'Öffnen Sie die Aufnahme in Sprachmemos.';
+
+  @override
+  String get fromShareStep2 =>
+      'Tippen Sie auf Teilen und dann auf In Dateien sichern.';
+
+  @override
+  String get fromShareStep3 =>
+      'Öffnen Sie hier den Tab Dateien und wählen Sie die Aufnahme.';
+
+
 
   @override
   String get needSource => 'Andere Quelle nötig?';
@@ -194,21 +214,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get openingAudio => 'Audio auf dem Telefon wird geöffnet…';
 
-  @override
-  String get appleHint =>
-      'Apple-Music-Titel sind geschützt und lassen sich nicht öffnen. Eigene Audiodateien und ungeschützte Käufe gehen.';
 
-  @override
-  String get noAudioAccess => 'Kein Zugriff auf Audio auf diesem Telefon.';
 
-  @override
-  String get libraryEmpty => 'Keine Titel in der Mediathek.';
 
-  @override
-  String get libraryDenied => 'Zugriff auf die Mediathek ist aus.';
 
-  @override
-  String get openSettings => 'Einstellungen öffnen';
 
   @override
   String mailSubject(String chip) {
@@ -459,8 +468,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get sourceFile => 'Datei';
 
-  @override
-  String get sourceLibrary => 'Mediathek';
 
   @override
   String get monitorSaved => 'Aufnahme gespeichert';

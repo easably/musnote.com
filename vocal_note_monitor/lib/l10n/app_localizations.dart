@@ -414,11 +414,43 @@ abstract class AppLocalizations {
   /// **'Files'**
   String get tabFiles;
 
-  /// No description provided for @tabLibrary.
+  /// No description provided for @tabFromShare.
   ///
   /// In en, this message translates to:
-  /// **'Library'**
-  String get tabLibrary;
+  /// **'Share'**
+  String get tabFromShare;
+
+  /// No description provided for @fromShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'From Voice Memos'**
+  String get fromShareTitle;
+
+  /// No description provided for @fromShareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Those recordings stay in Voice Memos. Send one here with Share. The file is m4a, and MusNote already opens it.'**
+  String get fromShareBody;
+
+  /// No description provided for @fromShareStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the recording in Voice Memos.'**
+  String get fromShareStep1;
+
+  /// No description provided for @fromShareStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Share, then Save to Files.'**
+  String get fromShareStep2;
+
+  /// No description provided for @fromShareStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Files tab here and choose that recording.'**
+  String get fromShareStep3;
+
+
 
   /// No description provided for @needSource.
   ///
@@ -468,35 +500,10 @@ abstract class AppLocalizations {
   /// **'Opening audio on this phone…'**
   String get openingAudio;
 
-  /// No description provided for @appleHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Music songs are protected and will not open. Your own audio files and unprotected purchases will.'**
-  String get appleHint;
 
-  /// No description provided for @noAudioAccess.
-  ///
-  /// In en, this message translates to:
-  /// **'No access to audio on this phone.'**
-  String get noAudioAccess;
 
-  /// No description provided for @libraryEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'No songs in the media library.'**
-  String get libraryEmpty;
 
-  /// No description provided for @libraryDenied.
-  ///
-  /// In en, this message translates to:
-  /// **'Media library access is off.'**
-  String get libraryDenied;
 
-  /// No description provided for @openSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Open settings'**
-  String get openSettings;
 
   /// No description provided for @mailSubject.
   ///
@@ -918,11 +925,6 @@ abstract class AppLocalizations {
   /// **'File'**
   String get sourceFile;
 
-  /// No description provided for @sourceLibrary.
-  ///
-  /// In en, this message translates to:
-  /// **'Library'**
-  String get sourceLibrary;
 
   /// No description provided for @monitorSaved.
   ///

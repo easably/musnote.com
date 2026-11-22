@@ -166,7 +166,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tabFiles => 'File';
 
   @override
-  String get tabLibrary => 'Libreria';
+  String get tabFromShare => 'Condividi';
+
+  @override
+  String get fromShareTitle => 'Da Memo Vocali';
+
+  @override
+  String get fromShareBody =>
+      'Quelle registrazioni restano in Memo Vocali. Mandane una qui con Condividi. Il file è m4a e MusNote lo apre già.';
+
+  @override
+  String get fromShareStep1 => 'Apri la registrazione in Memo Vocali.';
+
+  @override
+  String get fromShareStep2 => 'Tocca Condividi, poi Salva in File.';
+
+  @override
+  String get fromShareStep3 =>
+      'Apri qui la scheda File e scegli quella registrazione.';
+
+
 
   @override
   String get needSource => 'Ti serve un’altra fonte?';
@@ -193,21 +212,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get openingAudio => 'Apertura dell’audio sul telefono…';
 
-  @override
-  String get appleHint =>
-      'I brani di Apple Music sono protetti e non si aprono. Vanno bene i tuoi file e gli acquisti senza protezione.';
 
-  @override
-  String get noAudioAccess => 'Nessun accesso all’audio del telefono.';
 
-  @override
-  String get libraryEmpty => 'Nessun brano nella libreria.';
 
-  @override
-  String get libraryDenied => 'L’accesso alla libreria è disattivato.';
 
-  @override
-  String get openSettings => 'Apri impostazioni';
 
   @override
   String mailSubject(String chip) {
@@ -456,8 +464,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get sourceFile => 'File';
 
-  @override
-  String get sourceLibrary => 'Libreria';
 
   @override
   String get monitorSaved => 'Registrazione salvata';

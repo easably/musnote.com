@@ -166,7 +166,26 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabFiles => 'Файлы';
 
   @override
-  String get tabLibrary => 'Медиатека';
+  String get tabFromShare => 'Поделиться';
+
+  @override
+  String get fromShareTitle => 'Из «Диктофона»';
+
+  @override
+  String get fromShareBody =>
+      'Эти записи остаются в «Диктофоне». Одну можно отправить сюда через «Поделиться». Файл будет m4a, MusNote его уже открывает.';
+
+  @override
+  String get fromShareStep1 => 'Откройте запись в «Диктофоне».';
+
+  @override
+  String get fromShareStep2 =>
+      'Нажмите «Поделиться», затем «Сохранить в Файлы».';
+
+  @override
+  String get fromShareStep3 => 'На вкладке «Файлы» выберите эту запись.';
+
+
 
   @override
   String get needSource => 'Нужен другой источник?';
@@ -193,21 +212,10 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get openingAudio => 'Открываем аудио на телефоне…';
 
-  @override
-  String get appleHint =>
-      'Песни из Apple Music защищены и не открываются. Подойдут ваши аудиофайлы и купленные треки без защиты.';
 
-  @override
-  String get noAudioAccess => 'Нет доступа к аудио на телефоне.';
 
-  @override
-  String get libraryEmpty => 'В медиатеке нет песен.';
 
-  @override
-  String get libraryDenied => 'Доступ к медиатеке выключен.';
 
-  @override
-  String get openSettings => 'Открыть настройки';
 
   @override
   String mailSubject(String chip) {
@@ -461,8 +469,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get sourceFile => 'Файл';
 
-  @override
-  String get sourceLibrary => 'Медиатека';
 
   @override
   String get monitorSaved => 'Запись сохранена';

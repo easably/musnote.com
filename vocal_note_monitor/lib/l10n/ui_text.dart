@@ -36,8 +36,6 @@ String sourceName(AppLocalizations l, RecordingSource source) {
       return l.sourceMic;
     case RecordingSource.file:
       return l.sourceFile;
-    case RecordingSource.library:
-      return l.sourceLibrary;
   }
 }
 

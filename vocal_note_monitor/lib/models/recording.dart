@@ -1,6 +1,6 @@
 import 'stem_notes.dart';
 
-enum RecordingSource { mic, file, library }
+enum RecordingSource { mic, file }
 
 enum RecordingStatus { raw, reading, ready }
 
@@ -75,7 +75,7 @@ class Recording {
     return Recording(
       id: json['id'] as String,
       name: json['name'] as String? ?? 'audio',
-      source: RecordingSource.values.byName(json['source'] as String? ?? 'file'),
+      source: _sourceFromJson(json['source'] as String?),
       duration: Duration(milliseconds: (json['duration_ms'] as num?)?.round() ?? 0),
       createdAt: DateTime.parse(json['created_at'] as String),
       status: RecordingStatus.values.byName(json['status'] as String? ?? 'raw'),
@@ -97,6 +97,14 @@ class Recording {
     'stems': [for (final stem in stems) stem.toJson()],
     'selected_stem_id': selectedStemId,
     'error': error,
+  };
+}
+
+/// Old saves stored "library" for the media library. Those open as a file.
+RecordingSource _sourceFromJson(String? raw) {
+  return switch (raw) {
+    'mic' => RecordingSource.mic,
+    _ => RecordingSource.file,
   };
 }
 
