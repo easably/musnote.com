@@ -1,0 +1,240 @@
+{
+  "settings": "Settings",
+  "noteNames": "Note names",
+  "noteLetters": "C D E",
+  "noteSolfege": "До Ре Ми",
+  "about": "About",
+  "version": "Version",
+  "privacy": "Privacy policy",
+  "writeUs": "Write to us",
+  "howItWorks": "How it works",
+  "language": "Language",
+  "languageAuto": "System language",
+  "languageAutoNamed": "System language ({name})",
+  "@languageAutoNamed": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "tools": "Tools",
+  "toolsTooltip": "Tools",
+  "settingsTooltip": "Settings",
+  "toolAudio": "Audio to notes",
+  "toolAudioHint": "Recordings on this phone",
+  "toolMonitor": "Voice monitor",
+  "toolMonitorHint": "Live pitch",
+  "groupInApp": "In the app",
+  "groupChords": "Chords",
+  "groupVoice": "Voice",
+  "toolPiano": "Ear: piano",
+  "toolPianoHint": "Hear a note and find it",
+  "toolChart": "Chord chart",
+  "toolChartHint": "Look up a chord",
+  "toolClock": "Chord clock",
+  "toolClockHint": "Chords around the circle",
+  "toolHops": "Steps 4+3 / 3+4",
+  "toolHopsHint": "Move by chord steps",
+  "toolPatterns": "CFG and iDEA",
+  "toolPatternsHint": "Two chord patterns",
+  "toolSpeech": "Audio to text",
+  "toolSpeechHint": "Words from a recording",
+  "toolSlow": "Slow pronunciation",
+  "toolSlowHint": "Hear a phrase slowly",
+  "toolOctave": "Find my octave",
+  "toolOctaveHint": "Your voice range",
+  "toolShadow": "Shadow a phrase",
+  "toolShadowHint": "Repeat after the voice",
+  "webMark": "web",
+  "toolOffline": "This page did not open. A connection is needed.",
+  "toolRetry": "Try again",
+  "onbTitle": "From sound to notes on the keys",
+  "onbLine": "🎙 Sound → ♪ Notes → 🎹 Keys",
+  "onbBody": "Record a sound or pick a file. We read the notes, and you can play them on the keys.",
+  "start": "Start",
+  "addSound": "Add a sound",
+  "addFormats": "mp3, wav, m4a, flac, aac, ogg, webm · up to 100 MB · ✓ free",
+  "tabRecord": "Record",
+  "tabFiles": "Files",
+  "tabLibrary": "Library",
+  "needSource": "Need another source?",
+  "needSourceHint": "Tell us where you want to get music from — we will add the most requested",
+  "chipYoutube": "YouTube link",
+  "chipVideo": "Video from gallery",
+  "chipOther": "Other…",
+  "pickFile": "Choose a file",
+  "openFiles": "Open Files",
+  "openingAudio": "Opening audio on this phone…",
+  "appleHint": "Apple Music songs are protected and will not open. Your own audio files and unprotected purchases will.",
+  "noAudioAccess": "No access to audio on this phone.",
+  "libraryEmpty": "No songs in the media library.",
+  "libraryDenied": "Media library access is off.",
+  "openSettings": "Open settings",
+  "mailSubject": "MusNote: I want a source — {chip}",
+  "@mailSubject": {
+    "placeholders": {
+      "chip": {
+        "type": "String"
+      }
+    }
+  },
+  "mailBody": "App {version} ({system})",
+  "@mailBody": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "system": {
+        "type": "String"
+      }
+    }
+  },
+  "micNeeded": "Microphone access is needed.",
+  "stop": "Stop",
+  "recordingWord": "Recording",
+  "emptyTitle": "Nothing here yet",
+  "emptyBody": "Tap + to record a sound or pick a file.",
+  "deleteTitle": "Delete this recording?",
+  "deleteBody": "“{name}” and its file will be deleted from this phone.",
+  "@deleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "keep": "Keep",
+  "delete": "Delete",
+  "statusRaw": "Not processed",
+  "statusReading": "Reading notes…",
+  "statusReady": "Notes ready",
+  "tapForNotes": "Tap to get the notes",
+  "recordingCount": "{count, plural, one{{count} recording · stored on this phone} other{{count} recordings · stored on this phone}}",
+  "@recordingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordingGone": "Recording deleted",
+  "serverReads": "The MusNote server will read the notes and lay them on the keys. ✓ free",
+  "getNotes": "Get notes",
+  "noNotes": "No notes found",
+  "stemsHeading": "Tracks",
+  "comingSoon": "Coming soon: sheet music (PDF) and MusicXML",
+  "reading": "Reading notes…",
+  "playTrainer": "Play in the trainer",
+  "trainerSub": "{stem} · falling notes · turn the phone",
+  "@trainerSub": {
+    "placeholders": {
+      "stem": {
+        "type": "String"
+      }
+    }
+  },
+  "foundNotes": "{count, plural, one{Found {count} note · {span} · from {low} to {high}} other{Found {count} notes · {span} · from {low} to {high}}}",
+  "@foundNotes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "span": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      }
+    }
+  },
+  "stemNotes": "{count, plural, one{{count} note · {low}–{high}} other{{count} notes · {low}–{high}}}",
+  "@stemNotes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      }
+    }
+  },
+  "take": "Export",
+  "allStems": "All tracks",
+  "trackWord": "Track",
+  "midiTitle": "MIDI file",
+  "midiOne": "GarageBand, MuseScore, Synthesia",
+  "midiAll": "One file, each track is its own part",
+  "pdfTitle": "Letter sheet",
+  "pdfHint": "Printable PDF · C E G…",
+  "txtTitle": "Notes as text",
+  "txtHint": "Phrases, no octave number",
+  "copyTitle": "Copy notes",
+  "copyHint": "To the clipboard",
+  "copied": "Notes copied",
+  "buildFailed": "Could not build the file",
+  "share": "Share",
+  "saveDownloads": "Save to Downloads",
+  "saveFiles": "Save to Files",
+  "sendOut": "Send…",
+  "savedAs": "Saved: {name}",
+  "@savedAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "saveFailed": "Could not save the file",
+  "playFailed": "Could not play",
+  "first90": "The first 90 seconds play",
+  "fileFallback": "recording",
+  "errType": "Need an mp3, wav, m4a, flac, aac, ogg, or webm file.",
+  "errTooBig": "The file is over 100 MB.",
+  "errEmpty": "The file is empty.",
+  "errNetwork": "Could not reach the server. Check the network and try again.",
+  "errRead": "Could not read the notes. Try again.",
+  "errBad": "The server returned an unexpected reply.",
+  "errStems": "The server did not return six tracks.",
+  "turnPhone": "Turn the phone",
+  "turn": "Turn",
+  "tapHint": "Tap — pause, speed, exit",
+  "stemVocals": "Vocals",
+  "stemPiano": "Piano",
+  "stemGuitar": "Guitar",
+  "stemBass": "Bass",
+  "stemOther": "Other",
+  "stemDrums": "Drums",
+  "quietDrums": "drums — no notes",
+  "quietSilent": "quiet — no notes",
+  "sourceMic": "Recording",
+  "sourceFile": "File",
+  "sourceLibrary": "Library",
+  "monitorSaved": "Recording saved",
+  "monitorLoaded": "Recording loaded",
+  "monitorSave": "Save",
+  "monitorLoad": "Load",
+  "monitorIdeas": "Ideas (preview)",
+  "cancel": "Cancel",
+  "langEn": "English",
+  "langRu": "Русский",
+  "langEs": "Español",
+  "langDe": "Deutsch",
+  "langFr": "Français",
+  "langIt": "Italiano",
+  "langPl": "Polski",
+  "storeReviewBannerTitle": "Songs turned into notes: {count}",
+  "@storeReviewBannerTitle": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "storeReviewBannerSubtitle": "If MusNote helps you hear the music, leave a short review.",
+  "storeReviewBannerAction": "Leave a review",
+  "storeReviewBannerThanks": "✓ Thank you!",
+  "storeReviewBannerClose": "Hide"
+}

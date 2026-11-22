@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Прототип мобильного приложения · MusNote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<!-- Один источник стиля с сайтом: design/tokens/musnote.tokens.json → design-tokens.css -->
+<link rel="stylesheet" href="../../web/assets/css/design-tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--mn-font-sans); color: var(--mn-ink); background: #e9efec; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; }
+  .layout { display: grid; grid-template-columns: 360px 1fr; min-height: 100vh; }
+
+  /* ---------- control panel ---------- */
+  .ctrl { background: #fff; border-right: 1px solid var(--mn-line); padding: 26px 24px 40px; overflow-y: auto; max-height: 100vh; position: sticky; top: 0; }
+  .ctrl h1 { font-family: var(--mn-font-display); font-size: 1.7rem; line-height: 1.15; margin: 6px 0 8px; }
+  .eyebrow { display: inline-block; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--mn-green-700); background: var(--mn-green-50); padding: 4px 10px; border-radius: 999px; }
+  .ctrl p { color: var(--mn-ink-soft); font-size: .92rem; line-height: 1.5; margin: 0 0 14px; }
+  .vgroup { border-top: 1px solid var(--mn-line); padding: 14px 0; }
+  .vgroup h3 { margin: 0 0 3px; font-size: .95rem; display: flex; gap: 8px; align-items: baseline; }
+  .vgroup h3 code { font-size: .75rem; color: var(--mn-green-700); background: var(--mn-green-50); padding: 1px 6px; border-radius: 6px; }
+  .vgroup small { color: var(--mn-muted); display: block; margin-bottom: 8px; font-size: .8rem; }
+  .opts { display: grid; gap: 6px; }
+  .opt { text-align: left; border: 1.5px solid var(--mn-line); background: #fff; border-radius: 12px; padding: 8px 11px; cursor: pointer; font-size: .86rem; line-height: 1.3; }
+  .opt b { display: block; font-size: .9rem; }
+  .opt span { color: var(--mn-muted); }
+  .opt.on { border-color: var(--mn-ink); box-shadow: 0 0 0 3px var(--mn-green-50); }
+  .jump { display: flex; flex-wrap: wrap; gap: 6px; }
+  .jump button { border: 1px solid var(--mn-line); background: var(--mn-surface-2); border-radius: 999px; padding: 5px 10px; font-size: .8rem; cursor: pointer; }
+  .pick { margin-top: 14px; background: var(--mn-surface-2); border: 1px dashed #b9d8cb; border-radius: 12px; padding: 10px 12px; font-size: .82rem; color: var(--mn-ink-soft); }
+  .pick code { font-weight: 700; color: var(--mn-ink); }
+
+  /* ---------- stage + phone ---------- */
+  .stage { display: grid; place-items: center; padding: 30px 20px 60px; gap: 16px; align-content: center; }
+  .phone { --pw: 390px; --ph: 800px; width: var(--pw); height: var(--ph); background: #0d1512; border-radius: 54px; padding: 12px; box-shadow: 0 40px 80px rgba(15,31,26,.25), inset 0 0 0 2px #2a3a34; position: relative; transition: width .55s var(--mn-ease), height .55s var(--mn-ease); }
+  .phone.land { width: var(--ph); height: var(--pw); }
+  .device { width: 100%; height: 100%; border-radius: 42px; overflow: hidden; background: var(--mn-surface-2); position: relative; }
+  .island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 112px; height: 32px; background: #000; border-radius: 20px; z-index: 50; transition: .4s; }
+  .phone.land .island { top: 50%; left: 11px; transform: translateY(-50%); width: 32px; height: 112px; }
+  .stage-actions { display: flex; gap: 8px; }
+  .sbtn { border: 1px solid var(--mn-line); background: #fff; border-radius: 12px; padding: 9px 14px; font-weight: 600; cursor: pointer; }
+
+  .scr { position: absolute; inset: 0; display: none; flex-direction: column; background: var(--mn-surface-2); }
+  .scr.on { display: flex; animation: slide .28s var(--mn-ease); }
+  @keyframes slide { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+  .status { height: 50px; flex: none; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 30px 6px; font-size: .82rem; font-weight: 700; }
+  .appbar { display: flex; align-items: center; gap: 6px; padding: 4px 10px 8px 18px; flex: none; }
+  .appbar h2 { margin: 0; flex: 1; font-size: 1.15rem; font-weight: 700; }
+  .appbar h2.big { font-family: var(--mn-font-display); font-size: 1.75rem; }
+  .ib { width: 42px; height: 42px; border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; cursor: pointer; color: var(--mn-ink); }
+  .ib:hover { background: rgba(15,31,26,.06); }
+  .ib svg { width: 24px; height: 24px; }
+  .body { flex: 1; overflow-y: auto; padding: 4px 16px 120px; }
+  .sub { color: var(--mn-muted); font-size: .85rem; margin: 0 4px 10px; }
+
+  /* list A — rows */
+  .rows { background: #fff; border-radius: 20px; border: 1px solid var(--mn-line); overflow: hidden; }
+  .row { display: flex; gap: 12px; align-items: center; padding: 13px 14px; border-bottom: 1px solid var(--mn-line); cursor: pointer; }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: var(--mn-surface-2); }
+  .ava { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--mn-green-50); color: var(--mn-green-700); }
+  .ava svg { width: 22px; height: 22px; }
+  .row .t { flex: 1; min-width: 0; }
+  .row b { display: block; font-size: .98rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row small { color: var(--mn-muted); font-size: .8rem; }
+  .chip { font-size: .72rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+  .chip.ready { background: var(--mn-green-50); color: var(--mn-green-700); }
+  .chip.new { background: #eef3f1; color: var(--mn-ink-soft); }
+  .chip.busy { background: #fef3c7; color: #b45309; }
+  /* list B — cards */
+  .cards { display: grid; gap: 12px; }
+  .card { background: #fff; border: 1px solid var(--mn-line); border-radius: 20px; padding: 14px; cursor: pointer; box-shadow: var(--mn-shadow-soft); }
+  .card .top { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .card .top .t { flex: 1; min-width: 0; }
+  .card b { display: block; } .card small { color: var(--mn-muted); font-size: .8rem; }
+  .thumb { height: 54px; border-radius: 12px; background: var(--mn-surface-2); overflow: hidden; }
+  .thumb canvas { width: 100%; height: 100%; display: block; }
+  .thumb.empty { display: grid; place-items: center; color: var(--mn-muted); font-size: .8rem; border: 1px dashed var(--mn-line); background: #fff; }
+  [data-v-list="a"] .cards, [data-v-list="b"] .rows { display: none; }
+
+  .fab { position: absolute; right: 22px; bottom: 34px; width: 66px; height: 66px; border-radius: 50%; border: 0; background: var(--mn-green-500); color: #fff; display: grid; place-items: center; box-shadow: 0 14px 30px rgba(14,159,110,.4); cursor: pointer; z-index: 5; transition: transform .15s; }
+  .fab:active { transform: scale(.94); }
+  .fab svg { width: 30px; height: 30px; }
+  .empty-list { text-align: center; padding: 60px 30px; color: var(--mn-muted); }
+
+  /* sheet / dialog */
+  .scrim { position: absolute; inset: 0; background: rgba(15,31,26,.42); z-index: 20; display: none; }
+  .scrim.on { display: block; animation: fade .2s; }
+  @keyframes fade { from { opacity: 0; } }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 28px 28px 0 0; padding: 10px 18px 34px; z-index: 21; display: none; }
+  .sheet.on { display: block; animation: up .28s var(--mn-ease); }
+  @keyframes up { from { transform: translateY(40%); opacity: 0; } }
+  .grab { width: 38px; height: 5px; border-radius: 9px; background: #d4ddd9; margin: 0 auto 12px; }
+  .sheet h3 { margin: 0 0 4px; font-size: 1.2rem; }
+  .sheet .hint { color: var(--mn-muted); font-size: .82rem; margin: 0 0 14px; }
+  .tabs { display: flex; background: #eef3f1; border-radius: 14px; padding: 4px; margin-bottom: 14px; }
+  .tabs button { flex: 1; border: 0; background: transparent; padding: 9px 6px; border-radius: 10px; font-weight: 600; font-size: .88rem; cursor: pointer; color: var(--mn-ink-soft); }
+  .tabs button.on { background: #fff; color: var(--mn-ink); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .tabpane { display: none; min-height: 210px; } .tabpane.on { display: block; }
+  .bigmic { width: 96px; height: 96px; border-radius: 50%; border: 0; background: #ef4444; color: #fff; display: grid; place-items: center; margin: 22px auto 12px; cursor: pointer; box-shadow: 0 12px 28px rgba(239,68,68,.35); }
+  .bigmic svg { width: 40px; height: 40px; }
+  .center { text-align: center; } .muted { color: var(--mn-muted); font-size: .85rem; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--mn-line); background: #fff; border-radius: 14px; padding: 12px 16px; font-weight: 700; cursor: pointer; }
+  .btn.primary { background: var(--mn-ink); color: #fff; border-color: var(--mn-ink); }
+  .btn.green { background: var(--mn-green-500); color: #fff; border-color: var(--mn-green-500); }
+  .btn.block { width: 100%; }
+  .btn svg { width: 20px; height: 20px; }
+  .drop { border: 2px dashed #b9d8cb; border-radius: 18px; padding: 26px 16px; text-align: center; display: grid; gap: 10px; justify-items: center; }
+  .free { display: inline-flex; gap: 6px; font-size: .74rem; font-weight: 700; color: var(--mn-green-700); background: var(--mn-green-50); border-radius: 999px; padding: 3px 9px; }
+  .libitem { display: flex; align-items: center; gap: 10px; padding: 10px 4px; border-bottom: 1px solid var(--mn-line); cursor: pointer; }
+  .libitem:last-child { border: 0; }
+  .libitem .ava { width: 36px; height: 36px; }
+  .libitem .t { flex: 1; } .libitem small { color: var(--mn-muted); }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .tile { border: 1.5px solid var(--mn-line); border-radius: 18px; background: #fff; padding: 16px 8px; display: grid; gap: 8px; justify-items: center; cursor: pointer; font-weight: 700; font-size: .88rem; }
+  .tile:hover { border-color: var(--mn-ink); }
+  .tile .ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; }
+  .tile .ic svg { width: 26px; height: 26px; }
+  .tile small { color: var(--mn-muted); font-weight: 500; font-size: .74rem; }
+  .ic.rec { background: #fee2e2; color: #dc2626; } .ic.file { background: #dbeafe; color: #1d4ed8; } .ic.lib { background: #fef3c7; color: #b45309; }
+  [data-v-add="a"] .add-b, [data-v-add="a"] .add-c,
+  [data-v-add="b"] .add-a, [data-v-add="b"] .add-c,
+  [data-v-add="c"] .add-a, [data-v-add="c"] .add-b { display: none !important; }
+  .fullsheet { position: absolute; inset: 0; background: #fff; z-index: 22; display: none; flex-direction: column; }
+  .fullsheet.on { display: flex; animation: up .3s var(--mn-ease); }
+
+  /* recorder */
+  .rec-body { flex: 1; display: grid; align-content: center; justify-items: center; gap: 18px; padding: 20px; }
+  .rec-time { font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .rec-wave { display: flex; gap: 4px; align-items: center; height: 90px; }
+  .rec-wave i { width: 6px; border-radius: 6px; background: var(--mn-green-500); transition: height .12s; }
+  .stopbtn { width: 84px; height: 84px; border-radius: 50%; border: 6px solid #fecaca; background: #ef4444; display: grid; place-items: center; cursor: pointer; }
+  .stopbtn i { width: 26px; height: 26px; border-radius: 6px; background: #fff; display: block; }
+
+  /* detail */
+  .hero { background: #fff; border: 1px solid var(--mn-line); border-radius: 22px; padding: 16px; margin-bottom: 12px; }
+  .hero .meta { display: flex; gap: 12px; align-items: center; }
+  .hero h3 { margin: 0; font-size: 1.15rem; }
+  .player { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+  .pbtn { width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--mn-ink); color: #fff; display: grid; place-items: center; cursor: pointer; flex: none; }
+  .pbtn svg { width: 18px; height: 18px; }
+  .track { flex: 1; height: 6px; border-radius: 9px; background: #e3ebe7; position: relative; overflow: hidden; }
+  .track i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--mn-green-500); border-radius: 9px; }
+  .time { font-size: .8rem; color: var(--mn-muted); font-variant-numeric: tabular-nums; }
+  .section-t { font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--mn-muted); margin: 18px 4px 8px; }
+  .process { background: #fff; border: 1px solid var(--mn-line); border-radius: 22px; padding: 18px; text-align: center; }
+  .process p { color: var(--mn-ink-soft); font-size: .9rem; margin: 0 0 14px; }
+  .busyline { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 6px 0; font-weight: 600; color: var(--mn-ink-soft); }
+  .busyline .lot { width: 240px; height: 96px; }
+  .summary { font-size: .9rem; color: var(--mn-ink-soft); margin: 2px 4px 10px; }
+  .dl { background: #fff; border: 1px solid var(--mn-line); border-radius: 20px; overflow: hidden; }
+  .dlrow { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--mn-line); cursor: pointer; }
+  .dlrow:last-child { border: 0; }
+  .dlrow:hover { background: var(--mn-surface-2); }
+  .dlrow .fmt { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font-weight: 800; font-size: .7rem; flex: none; }
+  .dlrow .t { flex: 1; } .dlrow b { display: block; font-size: .95rem; } .dlrow small { color: var(--mn-muted); font-size: .78rem; }
+  .dlrow svg { width: 20px; height: 20px; color: var(--mn-muted); }
+  .fmt.midi { background: #dcfce7; color: var(--mn-green-700); } .fmt.pdf { background: #fef3c7; color: #b45309; } .fmt.txt { background: #dbeafe; color: #1d4ed8; } .fmt.copy { background: #f1f5f9; color: var(--mn-ink-soft); } .fmt.soon { background: #f1f5f9; color: #94a3b8; }
+  .soon .dlrow { cursor: default; opacity: .75; } .soon .dlrow:hover { background: none; }
+  .tag-soon { font-size: .68rem; font-weight: 800; color: #64748b; background: #f1f5f9; border-radius: 999px; padding: 3px 8px; }
+  /* trainer button variants */
+  .train-a { display: flex; align-items: center; gap: 14px; width: 100%; border: 0; border-radius: 22px; padding: 16px 18px; background: linear-gradient(135deg, var(--mn-green-400), var(--mn-green-700)); color: #fff; cursor: pointer; text-align: left; box-shadow: 0 16px 34px rgba(14,159,110,.35); margin: 4px 0 6px; }
+  .train-a .pi { width: 54px; height: 54px; border-radius: 16px; background: rgba(255,255,255,.18); display: grid; place-items: center; flex: none; }
+  .train-a .pi svg { width: 32px; height: 32px; }
+  .train-a b { display: block; font-size: 1.12rem; } .train-a small { opacity: .9; }
+  .train-b { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 30px; background: linear-gradient(to top, #fff 70%, rgba(255,255,255,0)); z-index: 4; }
+  .train-b .btn { width: 100%; padding: 16px; font-size: 1.05rem; border-radius: 18px; box-shadow: 0 12px 28px rgba(14,159,110,.35); }
+  .train-c { position: absolute; right: 18px; bottom: 32px; z-index: 4; display: flex; align-items: center; gap: 10px; }
+  .train-c .lbl { background: var(--mn-ink); color: #fff; font-weight: 700; font-size: .85rem; padding: 8px 12px; border-radius: 12px; }
+  .train-c button { width: 74px; height: 74px; border-radius: 50%; border: 0; background: radial-gradient(circle at 30% 30%, var(--mn-green-400), var(--mn-green-700)); color: #fff; display: grid; place-items: center; box-shadow: 0 16px 32px rgba(14,159,110,.45); cursor: pointer; }
+  .train-c svg { width: 36px; height: 36px; }
+  .train-a, .train-b, .train-c { display: none; }
+  [data-v-train="a"] .ready .train-a { display: flex; }
+  [data-v-train="b"] .ready ~ .train-b, [data-v-train="b"] .train-b.show { display: block; }
+  [data-v-train="c"] .train-c.show { display: flex; }
+
+  /* trainer (landscape) */
+  .trainer { background: #0f1f1a; }
+  .trainer canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .tbar { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 56px; color: #fff; z-index: 3; background: linear-gradient(to bottom, rgba(15,31,26,.9), rgba(15,31,26,0)); transition: opacity .25s; }
+  .tbar .ib { color: #fff; } .tbar .ib:hover { background: rgba(255,255,255,.1); }
+  .tbar b { flex: 1; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tseg { display: inline-flex; background: rgba(255,255,255,.12); border-radius: 999px; padding: 3px; }
+  .tseg button { border: 0; background: transparent; color: #cfe; font-size: .78rem; padding: 5px 9px; border-radius: 999px; cursor: pointer; }
+  .tseg button.on { background: #fff; color: var(--mn-ink); font-weight: 700; }
+  .tprog { position: absolute; left: 56px; right: 18px; top: 60px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.15); z-index: 3; transition: opacity .25s; }
+  .tprog i { position: absolute; inset: 0 auto 0 0; background: var(--mn-green-400); border-radius: 4px; }
+  [data-v-trainer="a"] .trainer:not(.ui) .tbar, [data-v-trainer="a"] .trainer:not(.ui) .tprog { opacity: 0; pointer-events: none; }
+  .tap-hint { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); color: rgba(255,255,255,.55); font-size: .85rem; z-index: 2; pointer-events: none; transition: opacity .4s; }
+  [data-v-trainer="b"] .tap-hint { display: none; }
+  .rotate-ask { position: absolute; inset: 0; background: rgba(15,31,26,.94); color: #fff; z-index: 6; display: none; place-items: center; text-align: center; padding: 30px; }
+  .rotate-ask.on { display: grid; }
+  .rotate-ask svg { width: 70px; height: 70px; margin-bottom: 12px; animation: tilt 1.6s ease-in-out infinite; }
+  @keyframes tilt { 0%, 30% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+
+  /* tools */
+  .tgroup { margin-bottom: 14px; }
+  .tlist { background: #fff; border: 1px solid var(--mn-line); border-radius: 20px; overflow: hidden; }
+  .titem { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--mn-line); cursor: pointer; }
+  .titem:last-child { border: 0; }
+  .titem .ava { width: 40px; height: 40px; font-weight: 800; font-size: .8rem; }
+  .titem .t { flex: 1; } .titem b { display: block; font-size: .95rem; } .titem small { color: var(--mn-muted); font-size: .78rem; }
+  .src { font-size: .66rem; font-weight: 800; padding: 3px 7px; border-radius: 999px; white-space: nowrap; }
+  .src.app { background: var(--mn-green-50); color: var(--mn-green-700); } .src.web { background: #eef2ff; color: #4338ca; }
+  .tgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tcell { background: #fff; border: 1px solid var(--mn-line); border-radius: 20px; padding: 14px; display: grid; gap: 8px; cursor: pointer; align-content: start; min-height: 120px; }
+  .tcell .ava { width: 40px; height: 40px; font-weight: 800; font-size: .8rem; }
+  .tcell b { font-size: .92rem; line-height: 1.2; } .tcell small { color: var(--mn-muted); font-size: .74rem; line-height: 1.3; }
+  [data-v-tools="a"] .tgrid-wrap, [data-v-tools="b"] .tlist-wrap { display: none; }
+
+  /* settings */
+  .set { background: #fff; border: 1px solid var(--mn-line); border-radius: 20px; overflow: hidden; margin-bottom: 14px; }
+  .setrow { display: flex; justify-content: space-between; align-items: center; padding: 14px; border-bottom: 1px solid var(--mn-line); gap: 10px; }
+  .setrow:last-child { border: 0; }
+  .setrow span { color: var(--mn-muted); font-size: .88rem; }
+  .sw { width: 46px; height: 28px; border-radius: 99px; background: var(--mn-green-500); position: relative; flex: none; }
+  .sw::after { content: ""; position: absolute; right: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; }
+  .sw.off { background: #cfd8d4; } .sw.off::after { right: auto; left: 3px; }
+
+  /* tracks */
+  .tracks { background: #fff; border: 1px solid var(--mn-line); border-radius: 20px; overflow: hidden; }
+  .trk { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--mn-line); cursor: pointer; }
+  .trk:last-child { border: 0; }
+  .trk .ava { width: 40px; height: 40px; font-size: 1.1rem; }
+  .trk .t { flex: 1; min-width: 0; } .trk b { display: block; font-size: .95rem; } .trk small { color: var(--mn-muted); font-size: .78rem; }
+  .trk .radio { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #c3d1cb; flex: none; }
+  .trk.sel { background: var(--mn-green-50); } .trk.sel .radio { border: 7px solid var(--mn-green-500); }
+  .trk.off { cursor: default; opacity: .55; } .trk.off .radio { visibility: hidden; }
+  .trk .bars { width: 54px; height: 22px; display: flex; gap: 2px; align-items: flex-end; flex: none; }
+  .trk .bars i { flex: 1; background: var(--mn-green-200); border-radius: 2px; }
+  .trk.sel .bars i { background: var(--mn-green-500); }
+  .sharebig { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 1.5px solid var(--mn-ink); background: #fff; border-radius: 18px; padding: 14px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 12px; }
+  .sharebig svg { width: 22px; height: 22px; }
+  .soonline { color: var(--mn-muted); font-size: .8rem; text-align: center; margin: 12px 8px 0; }
+  .scope { display: flex; background: #eef3f1; border-radius: 14px; padding: 4px; margin: 4px 0 12px; }
+  .scope button { flex: 1; border: 0; background: transparent; padding: 9px 6px; border-radius: 10px; font-weight: 600; font-size: .86rem; cursor: pointer; color: var(--mn-ink-soft); }
+  .scope button.on { background: #fff; color: var(--mn-ink); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .shareapps { display: flex; gap: 14px; overflow-x: auto; padding: 12px 2px 2px; }
+  .shareapps div { display: grid; justify-items: center; gap: 4px; font-size: .7rem; color: var(--mn-muted); flex: none; width: 58px; }
+  .shareapps i { width: 52px; height: 52px; border-radius: 14px; display: block; }
+
+  /* onboarding */
+  .onb { background: #fff; }
+  .onb-skip { position: absolute; left: 16px; top: 54px; border: 0; background: none; color: var(--mn-muted); font-weight: 600; cursor: pointer; z-index: 3; }
+  .lang-chip { position: absolute; right: 16px; top: 54px; z-index: 4; border: 1px solid var(--mn-line); background: #fff; color: var(--mn-muted); border-radius: 999px; padding: 6px 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .slides { flex: 1; position: relative; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; text-align: center; padding: 30px 28px 10px; gap: 14px; opacity: 0; transform: translateX(30px); transition: .4s var(--mn-ease); pointer-events: none; }
+  .slide.on { opacity: 1; transform: none; pointer-events: auto; }
+  .slide h2 { font-family: var(--mn-font-display); font-size: 1.75rem; line-height: 1.15; margin: 8px 0 0; }
+  .slide p { color: var(--mn-ink-soft); margin: 0; font-size: .98rem; line-height: 1.5; }
+  .visual { width: 300px; height: 220px; border-radius: 28px; background: var(--mn-surface-2); display: grid; place-items: center; overflow: hidden; position: relative; }
+  .visual canvas { width: 100%; height: 100%; display: block; }
+  .visual .lotbig { width: 280px; height: 112px; }
+  .stemchips { display: flex; gap: 5px; flex-wrap: nowrap; justify-content: center; position: absolute; bottom: 18px; left: 0; right: 0; }
+  .stemchips span { background: #fff; border: 1px solid var(--mn-line); border-radius: 999px; padding: 3px 8px; font-size: .72rem; font-weight: 700; animation: pop .5s var(--mn-ease) both; }
+  @keyframes pop { from { opacity: 0; transform: scale(.6); } }
+  .onb-foot { padding: 0 24px 40px; display: grid; gap: 14px; }
+  .dots { display: flex; justify-content: center; gap: 6px; }
+  .dots i { width: 8px; height: 8px; border-radius: 9px; background: #d4ddd9; transition: .3s; }
+  .dots i.on { width: 24px; background: var(--mn-green-500); }
+  .flow3 { display: flex; align-items: center; gap: 8px; justify-content: center; font-weight: 700; font-size: .9rem; }
+  .flow3 span { background: var(--mn-surface-2); border-radius: 12px; padding: 8px 10px; }
+  [data-v-onb="a"] .onb-b, [data-v-onb="b"] .onb-a { display: none !important; }
+
+  .shr { width: 40px; height: 40px; border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; cursor: pointer; color: var(--mn-ink-soft); flex: none; }
+  .shr:hover { background: var(--mn-surface-2); color: var(--mn-ink); }
+  .shr svg { width: 22px; height: 22px; }
+  .dlrow .chev { width: 18px; height: 18px; color: #b3c3bc; }
+  /* system share (iOS-like) */
+  .sys { background: #f2f2f7; border-radius: 16px 16px 0 0; padding: 10px 0 30px; }
+  .sys .file { display: flex; gap: 12px; align-items: center; padding: 6px 18px 14px; border-bottom: 1px solid #dcdce1; }
+  .sys .file .fmt { width: 44px; height: 44px; }
+  .sys .apps { display: flex; gap: 16px; padding: 14px 18px; overflow-x: auto; }
+  .sys .apps div { display: grid; justify-items: center; gap: 5px; font-size: .7rem; color: #3c3c43; flex: none; width: 60px; }
+  .sys .apps i { width: 56px; height: 56px; border-radius: 14px; display: block; }
+  .sys .acts { margin: 4px 14px 0; background: #fff; border-radius: 12px; overflow: hidden; }
+  .sys .acts div { padding: 13px 16px; border-bottom: 1px solid #e5e5ea; display: flex; justify-content: space-between; font-size: .95rem; cursor: pointer; }
+  .sys .acts div:last-child { border: 0; }
+  /* preview screen */
+  .pv-page { background: #fff; border-radius: 6px; box-shadow: 0 6px 24px rgba(0,0,0,.12); padding: 22px 20px; margin: 4px 2px 16px; }
+  .pv-page h4 { margin: 0; font-family: var(--mn-font-display); font-size: 1.1rem; }
+  .pv-page .meta { color: var(--mn-muted); font-size: .7rem; border-bottom: 2px solid var(--mn-ink); padding-bottom: 6px; margin-bottom: 12px; }
+  .pv-ph { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .pv-ph span { border: 1.2px solid #dfe8e4; border-radius: 6px; padding: 2px 6px; font-weight: 800; font-size: .95rem; }
+  .pv-ph span.ch { border-color: var(--mn-ink); }
+  .pv-txt { background: #fff; border: 1px solid var(--mn-line); border-radius: 14px; padding: 14px; font-family: ui-monospace, Menlo, monospace; font-size: .85rem; white-space: pre-wrap; line-height: 1.6; }
+  .pv-midi { background: #fff; border: 1px solid var(--mn-line); border-radius: 22px; padding: 22px; text-align: center; display: grid; gap: 14px; justify-items: center; }
+  .pv-midi .big { width: 84px; height: 84px; border-radius: 50%; border: 0; background: var(--mn-green-500); color: #fff; display: grid; place-items: center; cursor: pointer; box-shadow: 0 12px 26px rgba(14,159,110,.35); }
+  .pv-midi .big svg { width: 38px; height: 38px; }
+  .pv-note { color: var(--mn-muted); font-size: .8rem; text-align: center; margin-top: 10px; }
+  .askmore { margin-top: 14px; border-top: 1px solid var(--mn-line); padding-top: 12px; }
+  .askmore b { font-size: .9rem; } .askmore p { margin: 2px 0 8px; color: var(--mn-muted); font-size: .8rem; }
+  .askchips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .askchips button { border: 1px solid var(--mn-line); background: var(--mn-surface-2); border-radius: 999px; padding: 6px 11px; font-size: .8rem; font-weight: 600; cursor: pointer; }
+  .askchips button:hover { border-color: var(--mn-ink); }
+  .drm { font-size: .76rem; color: var(--mn-muted); background: var(--mn-surface-2); border-radius: 10px; padding: 8px 10px; margin-top: 10px; }
+  .toast { position: absolute; left: 50%; bottom: 120px; transform: translateX(-50%); background: var(--mn-ink); color: #fff; padding: 10px 16px; border-radius: 14px; font-size: .88rem; z-index: 60; opacity: 0; transition: .25s; pointer-events: none; white-space: nowrap; }
+  .toast.on { opacity: 1; }
+
+  @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } .ctrl { position: static; max-height: none; } .phone { transform: scale(.86); transform-origin: top center; } }
+</style>
+</head>
+<body data-v-onb="a" data-v-list="a" data-v-add="a" data-v-train="a" data-v-trainer="a" data-v-tools="a">
+
+<!-- Иконки (Material-канон + своя «инструменты») -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.3 7.3 0 0 0-1.69-.98l-.38-2.65A.49.49 0 0 0 14 2h-4a.49.49 0 0 0-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.49.49 0 0 0 .12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></symbol>
+    <!-- «Инструменты»: сетка 2×2, правый верхний квадрат — нота -->
+    <symbol id="i-tools" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></g><path fill="currentColor" d="M19.6 3.2v5.1a2.1 2.1 0 1 1-1.4-2V4.9l-2.8.6v4.1a2.1 2.1 0 1 1-1.4-2V4.4z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5.3-3a5.3 5.3 0 0 1-10.6 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm4 18H6V4h7v5h5zM10 17.5a1.8 1.8 0 1 1 0-3.6c.2 0 .4.03.6.1V10h3.4v1.6h-2V15.7A1.8 1.8 0 0 1 10 17.5z"/></symbol>
+    <symbol id="i-lib" viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-2 5h-3v5.5a2.5 2.5 0 1 1-1-2V5h4zM4 6H2v14a2 2 0 0 0 2 2h14v-2H4z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19h4V5H6zm8-14v14h4V5z"/></symbol>
+    <symbol id="i-dl" viewBox="0 0 24 24"><path fill="currentColor" d="M5 20h14v-2H5zM19 9h-4V3H9v6H5l7 7z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11z"/></symbol>
+    <symbol id="i-piano" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-5.5 16h-3v-5H11V5h2v9h.5zM5 5h2v9h.5v5H5zm14 14h-2.5v-5h.5V5h2z"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path fill="currentColor" d="M16.48 2.52c3.27 1.55 5.61 4.72 5.97 8.48h1.5C23.44 4.84 18.29 0 12 0l-.66.03 3.81 3.81zM10.23 1.75a1.5 1.5 0 0 0-2.12 0L1.75 8.11a1.5 1.5 0 0 0 0 2.12l12.02 12.02a1.5 1.5 0 0 0 2.12 0l6.36-6.36a1.5 1.5 0 0 0 0-2.12zm4.6 19.44L2.81 9.17l6.36-6.36 12.02 12.02zM7.52 21.48C4.25 19.94 1.91 16.76 1.55 13H.05C.56 19.16 5.71 24 12 24l.66-.03-3.81-3.81z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path fill="currentColor" d="M16 5l-1.42 1.42-1.59-1.59V16h-1.98V4.83L9.42 6.42 8 5l4-4zm4 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h3v2H6v11h12V10h-3V8h3a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path fill="currentColor" d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol>
+  </defs>
+</svg>
+
+<div class="layout">
+  <aside class="ctrl">
+    <span class="eyebrow">Прототип · мобильное приложение</span>
+    <h1>MusNote: запись → ноты → тренажёр</h1>
+    <p>Стиль — тот же, что у сайта: цвета и шрифты из <code>design/tokens/musnote.tokens.json</code>. Падающие ноты считаются той же логикой, что на сайте (<code>web/assets/js/falling-notes.js</code>), ролик ожидания — тот же Lottie.</p>
+    <p>Всё кликается. Слева — места, где нужно выбрать вариант. Номер выбора впишите в план <code>plans/mobile-app-prototype.md</code>.</p>
+
+    <div class="vgroup"><h3>Главный список <code>V1</code></h3><small>Как выглядят сохранённые записи</small>
+      <div class="opts" data-v="list">
+        <button class="opt" data-o="a"><b>A · Строки</b><span>Компактно, как «Файлы»: иконка, имя, длина, статус</span></button>
+        <button class="opt" data-o="b"><b>B · Карточки</b><span>Крупнее, с миниатюрой нот — сразу видно, что внутри</span></button>
+      </div></div>
+    <div class="vgroup"><h3>Диалог «+» <code>V2</code></h3><small>Откуда взять звук: запись, файл, медиатека</small>
+      <div class="opts" data-v="add">
+        <button class="opt" data-o="a"><b>A · Лист с вкладками</b><span>Запись / Файлы / Медиатека</span></button>
+        <button class="opt" data-o="b"><b>B · Три плитки</b><span>Один тап по источнику, без вкладок</span></button>
+        <button class="opt" data-o="c"><b>C · Сразу запись</b><span>Экран диктофона, файл — второй строкой</span></button>
+      </div></div>
+    <div class="vgroup"><h3>Кнопка тренажёра <code>V3</code></h3><small>На карточке записи, когда ноты готовы</small>
+      <div class="opts" data-v="train">
+        <button class="opt" data-o="a"><b>A · Большая плашка</b><span>Яркий баннер над списком загрузок</span></button>
+        <button class="opt" data-o="b"><b>B · Кнопка внизу</b><span>Всегда под пальцем, во всю ширину</span></button>
+        <button class="opt" data-o="c"><b>C · Круглая клавиша</b><span>Как «+» на главной, только с пианино</span></button>
+      </div></div>
+    <div class="vgroup"><h3>Экран тренажёра <code>V4</code></h3><small>Альбомная ориентация, весь экран</small>
+      <div class="opts" data-v="trainer">
+        <button class="opt" data-o="a"><b>A · Чистый экран</b><span>Только ноты и клавиши; тап — показать панель</span></button>
+        <button class="opt" data-o="b"><b>B · Панель всегда видна</b><span>Пауза, скорость, прогресс сверху</span></button>
+      </div></div>
+    <div class="vgroup"><h3>Инструменты <code>V5</code></h3><small>Иконка вверху слева от настроек</small>
+      <div class="opts" data-v="tools">
+        <button class="opt" data-o="a"><b>A · Список по группам</b><span>Ноты · Аккорды · Голос и слух</span></button>
+        <button class="opt" data-o="b"><b>B · Плитки 2×N</b><span>Как витрина, с описанием</span></button>
+      </div></div>
+
+    <div class="vgroup"><h3>Онбординг <code>V6</code></h3><small>Первый запуск: показать «звук → ноты → клавиши»</small>
+      <div class="opts" data-v="onb">
+        <button class="opt" data-o="a"><b>A · Три экрана</b><span>Звук · Ноты и дорожки · Играть и делиться</span></button>
+        <button class="opt" data-o="b"><b>B · Один экран</b><span>Ролик + строка «Звук → Ноты → Клавиши» и «Начать»</span></button>
+      </div></div>
+
+    <div class="vgroup"><h3>Перейти к экрану</h3>
+      <div class="jump">
+        <button data-go="onb">Онбординг</button><button data-go="home">Список</button><button data-go="add">Диалог «+»</button><button data-go="rec">Запись</button>
+        <button data-go="detail-new">Запись: обработать</button><button data-go="detail-ready">Запись: ноты готовы</button>
+        <button data-go="trainer">Тренажёр</button><button data-go="tools">Инструменты</button><button data-go="settings">Настройки</button>
+        <button data-go="empty">Пустой список</button>
+      </div>
+      <div class="pick" id="pick"></div>
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="phone" id="phone"><div class="device" id="device">
+      <div class="island"></div>
+
+      <!-- ONBOARDING (first launch) -->
+      <section class="scr onb" data-scr="onb">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <button class="onb-skip onb-a" id="onbSkip" type="button">Пропустить</button>
+        <button class="lang-chip" id="langChip" type="button">Русский ▾</button>
+        <div class="slides onb-a">
+          <div class="slide on" data-s="0"><div class="visual"><canvas id="onbWave"></canvas></div><h2>Запишите мелодию<br>или выберите файл</h2><p>Пианино, голос, песня целиком — mp3, wav, m4a до 100 МБ.</p></div>
+          <div class="slide" data-s="1"><div class="visual"><div class="lotbig" id="onbLot" style="margin-top:-46px"></div><div class="stemchips" id="onbChips"></div></div><h2>Мы находим ноты<br>и делим на дорожки</h2><p>Голос, пианино, бас — у каждой дорожки свои ноты. Бесплатно, на сервере MusNote.</p></div>
+          <div class="slide" data-s="2"><div class="visual"><canvas id="onbFall"></canvas></div><h2>Играйте вместе<br>и забирайте ноты</h2><p>Ноты падают на клавиши. Поделитесь MIDI, листом с буквами или текстом.</p></div>
+        </div>
+        <div class="slides onb-b"><div class="slide on"><div class="visual" style="width:320px"><div class="lotbig" id="onbLotB"></div></div><h2>Из звука — в ноты<br>на клавишах</h2><div class="flow3"><span>🎙 Звук</span>→<span>♪ Ноты</span>→<span>🎹 Клавиши</span></div><p>Запишите или выберите аудио. Мы найдём ноты, разделим дорожки и покажем, как это сыграть.</p></div></div>
+        <div class="onb-foot">
+          <div class="dots onb-a" id="onbDots"><i class="on"></i><i></i><i></i></div>
+          <button class="btn green block onb-a" id="onbNext" style="padding:15px;font-size:1.05rem">Далее</button>
+          <button class="btn green block onb-b" id="onbStartB" type="button" style="padding:15px;font-size:1.05rem">Начать</button>
+        </div>
+      </section>
+
+      <!-- HOME -->
+      <section class="scr on" data-scr="home">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar">
+          <h2 class="big">Mus<span style="color:var(--mn-green-600)">Note</span></h2>
+          <button class="ib" data-go="tools" title="Инструменты"><svg><use href="#i-tools"/></svg></button>
+          <button class="ib" data-go="settings" title="Настройки"><svg><use href="#i-gear"/></svg></button>
+        </div>
+        <div class="body">
+          <p class="sub" id="countline"></p>
+          <div class="rows" id="rows"></div>
+          <div class="cards" id="cards"></div>
+          <div class="empty-list" id="emptyList" hidden>
+            <svg width="64" height="64" style="color:var(--mn-green-500)"><use href="#i-piano"/></svg>
+            <h3 style="color:var(--mn-ink);margin:8px 0 4px">Пока пусто</h3>
+            <p>Нажмите «+», чтобы записать мелодию или выбрать аудиофайл. Ноты появятся на клавишах.</p>
+          </div>
+        </div>
+        <button class="fab" data-go="add" title="Добавить"><svg><use href="#i-plus"/></svg></button>
+      </section>
+
+      <!-- RECORDER -->
+      <section class="scr" data-scr="rec" style="background:#fff">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar"><button class="ib" data-go="home"><svg><use href="#i-close"/></svg></button><h2>Запись</h2></div>
+        <div class="rec-body">
+          <div class="rec-wave" id="recWave"></div>
+          <div class="rec-time" id="recTime">0:00</div>
+          <div class="muted">Поднесите телефон к инструменту. Лучше всего — соло или чистая мелодия.</div>
+          <button class="stopbtn" id="recStop" title="Остановить и сохранить"><i></i></button>
+          <div class="muted">Стоп — запись сохранится в список</div>
+        </div>
+      </section>
+
+      <!-- DETAIL -->
+      <section class="scr" data-scr="detail">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar"><button class="ib" data-go="home"><svg><use href="#i-back"/></svg></button><h2 id="dTitle">Запись</h2></div>
+        <div class="body" id="dBody"></div>
+        <div class="train-b" id="trainB"><button class="btn green" data-go="trainer"><svg><use href="#i-piano"/></svg> Играть в тренажёре</button></div>
+        <div class="train-c" id="trainC"><span class="lbl">Тренажёр</span><button data-go="trainer" title="Играть в тренажёре"><svg><use href="#i-piano"/></svg></button></div>
+      </section>
+
+      <!-- TRAINER (landscape) -->
+      <section class="scr trainer" data-scr="trainer">
+        <canvas id="tCanvas"></canvas>
+        <div class="tbar">
+          <button class="ib" id="tClose" title="Закрыть"><svg><use href="#i-close"/></svg></button>
+          <b id="tTitle">Тренажёр</b>
+          <div class="tseg" id="tSpeed"><button data-s="0.5">0,5×</button><button data-s="0.75">0,75×</button><button data-s="1" class="on">1×</button></div>
+          <button class="ib" id="tPlay" title="Играть / пауза"><svg><use href="#i-pause"/></svg></button>
+        </div>
+        <div class="tprog"><i id="tProg"></i></div>
+        <div class="tap-hint" id="tapHint">Тап — пауза, скорость, выход</div>
+        <div class="rotate-ask" id="rotateAsk"><div>
+          <svg><use href="#i-rotate"/></svg>
+          <h3 style="margin:0 0 6px">Поверните телефон</h3>
+          <p style="opacity:.8;margin:0 0 16px">Так видна вся клавиатура</p>
+          <button class="btn green" id="doRotate">Повернуть</button>
+        </div></div>
+      </section>
+
+      <!-- PREVIEW (открыть файл) -->
+      <section class="scr" data-scr="preview">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar"><button class="ib" id="pvBack"><svg><use href="#i-back"/></svg></button><h2 id="pvTitle">Файл</h2><button class="ib" id="pvShare" title="Поделиться"><svg><use href="#i-share"/></svg></button></div>
+        <div class="body" id="pvBody"></div>
+      </section>
+
+      <!-- TOOLS -->
+      <section class="scr" data-scr="tools">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar"><button class="ib" data-go="home"><svg><use href="#i-back"/></svg></button><h2>Инструменты</h2></div>
+        <div class="body">
+          <div class="tlist-wrap" id="toolsList"></div>
+          <div class="tgrid-wrap" id="toolsGrid"></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="scr" data-scr="settings">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar"><button class="ib" data-go="home"><svg><use href="#i-back"/></svg></button><h2>Настройки</h2></div>
+        <div class="body">
+          <div class="section-t">Язык</div>
+          <div class="set">
+            <div class="setrow" id="langRow">Язык <span id="langValue">Как в системе (Русский) ›</span></div>
+          </div>
+          <div class="section-t">Ноты</div>
+          <div class="set">
+            <div class="setrow">Обозначения нот <div class="scope" style="margin:0;width:170px" id="notation"><button class="on">C D E</button><button>До Ре Ми</button></div></div>
+          </div>
+          <p class="sub">Так ноты подписаны на клавишах, в тренажёре и в листе с буквами — как переключатель на сайте.</p>
+          <div class="section-t">О приложении</div>
+          <div class="set">
+            <div class="setrow" data-go="onb" data-onb-back="settings">Как это работает <svg width="20" height="20" style="color:var(--mn-muted)"><use href="#i-chev"/></svg></div>
+            <div class="setrow">Версия <span>1.0</span></div>
+            <div class="setrow" data-link="https://musnote.com/privacy/">Политика конфиденциальности <svg width="20" height="20" style="color:var(--mn-muted)"><use href="#i-chev"/></svg></div>
+            <div class="setrow" data-link="mailto:support@englishingames.com">Написать нам <span>support@englishingames.com</span></div>
+          </div>
+          <p class="sub">Настройки монитора голоса (порог громкости, калибровка A4, гамма, цвета) остаются внутри инструмента «Монитор голоса».</p>
+        </div>
+      </section>
+
+      <!-- ADD: scrim + sheet variants -->
+      <div class="scrim" id="scrim"></div>
+      <div class="sheet add-a" id="sheetA">
+        <div class="grab"></div><h3>Добавить звук</h3><p class="hint">mp3, wav, m4a, flac · до 100 МБ · <span class="free">✓ бесплатно</span></p>
+        <div class="tabs" id="addTabs"><button data-t="rec" class="on">Запись</button><button data-t="file">Файлы</button><button data-t="lib">Медиатека</button></div>
+        <div class="tabpane on" data-t="rec"><div class="center"><button class="bigmic" data-act="record"><svg><use href="#i-mic"/></svg></button><div class="muted">Нажмите и сыграйте мелодию</div></div></div>
+        <div class="tabpane" data-t="file"><div class="drop"><svg width="40" height="40" style="color:#1d4ed8"><use href="#i-file"/></svg><b>Выбрать файл</b><span class="muted">Файлы телефона, iCloud, Google Drive</span><button class="btn primary" data-act="file">Открыть «Файлы»</button></div></div>
+        <div class="tabpane" data-t="lib"><div id="libList"></div><div class="drm">Песни из Apple Music защищены и не открываются. Подойдут ваши аудиофайлы и купленные треки без защиты.</div></div>
+        <div class="askmore">
+          <b>Нужен другой источник?</b>
+          <p>Скажите, откуда вы хотите брать музыку — добавим самое частое.</p>
+          <div class="askchips" id="askChips"><button>YouTube-ссылка</button><button>Видео из галереи</button><button>Другое…</button></div>
+        </div>
+      </div>
+      <div class="sheet add-b" id="sheetB">
+        <div class="grab"></div><h3>Добавить звук</h3><p class="hint">До 100 МБ · <span class="free">✓ бесплатно</span></p>
+        <div class="tiles">
+          <button class="tile" data-act="record"><span class="ic rec"><svg><use href="#i-mic"/></svg></span>Записать<small>микрофон</small></button>
+          <button class="tile" data-act="file"><span class="ic file"><svg><use href="#i-file"/></svg></span>Файл<small>mp3, wav, m4a</small></button>
+          <button class="tile" data-act="lib"><span class="ic lib"><svg><use href="#i-lib"/></svg></span>Медиатека<small>музыка телефона</small></button>
+        </div>
+      </div>
+      <div class="fullsheet add-c" id="sheetC">
+        <div class="status"><span>9:41</span><span>●●● 5G</span></div>
+        <div class="appbar"><button class="ib" data-go="home"><svg><use href="#i-close"/></svg></button><h2>Новая запись</h2></div>
+        <div class="rec-body">
+          <button class="bigmic" style="width:120px;height:120px" data-act="record"><svg><use href="#i-mic"/></svg></button>
+          <b style="font-size:1.2rem">Нажмите, чтобы записать</b>
+          <div class="muted">или возьмите готовый звук</div>
+          <div style="display:flex;gap:8px"><button class="btn" data-act="file"><svg><use href="#i-file"/></svg>Файл</button><button class="btn" data-act="lib"><svg><use href="#i-lib"/></svg>Медиатека</button></div>
+          <span class="free">✓ бесплатно · до 100 МБ</span>
+        </div>
+      </div>
+      <div class="sheet sys" id="shareSheet" style="padding:10px 0 30px">
+        <div class="grab"></div>
+        <div class="file"><span class="fmt" id="sysFmt">MID</span><div><b id="sysName">file.mid</b><br><small class="muted" id="sysSize">MIDI · 2 КБ</small></div></div>
+        <div class="apps"><div><i style="background:linear-gradient(#5ac8fa,#007aff)"></i>AirDrop</div><div><i style="background:#25d366"></i>WhatsApp</div><div><i style="background:#2aabee"></i>Telegram</div><div><i style="background:#0a84ff"></i>Почта</div><div><i style="background:#ff9500"></i>GarageBand</div></div>
+        <div class="acts"><div data-sys="save">Сохранить в «Файлы» <span>📁</span></div><div data-sys="open">Открыть в… <span>↗</span></div></div>
+        <p class="muted center" style="margin:10px 0 0;font-size:.72rem">Системный лист iOS / Android — рисует не приложение</p>
+      </div>
+      <div class="sheet" id="langSheet" style="max-width:480px;margin:0 auto">
+        <div class="grab"></div><h3>Язык</h3>
+        <div class="set" id="langList">
+          <div class="setrow" data-lang="Как в системе">Как в системе (Русский) <span>✓</span></div>
+          <div class="setrow" data-lang="English">English</div>
+          <div class="setrow" data-lang="Русский">Русский</div>
+          <div class="setrow" data-lang="Español">Español</div>
+          <div class="setrow" data-lang="Deutsch">Deutsch</div>
+          <div class="setrow" data-lang="Français">Français</div>
+          <div class="setrow" data-lang="Italiano">Italiano</div>
+          <div class="setrow" data-lang="Polski">Polski</div>
+        </div>
+      </div>
+      <div class="toast" id="toast"></div>
+    </div></div>
+    <div class="stage-actions">
+      <button class="sbtn" id="rotBtn">⟲ Повернуть телефон</button>
+    </div>
+  </main>
+</div>
+
+<script src="../../web/assets/js/falling-notes.js"></script>
+<script src="../../web/assets/vendor/lottie_light.min.js"></script>
+<script src="../loading-animation/lottie/musnote-loading.preview.js"></script>
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const ICON = { rec: 'i-mic', file: 'i-file', lib: 'i-lib' };
+const SRC = { rec: 'Запись', file: 'Файл', lib: 'Медиатека' };
+
+/* sample notes (Ode to Joy, public domain) */
+function sampleNotes(shift = 0) {
+  const mel = [64,64,65,67,67,65,64,62,60,60,62,64,64,62,62, 64,64,65,67,67,65,64,62,60,60,62,64,62,60,60];
+  const dur = [1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,2, 1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,2];
+  const out = []; let t = 0.6; const q = .45;
+  mel.forEach((m, i) => { out.push({ midi: m + shift, start: t, end: t + dur[i] * q * .92 }); if (i % 4 === 0) out.push({ midi: 48 + shift + (i % 8 === 0 ? 0 : 7), start: t, end: t + q * 3.6 }); t += dur[i] * q; if (i === 14) t += .4; });
+  return out;
+}
+/* Ответ сервера: POST /v1/separated-notes → stems[] (vocals, piano, guitar, bass, other, drums) */
+const STEM = { vocals: ['🎤', 'Голос'], piano: ['🎹', 'Пианино'], guitar: ['🎸', 'Гитара'], bass: ['〰', 'Бас'], other: ['✳', 'Другое'], drums: ['🥁', 'Барабаны'] };
+function sampleStems(shift = 0) {
+  const all = sampleNotes(shift);
+  const mel = all.filter(n => n.midi >= 58), low = all.filter(n => n.midi < 58);
+  return [
+    { id: 'vocals', empty: false, notes: mel.map(n => ({ ...n, midi: n.midi + 12 })) },
+    { id: 'piano', empty: false, notes: all },
+    { id: 'guitar', empty: true, notes: [] },
+    { id: 'bass', empty: false, notes: low.map(n => ({ ...n, midi: n.midi - 12 })) },
+    { id: 'other', empty: false, notes: mel.filter((n, i) => i % 3 === 0) },
+    { id: 'drums', empty: false, notes: [] },
+  ];
+}
+function setReady(it, shift = 0) { it.status = 'ready'; it.stems = sampleStems(shift); it.sel = 'piano'; it.notes = it.stems.find(x => x.id === 'piano').notes; }
+let items = [
+  { id: 1, name: 'Колыбельная — пианино', src: 'rec', dur: '0:32', date: 'Сегодня, 9:12', status: 'new' },
+  { id: 2, name: 'lesson-3.m4a', src: 'file', dur: '1:12', date: 'Вчера', status: 'new' },
+  { id: 3, name: 'Голосовая заметка 4', src: 'lib', dur: '0:18', date: '18 нояб.', status: 'new' },
+];
+setReady(items[0], 0);
+let current = items[0];
+let recN = 5;
+
+/* ---------- variants ---------- */
+function setVariant(key, val) {
+  document.body.dataset['v' + key[0].toUpperCase() + key.slice(1)] = val;
+  $$(`.opts[data-v="${key}"] .opt`).forEach(o => o.classList.toggle('on', o.dataset.o === val));
+  renderPick();
+  if (key === 'onb' && $('[data-scr="onb"]').classList.contains('on')) startOnb();
+  if (key === 'list') renderList();
+  if (key === 'train' && $('[data-scr="detail"]').classList.contains('on')) renderDetail();
+  if (key === 'add' && addOpen) openAdd();
+}
+function renderPick() {
+  const d = document.body.dataset;
+  $('#pick').innerHTML = `Ваш выбор для плана: <code>V6=${d.vOnb.toUpperCase()}</code> · <code>V1=${d.vList.toUpperCase()}</code> · <code>V2=${d.vAdd.toUpperCase()}</code> · <code>V3=${d.vTrain.toUpperCase()}</code> · <code>V4=${d.vTrainer.toUpperCase()}</code> · <code>V5=${d.vTools.toUpperCase()}</code>`;
+}
+$$('.opts').forEach(g => g.addEventListener('click', e => { const o = e.target.closest('.opt'); if (o) setVariant(g.dataset.v, o.dataset.o); }));
+
+/* ---------- toast ---------- */
+function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => el.classList.remove('on'), 1800); }
+
+/* ---------- list ---------- */
+const chip = s => s === 'ready' ? '<span class="chip ready">Ноты готовы</span>' : s === 'busy' ? '<span class="chip busy">Читаем ноты…</span>' : '<span class="chip new">Не обработано</span>';
+function renderList() {
+  $('#emptyList').hidden = items.length > 0;
+  $('#countline').textContent = items.length ? `${items.length} ${items.length === 1 ? 'запись' : items.length < 5 ? 'записи' : 'записей'} · хранятся на телефоне` : '';
+  $('#rows').innerHTML = items.map(it => `<div class="row" data-id="${it.id}"><div class="ava"><svg><use href="#${ICON[it.src]}"/></svg></div><div class="t"><b>${it.name}</b><small>${it.dur} · ${it.date}</small></div>${chip(it.status)}</div>`).join('');
+  $('#cards').innerHTML = items.map(it => `<div class="card" data-id="${it.id}"><div class="top"><div class="ava"><svg><use href="#${ICON[it.src]}"/></svg></div><div class="t"><b>${it.name}</b><small>${SRC[it.src]} · ${it.dur} · ${it.date}</small></div>${chip(it.status)}</div>${it.status === 'ready' ? `<div class="thumb"><canvas data-thumb="${it.id}"></canvas></div>` : `<div class="thumb empty">Нажмите, чтобы получить ноты</div>`}</div>`).join('');
+  $('#rows').style.display = items.length ? '' : 'none';
+  $$('canvas[data-thumb]').forEach(c => drawThumb(c, items.find(i => i.id == c.dataset.thumb).notes));
+}
+function drawThumb(c, notes) {
+  const r = c.getBoundingClientRect(); const dpr = 2; c.width = (r.width || 320) * dpr; c.height = (r.height || 54) * dpr;
+  const g = c.getContext('2d'); const T = Math.max(...notes.map(n => n.end)); const lo = 46, hi = 70;
+  notes.forEach(n => { g.fillStyle = n.midi < 58 ? '#a7f3d0' : '#15c39a'; const x = n.start / T * c.width, w = Math.max(3, (n.end - n.start) / T * c.width - 2), y = (1 - (n.midi - lo) / (hi - lo)) * (c.height - 8) + 2; g.beginPath(); g.roundRect(x, y, w, 6, 3); g.fill(); });
+}
+$('#rows').addEventListener('click', e => { const r = e.target.closest('[data-id]'); if (r) openDetail(+r.dataset.id); });
+$('#cards').addEventListener('click', e => { const r = e.target.closest('[data-id]'); if (r) openDetail(+r.dataset.id); });
+
+/* ---------- navigation ---------- */
+let addOpen = false;
+function show(name) {
+  closeAdd();
+  $$('.scr').forEach(s => s.classList.toggle('on', s.dataset.scr === name));
+  if (name !== 'trainer') stopTrainer();
+  if (name !== 'rec') stopRec();
+}
+function go(where) {
+  if (where === 'add') { show('home'); openAdd(); return; }
+  if (where === 'detail-new') { openDetail(items.find(i => i.status !== 'ready')?.id ?? items[0].id); return; }
+  if (where === 'detail-ready') { const r = items.find(i => i.status === 'ready'); if (r) openDetail(r.id); return; }
+  if (where === 'empty') { items = []; renderList(); show('home'); return; }
+  if (where === 'trainer') { openTrainer(); return; }
+  if (where === 'rec') { startRec(); return; }
+  if (where === 'home') { renderList(); setLand(false); }
+  show(where);
+}
+let onbReturn = 'home';
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if (!g) return;
+  if (g.dataset.go === 'onb') onbReturn = g.dataset.onbBack || 'home';
+  e.preventDefault();
+  go(g.dataset.go);
+});
+
+/* ---------- add dialog ---------- */
+function openAdd() {
+  addOpen = true; const v = document.body.dataset.vAdd;
+  $('#scrim').classList.toggle('on', v !== 'c');
+  $('#sheetA').classList.toggle('on', v === 'a'); $('#sheetB').classList.toggle('on', v === 'b'); $('#sheetC').classList.toggle('on', v === 'c');
+}
+function closeAdd() { addOpen = false; $('#scrim').classList.remove('on'); $$('#sheetA,#sheetB,#sheetC,#shareSheet').forEach(s => s.classList.remove('on')); }
+$('#scrim').onclick = closeAdd;
+$('#askChips').onclick = e => { const b = e.target.closest('button'); if (!b) return; toast(`Письмо: «Хочу источник: ${b.textContent.replace('…', '')}» → support@englishingames.com`); };
+$('#addTabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; $$('#addTabs button').forEach(x => x.classList.toggle('on', x === b)); $$('#sheetA .tabpane').forEach(p => p.classList.toggle('on', p.dataset.t === b.dataset.t)); };
+const LIB = [['Clair de Lune (запись концерта)', '5:02'], ['Утренняя гамма', '0:41'], ['Мелодия из рекламы', '0:24']];
+$('#libList').innerHTML = LIB.map(([n, d]) => `<div class="libitem" data-act="libpick" data-name="${n}" data-dur="${d}"><div class="ava"><svg><use href="#i-lib"/></svg></div><div class="t"><b>${n}</b><br><small>${d}</small></div><svg width="20" height="20" style="color:var(--mn-muted)"><use href="#i-chev"/></svg></div>`).join('');
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  const act = a.dataset.act;
+  if (act === 'record') startRec();
+  if (act === 'file') addItem({ name: 'piano-lesson-07.mp3', src: 'file', dur: '2:08' });
+  if (act === 'lib') { if (document.body.dataset.vAdd === 'a') return; const [n, d] = LIB[1]; addItem({ name: n, src: 'lib', dur: d }); }
+  if (act === 'libpick') addItem({ name: a.dataset.name, src: 'lib', dur: a.dataset.dur });
+});
+function addItem(o) { const it = { id: Date.now(), date: 'Только что', status: 'new', ...o }; items.unshift(it); renderList(); toast('Сохранено в список'); openDetail(it.id); }
+
+/* ---------- recorder ---------- */
+let recTimer = null, recSec = 0;
+function startRec() {
+  show('rec'); recSec = 0; $('#recTime').textContent = '0:00';
+  $('#recWave').innerHTML = Array.from({ length: 28 }, () => '<i style="height:8px"></i>').join('');
+  recTimer = setInterval(() => { recSec += .12; $('#recTime').textContent = `0:${String(Math.floor(recSec)).padStart(2, '0')}`; $$('#recWave i').forEach((b, i) => b.style.height = (8 + Math.abs(Math.sin(recSec * 3 + i * .6)) * 70 * Math.random()) + 'px'); }, 120);
+}
+function stopRec() { clearInterval(recTimer); recTimer = null; }
+$('#recStop').onclick = () => { const s = Math.max(3, Math.floor(recSec)); stopRec(); addItem({ name: `Запись ${recN++}`, src: 'rec', dur: `0:${String(s).padStart(2, '0')}` }); };
+
+/* ---------- detail ---------- */
+let lot = null;
+function openDetail(id) { current = items.find(i => i.id === id); show('detail'); renderDetail(); }
+function renderDetail() {
+  const it = current; $('#dTitle').textContent = it.name;
+  const head = `<div class="hero"><div class="meta"><div class="ava"><svg><use href="#${ICON[it.src]}"/></svg></div><div style="flex:1"><h3>${it.name}</h3><small class="muted">${SRC[it.src]} · ${it.dur} · ${it.date}</small></div></div>
+    <div class="player"><button class="pbtn" id="origPlay"><svg><use href="#i-play"/></svg></button><div class="track"><i id="origProg"></i></div><span class="time">${it.dur}</span></div></div>`;
+  let main = '';
+  if (it.status === 'new') main = `<div class="process"><p>Сервер MusNote прочитает ноты и разложит их по клавишам. <span class="free">✓ бесплатно</span></p><button class="btn green block" id="doProcess"><svg><use href="#i-piano"/></svg> Получить ноты</button></div>`;
+  else if (it.status === 'busy') main = `<div class="process"><div class="busyline"><div class="lot" id="lot"></div>Читаем ноты…</div></div>`;
+  else {
+    const lo = Math.min(...it.notes.map(n => n.midi)), hi = Math.max(...it.notes.map(n => n.midi)), T = Math.max(...it.notes.map(n => n.end));
+    const stem = it.stems.find(x => x.id === it.sel);
+    const withNotes = it.stems.filter(x => x.notes.length).length;
+    main = `<div class="ready">
+      <p class="summary">${(() => { const n = stem.notes, lo = Math.min(...n.map(x => x.midi)), hi = Math.max(...n.map(x => x.midi)), T = Math.max(...n.map(x => x.end)); const nm = m => FallingNotes.letterForMidi(m) + (Math.floor(m / 12) - 1); return `Найдено ${n.length} нот · 0:${String(Math.round(T)).padStart(2, '0')} · от ${nm(lo)} до ${nm(hi)}`; })()}</p>
+      <button class="train-a" data-go="trainer"><span class="pi"><svg><use href="#i-piano"/></svg></span><span><b>Играть в тренажёре</b><small>${STEM[it.sel][1]} · падающие ноты · поверните телефон</small></span></button>
+      <div class="section-t">Дорожки</div>
+      <div class="tracks">${it.stems.map(st => {
+        const off = !st.notes.length; const [ic, nm] = STEM[st.id];
+        const why = st.id === 'drums' ? 'ударные — без нот' : st.empty ? 'тихо — нот нет' : '';
+        const n = st.notes.length; const lo = n ? Math.min(...st.notes.map(x => x.midi)) : 0, hi = n ? Math.max(...st.notes.map(x => x.midi)) : 0;
+        const bars = n ? Array.from({ length: 9 }, (_, k) => `<i style="height:${20 + Math.abs(Math.sin((k + 1) * (lo % 7 + 1))) * 80}%"></i>`).join('') : '';
+        return `<div class="trk${off ? ' off' : ''}${st.id === it.sel ? ' sel' : ''}" data-stem="${st.id}"><span class="radio"></span><div class="ava">${ic}</div><div class="t"><b>${nm}</b><small>${off ? why : `${n} нот · ${FallingNotes.letterForMidi(lo)}${Math.floor(lo / 12) - 1}–${FallingNotes.letterForMidi(hi)}${Math.floor(hi / 12) - 1}`}</small></div><div class="bars">${bars}</div></div>`;
+      }).join('')}</div>
+      <div class="section-t">Забрать</div>
+      <div class="scope" id="dlScope"><button data-sc="one" class="${it.scope !== 'all' ? 'on' : ''}">${STEM[it.sel][1]}</button><button data-sc="all" class="${it.scope === 'all' ? 'on' : ''}">Все дорожки</button></div>
+      <div class="dl">
+        <div class="dlrow" data-open="midi"><span class="fmt midi">MID</span><span class="t"><b>MIDI-файл</b><small>${it.scope === 'all' ? 'Один файл, каждая дорожка — свой трек' : 'GarageBand, MuseScore, Synthesia'}</small></span><button class="shr" data-share="midi" title="Поделиться"><svg><use href="#i-share"/></svg></button></div>
+        <div class="dlrow" data-open="pdf"><span class="fmt pdf">PDF</span><span class="t"><b>Лист с буквами нот</b><small>PDF для печати · E E F G…</small></span><button class="shr" data-share="pdf" title="Поделиться"><svg><use href="#i-share"/></svg></button></div>
+        <div class="dlrow" data-open="txt"><span class="fmt txt">TXT</span><span class="t"><b>Ноты текстом</b><small>C4 E4 G4 … по фразам</small></span><button class="shr" data-share="txt" title="Поделиться"><svg><use href="#i-share"/></svg></button></div>
+        <div class="dlrow" data-copy="1"><span class="fmt copy"><svg style="width:18px;height:18px;color:inherit"><use href="#i-copy"/></svg></span><span class="t"><b>Скопировать ноты</b><small>В буфер обмена</small></span></div>
+      </div>
+      <p class="soonline">Скоро: партитура на нотном стане (PDF) и MusicXML</p>
+    </div>`;
+  }
+  $('#dBody').innerHTML = head + main;
+  if (it.status === 'ready') { $('#dlScope').onclick = e => { const b = e.target.closest('button'); if (!b) return; it.scope = b.dataset.sc; renderDetail(); }; $$('.trk:not(.off)').forEach(r => r.onclick = () => { it.sel = r.dataset.stem; it.notes = it.stems.find(x => x.id === it.sel).notes; renderDetail(); }); }
+  const v = document.body.dataset.vTrain, ready = it.status === 'ready';
+  $('#trainB').classList.toggle('show', ready && v === 'b'); $('#trainC').classList.toggle('show', ready && v === 'c');
+  $('#dBody').style.paddingBottom = ready && v !== 'a' ? '140px' : '';
+  if (it.status === 'new') $('#doProcess').onclick = () => { it.status = 'busy'; renderDetail(); renderList(); setTimeout(() => { setReady(it, it.id % 3); renderList(); if (current === it && $('[data-scr="detail"]').classList.contains('on')) renderDetail(); }, 3200); };
+  if (lot) { lot.destroy(); lot = null; }
+  if (it.status === 'busy' && window.lottie && window.MUSNOTE_LOADING) lot = lottie.loadAnimation({ container: $('#lot'), renderer: 'svg', loop: true, autoplay: true, animationData: JSON.parse(JSON.stringify(window.MUSNOTE_LOADING)) });
+  let p = 0, pt = null; $('#origPlay').onclick = e => { const b = e.currentTarget; if (pt) { clearInterval(pt); pt = null; b.innerHTML = '<svg><use href="#i-play"/></svg>'; return; } b.innerHTML = '<svg><use href="#i-pause"/></svg>'; pt = setInterval(() => { p = (p + 1) % 101; const pr = $('#origProg'); if (pr) pr.style.width = p + '%'; else clearInterval(pt); }, 80); };
+}
+/* Забрать: тап по строке — открыть файл; иконка — системное «Поделиться» */
+const FMT = { midi: ['MID', 'midi', 'mid', 'MIDI'], pdf: ['PDF', 'pdf', 'pdf', 'PDF'], txt: ['TXT', 'txt', 'txt', 'Текст'] };
+const slug = n => n.toLowerCase().replace(/[^a-zа-я0-9]+/gi, '-').replace(/^-|-$/g, '');
+function fileName(kind) { const it = current; return `${slug(it.name)}${it.scope === 'all' ? '' : '-' + it.sel}-musnote.${FMT[kind][2]}`; }
+function scopeNotes() { const it = current; return it.scope === 'all' ? it.stems.filter(x => x.notes.length) : [it.stems.find(x => x.id === it.sel)]; }
+function phrasesOf(notes) {
+  const list = notes.slice().sort((a, b) => a.start - b.start); const out = [[]]; let end = -1;
+  list.forEach(n => { if (out.at(-1).length && n.start - end > .6) out.push([]); const ph = out.at(-1); const g = ph.at(-1); if (g && Math.abs(g[0].start - n.start) < .04) g.push(n); else ph.push([n]); end = Math.max(end, n.end); });
+  const solf = $('#notation .on')?.textContent.includes('До'); const SO = ['До','До#','Ре','Ре#','Ми','Фа','Фа#','Соль','Соль#','Ля','Ля#','Си'];
+  const nm = m => solf ? SO[m % 12] : FallingNotes.letterForMidi(m);
+  return out.map(ph => ph.map(g => g.length > 1 ? '[' + g.map(x => nm(x.midi)).join(' ') + ']' : nm(g[0].midi)));
+}
+function openSysShare(kind) {
+  const [lab, cls] = FMT[kind]; $('#sysFmt').textContent = lab; $('#sysFmt').className = 'fmt ' + cls;
+  $('#sysName').textContent = fileName(kind); $('#sysSize').textContent = `${FMT[kind][3]} · ${kind === 'pdf' ? '48' : kind === 'midi' ? '2' : '1'} КБ`;
+  $('#scrim').classList.add('on'); $('#shareSheet').classList.add('on'); addOpen = true;
+}
+$('#shareSheet').addEventListener('click', e => { const a = e.target.closest('[data-sys]'); if (!a) return; closeAdd(); toast(a.dataset.sys === 'save' ? 'Сохранено в «Файлы»' : 'Выберите приложение'); });
+let pvKind = null, pvTimer = null;
+function openPreview(kind) {
+  pvKind = kind; show('preview'); $('#pvTitle').textContent = fileName(kind);
+  const parts = scopeNotes();
+  if (kind === 'pdf') $('#pvBody').innerHTML = parts.map(st => `<div class="pv-page"><h4>${current.name}</h4><div class="meta">${STEM[st.id][1]} · ${current.date} · musnote.com</div>${phrasesOf(st.notes).map(ph => `<div class="pv-ph">${ph.map(t => `<span class="${t[0] === '[' ? 'ch' : ''}">${t}</span>`).join('')}</div>`).join('')}</div>`).join('') + '<p class="pv-note">Просмотр PDF — системный (Quick Look на iOS, просмотрщик на Android)</p>';
+  if (kind === 'txt') $('#pvBody').innerHTML = parts.map(st => `<div class="section-t">${STEM[st.id][1]}</div><div class="pv-txt">${phrasesOf(st.notes).map(ph => ph.join(' ')).join('\n')}</div>`).join('') + '<p class="pv-note">Просмотр текста — системный</p>';
+  if (kind === 'midi') {
+    const n = parts.reduce((a, st) => a + st.notes.length, 0);
+    $('#pvBody').innerHTML = `<div class="pv-midi"><span class="fmt midi" style="width:64px;height:64px;font-size:.9rem">MID</span><b>${fileName('midi')}</b><span class="muted">${parts.length > 1 ? parts.length + ' трека · ' : ''}${n} нот</span><button class="big" id="pvPlay"><svg><use href="#i-play"/></svg></button><div class="track" style="width:100%"><i id="pvProg"></i></div></div><p class="pv-note">MIDI играет встроенный синтезатор приложения — одинаково на iOS и Android</p>`;
+    const all = parts.flatMap(st => st.notes), T = Math.max(...all.map(x => x.end)); let t = 0, done = new Set();
+    $('#pvPlay').onclick = e => { const b = e.currentTarget; if (pvTimer) { clearInterval(pvTimer); pvTimer = null; b.innerHTML = '<svg><use href="#i-play"/></svg>'; return; } b.innerHTML = '<svg><use href="#i-pause"/></svg>';
+      pvTimer = setInterval(() => { t += .05; all.forEach((x, i) => { if (!done.has(i) && x.start <= t) { done.add(i); beep(x.midi); } }); const pr = $('#pvProg'); if (pr) pr.style.width = Math.min(100, t / T * 100) + '%'; if (t > T) { t = 0; done = new Set(); } }, 50); };
+  }
+}
+$('#pvBack').onclick = () => { clearInterval(pvTimer); pvTimer = null; openDetail(current.id); };
+$('#pvShare').onclick = () => openSysShare(pvKind);
+$('#dBody').addEventListener('click', e => {
+  const sh = e.target.closest('.shr'); if (sh) { e.stopPropagation(); openSysShare(sh.dataset.share); return; }
+  const op = e.target.closest('[data-open]'); if (op) { openPreview(op.dataset.open); return; }
+  if (e.target.closest('[data-copy]')) toast('Ноты скопированы');
+});
+
+/* ---------- landscape trainer: same geometry as the site (FallingNotes) ---------- */
+const phone = $('#phone');
+function setLand(on) { phone.classList.toggle('land', on); $('#rotBtn').textContent = on ? '⟲ Вернуть портрет' : '⟲ Повернуть телефон'; setTimeout(resizeCanvas, 600); }
+$('#rotBtn').onclick = () => { const on = !phone.classList.contains('land'); setLand(on); if ($('[data-scr="trainer"]').classList.contains('on')) $('#rotateAsk').classList.toggle('on', !on); else if (!on) {} };
+let tRaf = null, tTime = 0, tSpeed = 1, tPlaying = true, tLast = 0, layout = null, played = new Set(), AC = null;
+function openTrainer() {
+  const it = current && current.status === 'ready' ? current : items.find(i => i.status === 'ready');
+  if (!it) { toast('Сначала получите ноты'); return; }
+  current = it; show('trainer'); $('#tTitle').textContent = `${STEM[it.sel][1]} · ${it.name}`;
+  const range = FallingNotes.rangeForMidis(it.notes.map(n => n.midi), { minWhites: 15 });
+  layout = { ...range, keys: FallingNotes.keyLayout(range.start, range.whites) };
+  tTime = -0.5; tPlaying = true; played = new Set(); setPlayIcon();
+  $('#trainer, .trainer').classList.toggle('ui', document.body.dataset.vTrainer === 'b');
+  $('#rotateAsk').classList.toggle('on', !phone.classList.contains('land'));
+  $('#tapHint').style.opacity = 1; setTimeout(() => $('#tapHint').style.opacity = 0, 2600);
+  resizeCanvas(); tLast = performance.now(); cancelAnimationFrame(tRaf); tRaf = requestAnimationFrame(tick);
+}
+function stopTrainer() { cancelAnimationFrame(tRaf); tRaf = null; }
+$('#doRotate').onclick = () => { setLand(true); $('#rotateAsk').classList.remove('on'); };
+$('#tClose').onclick = () => { setLand(false); openDetail(current.id); };
+$('#tPlay').onclick = e => { e.stopPropagation(); tPlaying = !tPlaying; setPlayIcon(); };
+function setPlayIcon() { $('#tPlay').innerHTML = `<svg><use href="#${tPlaying ? 'i-pause' : 'i-play'}"/></svg>`; }
+$('#tSpeed').onclick = e => { e.stopPropagation(); const b = e.target.closest('button'); if (!b) return; tSpeed = +b.dataset.s; $$('#tSpeed button').forEach(x => x.classList.toggle('on', x === b)); };
+$('[data-scr="trainer"]').addEventListener('click', e => { if (e.target.closest('.tbar, .rotate-ask')) return; if (document.body.dataset.vTrainer === 'a') { const s = $('[data-scr="trainer"]'); s.classList.toggle('ui'); clearTimeout(s._h); if (s.classList.contains('ui')) s._h = setTimeout(() => s.classList.remove('ui'), 3500); } });
+function resizeCanvas() { const c = $('#tCanvas'), r = c.getBoundingClientRect(); c.width = r.width * 2; c.height = r.height * 2; }
+function beep(m) { try { AC = AC || new AudioContext(); const o = AC.createOscillator(), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = 440 * 2 ** ((m - 69) / 12); g.gain.setValueAtTime(.08, AC.currentTime); g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + .6); o.connect(g).connect(AC.destination); o.start(); o.stop(AC.currentTime + .65); } catch (e) {} }
+function tick(now) {
+  const dt = (now - tLast) / 1000; tLast = now;
+  const notes = current.notes, T = Math.max(...notes.map(n => n.end)) + .8;
+  if (tPlaying && !$('#rotateAsk').classList.contains('on')) tTime += dt * tSpeed;
+  if (tTime > T) { tTime = -0.5; played = new Set(); }
+  notes.forEach((n, i) => { if (!played.has(i) && n.start <= tTime && tTime < n.end) { played.add(i); beep(n.midi); } });
+  drawFall($('#tCanvas'), notes, tTime, layout, 2.6); $('#tProg').style.width = Math.max(0, tTime / T * 100) + '%';
+  tRaf = requestAnimationFrame(tick);
+}
+function drawFall(c, notes, tTime, layout, look) {
+  const g = c.getContext('2d'), W = c.width, H = c.height; if (!W || !layout) return;
+  g.clearRect(0, 0, W, H);
+  const keyH = H * .28, lane = H - keyH, ww = W / layout.whites;
+  g.strokeStyle = 'rgba(47,211,154,.08)'; g.lineWidth = 2; layout.keys.filter(k => !k.black).forEach(k => { const x = (k.centerWhites + .5) * ww; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, lane); g.stroke(); });
+  const bars = FallingNotes.barsAtTime(notes, tTime, { lookAhead: look, laneHeight: lane, whiteKeyWidth: ww, keys: layout.keys });
+  const active = new Set(bars.filter(b => b.active).map(b => b.midi));
+  bars.forEach(b => { g.fillStyle = b.active ? '#2fd39a' : (b.black ? '#0e9f6e' : '#15c39a'); g.globalAlpha = b.active ? 1 : .85; g.beginPath(); g.roundRect(b.x + 2, b.y, b.width - 4, Math.max(6, b.height), 10); g.fill(); g.globalAlpha = 1;
+    if (b.height > 40) { g.fillStyle = '#fff'; g.font = `700 ${ww * .3}px Outfit, sans-serif`; g.textAlign = 'center'; g.fillText(b.label, b.x + b.width / 2, b.y + b.height - 14); } });
+  g.fillStyle = '#2fd39a'; g.fillRect(0, lane - 3, W, 3);
+  layout.keys.filter(k => !k.black).forEach(k => { const x = (k.centerWhites - .5) * ww; g.fillStyle = active.has(k.midi) ? '#a7f3d0' : '#fff'; g.beginPath(); g.roundRect(x + 1.5, lane + 2, ww - 3, keyH - 6, 10); g.fill(); g.fillStyle = '#9aaba4'; g.font = `600 ${ww * .26}px Outfit, sans-serif`; g.textAlign = 'center'; g.fillText(FallingNotes.letterForMidi(k.midi), x + ww / 2, H - 18); });
+  layout.keys.filter(k => k.black).forEach(k => { const w = k.widthWhites * ww, x = k.centerWhites * ww - w / 2; g.fillStyle = active.has(k.midi) ? '#10b981' : '#1b2622'; g.beginPath(); g.roundRect(x, lane + 2, w, keyH * .6, 6); g.fill(); });
+}
+
+/* ---------- tools ---------- */
+const TOOLS = [
+  ['', [
+    ['♪→', 'Аудио в ноты', 'Ваши записи: ноты, дорожки, тренажёр', 'app'],
+    ['〰', 'Монитор голоса', 'Высота голоса в реальном времени, тюнер', 'app'],
+  ]],
+];
+const srcTag = () => '';
+$('#toolsList').innerHTML = TOOLS.map(([g, list]) => `<div class="tgroup">${g ? `<div class="section-t">${g}</div>` : ''}<div class="tlist">${list.map(([ic, n, d, s, w]) => `<div class="titem" data-tool="${n}"><div class="ava">${ic}</div><div class="t"><b>${n}</b><small>${d}</small></div>${srcTag(s)}</div>`).join('')}</div></div>`).join('');
+$('#toolsGrid').innerHTML = TOOLS.map(([g, list]) => `${g ? `<div class="section-t">${g}</div>` : ''}<div class="tgrid" style="margin-bottom:14px">${list.map(([ic, n, d, s]) => `<div class="tcell" data-tool="${n}"><div class="ava">${ic}</div><b>${n}</b><small>${d}</small>${srcTag(s)}</div>`).join('')}</div>`).join('');
+$('[data-scr="tools"]').addEventListener('click', e => { const t = e.target.closest('[data-tool]'); if (!t) return; if (t.dataset.tool === 'Аудио в ноты') go('home'); else toast('Откроется: Монитор голоса'); });
+
+$('[data-scr="settings"]').addEventListener('click', e => { const l = e.target.closest('[data-link]'); if (l) toast('Откроется: ' + l.dataset.link.replace('mailto:', '')); });
+function openLang() { $('#scrim').classList.add('on'); $('#langSheet').style.display = 'block'; }
+function closeLang() { $('#scrim').classList.remove('on'); $('#langSheet').style.display = 'none'; }
+$('#langChip').onclick = openLang;
+$('#langRow').onclick = openLang;
+$('#langSheet').onclick = e => {
+  const row = e.target.closest('[data-lang]');
+  if (!row) return;
+  const name = row.dataset.lang;
+  $('#langChip').textContent = (name === 'Как в системе' ? 'Русский' : name) + ' ▾';
+  $('#langValue').textContent = (name === 'Как в системе' ? 'Как в системе (Русский)' : name) + ' ›';
+  $$('#langList .setrow').forEach(r => { const mark = r.querySelector('span'); if (mark && mark.textContent === '✓') mark.remove(); });
+  if (!row.querySelector('span')) row.insertAdjacentHTML('beforeend', '<span>✓</span>');
+  closeLang();
+};
+$('#notation').onclick = e => { const b = e.target.closest('button'); if (!b) return; $$('#notation button').forEach(x => x.classList.toggle('on', x === b)); toast('Обозначения: ' + b.textContent); };
+
+/* ---------- onboarding ---------- */
+let onbStep = 0, onbRaf = null, onbLots = [];
+function startOnb() {
+  onbStep = 0; setSlide(0);
+  onbLots.forEach(a => a.destroy()); onbLots = [];
+  if (window.lottie && window.MUSNOTE_LOADING) ['#onbLot', '#onbLotB'].forEach(id => onbLots.push(lottie.loadAnimation({ container: $(id), renderer: 'svg', loop: true, autoplay: true, animationData: JSON.parse(JSON.stringify(window.MUSNOTE_LOADING)) })));
+  const wave = $('#onbWave'), fall = $('#onbFall'); [wave, fall].forEach(c => { const r = c.getBoundingClientRect(); c.width = (r.width || 300) * 2; c.height = (r.height || 220) * 2; });
+  const notes = sampleNotes(0), range = FallingNotes.rangeForMidis(notes.map(n => n.midi), { minWhites: 10, maxWhites: 12 });
+  const lay = { ...range, keys: FallingNotes.keyLayout(range.start, range.whites) };
+  const t0 = performance.now(); cancelAnimationFrame(onbRaf);
+  const loop = now => {
+    const t = (now - t0) / 1000;
+    if (onbStep === 0) { const g = wave.getContext('2d'), W = wave.width, H = wave.height; g.clearRect(0, 0, W, H);
+      for (let k = 0; k < 3; k++) { g.beginPath(); g.lineWidth = k ? 4 : 8; g.strokeStyle = ['#15c39a', '#a8e9d0', '#d5f5e9'][k];
+        for (let x = 0; x <= W; x += 6) { const u = x / W, env = Math.sin(Math.PI * u); const y = H / 2 - env * (60 - k * 14) * Math.sin(u * 14 - t * (4 + k) + k) * (0.6 + 0.4 * Math.sin(t * 1.7)); x ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); } }
+    if (onbStep === 2) { const r = fall.getBoundingClientRect(); if (fall.width < 10 && r.width) { fall.width = r.width * 2; fall.height = r.height * 2; } drawFall(fall, notes, (t % 9) - .3, lay, 2); }
+    onbRaf = requestAnimationFrame(loop);
+  };
+  onbRaf = requestAnimationFrame(loop);
+}
+function setSlide(i) {
+  onbStep = i; $$('.slides.onb-a .slide').forEach(s => s.classList.toggle('on', +s.dataset.s === i));
+  $$('#onbDots i').forEach((d, k) => d.classList.toggle('on', k === i));
+  $('#onbNext').textContent = i === 2 ? 'Начать' : 'Далее';
+  if (i === 1) $('#onbChips').innerHTML = ['🎤 Голос', '🎹 Пианино', '〰 Бас', '✳ Другое'].map((c, k) => `<span style="animation-delay:${.3 + k * .25}s">${c}</span>`).join('');
+}
+$('#onbNext').onclick = () => { if (onbStep < 2) setSlide(onbStep + 1); else go(onbReturn); };
+$('#onbSkip').onclick = () => go(onbReturn);
+$('#onbStartB').onclick = () => go(onbReturn);
+const _show = show;
+show = function (name) { if (name !== 'onb') cancelAnimationFrame(onbRaf); _show(name); if (name === 'onb') startOnb(); };
+
+/* init */
+['onb', 'list', 'add', 'train', 'trainer', 'tools'].forEach(k => setVariant(k, 'a'));
+renderList();
+go('onb');
+</script>
+</body>
+</html>
