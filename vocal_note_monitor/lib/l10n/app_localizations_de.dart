@@ -151,6 +151,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nimm einen Klang auf oder wähle eine Datei. Wir lesen die Noten, und du kannst sie auf den Tasten spielen.';
 
   @override
+  String get onbNext => 'Weiter';
+
+  @override
+  String get onbSkip => 'Überspringen';
+
+  @override
+  String get onbSoundTitle => 'Nimm eine Melodie auf oder wähle eine Datei';
+
+  @override
+  String get onbSoundBody =>
+      'Klavier, Stimme, ein ganzes Lied — mp3, wav, m4a bis 100 MB.';
+
+  @override
+  String get onbTracksTitle => 'Wir finden die Noten und teilen die Spuren';
+
+  @override
+  String get onbTracksBody =>
+      'Stimme, Klavier, Bass — jede Spur hat eigene Noten. Kostenlos, auf dem MusNote-Server.';
+
+  @override
+  String get onbPlayTitle => 'Spiel mit und nimm die Noten mit';
+
+  @override
+  String get onbPlayBody =>
+      'Die Noten fallen auf die Tasten. Teile MIDI, ein Blatt mit Buchstaben oder Text.';
+
+  @override
   String get start => 'Start';
 
   @override
@@ -187,8 +214,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get fromShareStep3 =>
       'Öffnen Sie hier den Tab Dateien und wählen Sie die Aufnahme.';
 
-
-
   @override
   String get needSource => 'Andere Quelle nötig?';
 
@@ -213,11 +238,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get openingAudio => 'Audio auf dem Telefon wird geöffnet…';
-
-
-
-
-
 
   @override
   String mailSubject(String chip) {
@@ -468,7 +488,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get sourceFile => 'Datei';
 
-
   @override
   String get monitorSaved => 'Aufnahme gespeichert';
 
@@ -507,4 +526,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get langPl => 'Polski';
+
+  @override
+  String storeReviewBannerTitle(int count) {
+    return 'Songs als Noten: $count';
+  }
+
+  @override
+  String get storeReviewBannerSubtitle =>
+      'Wenn MusNote dir hilft, die Musik zu hören, hinterlasse eine kurze Bewertung.';
+
+  @override
+  String get storeReviewBannerAction => 'Bewertung abgeben';
+
+  @override
+  String get storeReviewBannerThanks => '✓ Danke!';
+
+  @override
+  String get storeReviewBannerClose => 'Ausblenden';
 }

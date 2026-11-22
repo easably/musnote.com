@@ -150,6 +150,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'Record a sound or pick a file. We read the notes, and you can play them on the keys.';
 
   @override
+  String get onbNext => 'Next';
+
+  @override
+  String get onbSkip => 'Skip';
+
+  @override
+  String get onbSoundTitle => 'Record a melody or pick a file';
+
+  @override
+  String get onbSoundBody =>
+      'Piano, voice, a whole song — mp3, wav, m4a up to 100 MB.';
+
+  @override
+  String get onbTracksTitle => 'We find the notes and split the tracks';
+
+  @override
+  String get onbTracksBody =>
+      'Voice, piano, bass — each track has its own notes. Free, on the MusNote server.';
+
+  @override
+  String get onbPlayTitle => 'Play along and take the notes';
+
+  @override
+  String get onbPlayBody =>
+      'Notes fall onto the keys. Share a MIDI file, a letter sheet, or text.';
+
+  @override
   String get start => 'Start';
 
   @override
@@ -185,8 +212,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fromShareStep3 =>
       'Open the Files tab here and choose that recording.';
 
-
-
   @override
   String get needSource => 'Need another source?';
 
@@ -211,11 +236,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openingAudio => 'Opening audio on this phone…';
-
-
-
-
-
 
   @override
   String mailSubject(String chip) {
@@ -463,7 +483,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get sourceFile => 'File';
 
-
   @override
   String get monitorSaved => 'Recording saved';
 
@@ -502,4 +521,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get langPl => 'Polski';
+
+  @override
+  String storeReviewBannerTitle(int count) {
+    return 'Songs turned into notes: $count';
+  }
+
+  @override
+  String get storeReviewBannerSubtitle =>
+      'If MusNote helps you hear the music, leave a short review.';
+
+  @override
+  String get storeReviewBannerAction => 'Leave a review';
+
+  @override
+  String get storeReviewBannerThanks => '✓ Thank you!';
+
+  @override
+  String get storeReviewBannerClose => 'Hide';
 }

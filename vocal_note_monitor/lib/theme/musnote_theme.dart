@@ -5,6 +5,7 @@ import 'musnote_tokens.g.dart';
 /// Names screens already use. The numbers live in [MusnoteTokens].
 abstract final class MusnoteColors {
   static const green50 = MusnoteTokens.green50;
+  static const green400 = MusnoteTokens.green400;
   static const green100 = MusnoteTokens.green100;
   static const green500 = MusnoteTokens.green500;
   static const green600 = MusnoteTokens.green600;
@@ -27,6 +28,7 @@ abstract final class MusnoteTheme {
     final base = ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: MusnoteTokens.fontSans,
       scaffoldBackgroundColor: MusnoteColors.surface2,
       colorScheme: ColorScheme.fromSeed(
         seedColor: MusnoteColors.green500,
@@ -36,6 +38,18 @@ abstract final class MusnoteTheme {
       ),
     );
     return base.copyWith(
+      textTheme: base.textTheme.apply(fontFamily: MusnoteTokens.fontSans),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: MusnoteColors.surface,
+        foregroundColor: MusnoteColors.ink,
+        elevation: 0,
+        titleTextStyle: TextStyle(
+          fontFamily: MusnoteTokens.fontSans,
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: MusnoteColors.ink,
+        ),
+      ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: MusnoteColors.surface,
         indicatorColor: MusnoteColors.green100,
@@ -54,6 +68,43 @@ abstract final class MusnoteTheme {
             color: selected ? MusnoteColors.green700 : MusnoteColors.muted,
           );
         }),
+      ),
+    );
+  }
+}
+
+/// Screen text sizes from the mobile prototype.
+abstract final class MusnoteType {
+  static const pageWidth = 720.0;
+
+  static const section = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w800,
+    letterSpacing: 0.72,
+    color: MusnoteColors.muted,
+  );
+
+  static const display = TextStyle(
+    fontFamily: MusnoteTokens.fontDisplay,
+    fontSize: 28,
+    fontWeight: FontWeight.w700,
+    height: 1.15,
+  );
+}
+
+/// Keeps a phone screen full width and a tablet screen near 720 pt.
+class MusnotePage extends StatelessWidget {
+  const MusnotePage({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: MusnoteType.pageWidth),
+        child: child,
       ),
     );
   }

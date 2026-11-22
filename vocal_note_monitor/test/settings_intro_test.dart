@@ -47,6 +47,13 @@ void main() {
 
     expect(find.text('From sound to notes on the keys'), findsOneWidget);
 
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.widgetWithText(FilledButton, 'Next'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+    }
+    expect(find.text('Play along and take the notes'), findsOneWidget);
+
     await tester.tap(find.widgetWithText(FilledButton, 'Start'));
     await tester.pump();
     await tester.pump();

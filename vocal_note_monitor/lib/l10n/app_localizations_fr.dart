@@ -150,6 +150,34 @@ class AppLocalizationsFr extends AppLocalizations {
       'Enregistrez un son ou choisissez un fichier. Nous lisons les notes, et vous pouvez les jouer sur les touches.';
 
   @override
+  String get onbNext => 'Suivant';
+
+  @override
+  String get onbSkip => 'Passer';
+
+  @override
+  String get onbSoundTitle =>
+      'Enregistrez une mélodie ou choisissez un fichier';
+
+  @override
+  String get onbSoundBody =>
+      'Piano, voix, une chanson entière — mp3, wav, m4a jusqu\'à 100 Mo.';
+
+  @override
+  String get onbTracksTitle => 'Nous trouvons les notes et séparons les pistes';
+
+  @override
+  String get onbTracksBody =>
+      'Voix, piano, basse — chaque piste a ses notes. Gratuit, sur le serveur MusNote.';
+
+  @override
+  String get onbPlayTitle => 'Jouez ensemble et emportez les notes';
+
+  @override
+  String get onbPlayBody =>
+      'Les notes tombent sur les touches. Partagez un MIDI, une feuille en lettres ou du texte.';
+
+  @override
   String get start => 'Commencer';
 
   @override
@@ -186,8 +214,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fromShareStep3 =>
       'Ouvrez l’onglet Fichiers ici et choisissez cet enregistrement.';
 
-
-
   @override
   String get needSource => 'Une autre source ?';
 
@@ -212,11 +238,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get openingAudio => 'Ouverture de l’audio du téléphone…';
-
-
-
-
-
 
   @override
   String mailSubject(String chip) {
@@ -466,7 +487,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get sourceFile => 'Fichier';
 
-
   @override
   String get monitorSaved => 'Enregistrement enregistré';
 
@@ -505,4 +525,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get langPl => 'Polski';
+
+  @override
+  String storeReviewBannerTitle(int count) {
+    return 'Chansons en notes : $count';
+  }
+
+  @override
+  String get storeReviewBannerSubtitle =>
+      'Si MusNote vous aide à entendre la musique, laissez un court avis.';
+
+  @override
+  String get storeReviewBannerAction => 'Laisser un avis';
+
+  @override
+  String get storeReviewBannerThanks => '✓ Merci !';
+
+  @override
+  String get storeReviewBannerClose => 'Masquer';
 }

@@ -384,6 +384,54 @@ abstract class AppLocalizations {
   /// **'Record a sound or pick a file. We read the notes, and you can play them on the keys.'**
   String get onbBody;
 
+  /// No description provided for @onbNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onbNext;
+
+  /// No description provided for @onbSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onbSkip;
+
+  /// No description provided for @onbSoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a melody or pick a file'**
+  String get onbSoundTitle;
+
+  /// No description provided for @onbSoundBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Piano, voice, a whole song — mp3, wav, m4a up to 100 MB.'**
+  String get onbSoundBody;
+
+  /// No description provided for @onbTracksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We find the notes and split the tracks'**
+  String get onbTracksTitle;
+
+  /// No description provided for @onbTracksBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice, piano, bass — each track has its own notes. Free, on the MusNote server.'**
+  String get onbTracksBody;
+
+  /// No description provided for @onbPlayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Play along and take the notes'**
+  String get onbPlayTitle;
+
+  /// No description provided for @onbPlayBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes fall onto the keys. Share a MIDI file, a letter sheet, or text.'**
+  String get onbPlayBody;
+
   /// No description provided for @start.
   ///
   /// In en, this message translates to:
@@ -450,8 +498,6 @@ abstract class AppLocalizations {
   /// **'Open the Files tab here and choose that recording.'**
   String get fromShareStep3;
 
-
-
   /// No description provided for @needSource.
   ///
   /// In en, this message translates to:
@@ -499,11 +545,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Opening audio on this phone…'**
   String get openingAudio;
-
-
-
-
-
 
   /// No description provided for @mailSubject.
   ///
@@ -925,7 +966,6 @@ abstract class AppLocalizations {
   /// **'File'**
   String get sourceFile;
 
-
   /// No description provided for @monitorSaved.
   ///
   /// In en, this message translates to:
@@ -1003,6 +1043,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Polski'**
   String get langPl;
+
+  /// No description provided for @storeReviewBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Songs turned into notes: {count}'**
+  String storeReviewBannerTitle(int count);
+
+  /// No description provided for @storeReviewBannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'If MusNote helps you hear the music, leave a short review.'**
+  String get storeReviewBannerSubtitle;
+
+  /// No description provided for @storeReviewBannerAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review'**
+  String get storeReviewBannerAction;
+
+  /// No description provided for @storeReviewBannerThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Thank you!'**
+  String get storeReviewBannerThanks;
+
+  /// No description provided for @storeReviewBannerClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get storeReviewBannerClose;
 }
 
 class _AppLocalizationsDelegate
