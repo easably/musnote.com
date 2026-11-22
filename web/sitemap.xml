@@ -620,4 +620,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://musnote.com/song-to-notes/"/>
   </url>
 
+  <url>
+    <loc>https://musnote.com/privacy/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
