@@ -340,6 +340,13 @@ footer.note { padding: 30px 24px 60px; color: var(--mn-muted); font-size: .9rem;
 .chart-groups { display: grid; gap: 16px; margin-bottom: 18px; }
 .chart-groups h2 { font-family: var(--mn-font-sans); font-size: 1rem; margin: 0; }
 
+.site-legal { padding: 28px 24px 48px; color: var(--mn-muted); font-size: .85rem; }
+.policy { max-width: 760px; padding-top: 36px; padding-bottom: 12px; }
+.policy h2 { margin-top: 1.5em; }
+.policy table { width: 100%; border-collapse: collapse; font-size: .95rem; margin: 12px 0 4px; }
+.policy th, .policy td { border-bottom: 1px solid var(--mn-line); text-align: left; vertical-align: top; padding: 8px 12px 8px 0; }
+.policy code { font-size: .9em; }
+
 @media (max-width: 900px) {
   .variants-grid, .types { grid-template-columns: 1fr 1fr; }
   .tips { grid-template-columns: 1fr 1fr; }
@@ -353,3 +360,6 @@ footer.note { padding: 30px 24px 60px; color: var(--mn-muted); font-size: .9rem;
   .arc.draw { animation: none; stroke-dashoffset: 0; }
   .vcard, .marker.slide { transition: none; }
 }
+html.app-embed .topbar,
+html.app-embed footer,
+html.app-embed .footer { display: none; }

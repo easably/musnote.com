@@ -252,6 +252,7 @@ a:hover {
   padding-top: 1rem;
 }
 
+.site-legal { padding: 28px 24px 48px; color: var(--mn-muted, #5c6b66); font-size: .85rem; }
 .footer-copyright {
   color: var(--mn-muted);
   font-size: var(--mn-fs-xs);
@@ -328,3 +329,7 @@ a:hover {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+html.app-embed .topbar,
+html.app-embed footer,
+html.app-embed .footer { display: none; }
