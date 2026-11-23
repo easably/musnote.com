@@ -331,5 +331,6 @@ a:hover {
 }
 
 html.app-embed .topbar,
+html.app-embed .header,
 html.app-embed footer,
 html.app-embed .footer { display: none; }
