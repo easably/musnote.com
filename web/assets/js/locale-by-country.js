@@ -1,6 +1,9 @@
 /**
  * Pick site language from visitor country (Cloudflare loc=); remember a manual choice.
  * Redirects only to LIVE locales; DEEP locales keep chord/piano paths.
+ *
+ * SEO: never leave an explicit locale URL (/ru/, /de/, …). Geo/storage only
+ * apply on English (no-prefix) paths. Bots never get a client redirect.
  */
 (function () {
   var LIVE = {
@@ -12,6 +15,7 @@
   var PREFIX_RE = /^\/(ru|de|pl|es|pt|ja|ko|zh-tw|zh-cn|vi)(?=\/|$)/;
   var STORAGE_KEY = 'mn_lang';
   var GEO_FLAG = 'mn_geo_checked';
+  var BOT_RE = /bot|crawl|spider|slurp|google|bing|yandex|baidu|duckduck|semrush|ahrefs|facebookexternalhit|twitterbot|linkedinbot|applebot|petalbot/i;
 
   var COUNTRY_TO_LANG = {
     PL: 'pl',
@@ -49,9 +53,15 @@
     return path + (search || '') + (hash || '');
   }
 
+  function hasExplicitLocale() {
+    return PREFIX_RE.test(location.pathname);
+  }
+
   function go(lang) {
     if (!LIVE[lang]) return;
     if (pathLang() === lang) return;
+    /* Explicit /ru/… etc. always wins — shared links and Googlebot. */
+    if (hasExplicitLocale()) return;
     location.replace(hrefFor(lang, location.pathname, location.search, location.hash));
   }
 
@@ -97,6 +107,9 @@
       } catch (e) {}
     }
   };
+
+  if (BOT_RE.test(navigator.userAgent || '')) return;
+  if (hasExplicitLocale()) return;
 
   var stored = readStored();
   if (stored && LIVE[stored]) {

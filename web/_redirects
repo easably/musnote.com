@@ -1,2 +1,13 @@
 # Path redirects only (Cloudflare Pages). Host www→apex is a zone
 # Dynamic Redirect Rule (proxied DNS), not _redirects.
+
+# Old chord-tutorial URLs → canonical chord chart (fix GSC duplicates)
+/chord-tutorial /chords/chart/ 301
+/chord-tutorial/ /chords/chart/ 301
+/chord-tutorial.html /chords/chart/ 301
+/ru/chord-tutorial /ru/chords/chart/ 301
+/ru/chord-tutorial/ /ru/chords/chart/ 301
+/ru/chord-tutorial.html /ru/chords/chart/ 301
+/de/chord-tutorial /de/chords/chart/ 301
+/de/chord-tutorial/ /de/chords/chart/ 301
+/de/chord-tutorial.html /de/chords/chart/ 301
